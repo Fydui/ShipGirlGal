@@ -1,16 +1,19 @@
-﻿#ifndef SG_UI_H
+﻿#pragma once
+#ifndef SG_UI_H
 #define SG_UI_H
-#include "maincall.h"
+#include "library.h"
 
 
 class SG_UI
 {
 public:
-    SG_UI();
+    SG_UI(library*m)
+    {
+        ma = m;
+    }
     void SG_MainUI();
 private:
-    maincall* ma;
-
+    library* ma;
 
 };
 

@@ -44,3 +44,5 @@ QT += multimedia multimediawidgets
 INSTALLS += target
 QT += script
 QMAKE_CXXFLAGS += -std=c++11
+
+DISTFILES +=
