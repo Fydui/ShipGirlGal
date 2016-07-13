@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     EngineBeh.cpp \
     SC.cpp \
     InputEvent.cpp \
-    sg_ui.cpp
+    sg_ui.cpp \
+    sg_startgame.cpp
 
 HEADERS  += widget.h \
     head.h \
@@ -33,7 +34,8 @@ HEADERS  += widget.h \
     AES.h \
     js.h \
     macro.h \
-    sg_ui.h
+    sg_ui.h \
+    sg_startgame.h
 
 FORMS    += widget.ui
 QT += core gui declarative
@@ -46,3 +48,6 @@ QT += script
 QMAKE_CXXFLAGS += -std=c++11
 
 DISTFILES +=
+
+RESOURCES += \
+    pix.qrc

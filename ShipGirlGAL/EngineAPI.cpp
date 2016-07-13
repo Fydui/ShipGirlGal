@@ -1,4 +1,4 @@
-//-----本文件是引擎行为层给用户提供的接口的实现-----
+﻿//-----本文件是引擎行为层给用户提供的接口的实现-----
 #include "widget.h"
 
 Pixmap* Widget::NewPixmap(String PicPath)

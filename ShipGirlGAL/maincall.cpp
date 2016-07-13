@@ -6,5 +6,5 @@
 
 void maincall::StartGame()//入口函数
 {
-    sg->SG_MainUI();
+    su->SG_MainUI();
 }

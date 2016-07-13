@@ -6,4 +6,5 @@ class library : public Widget
 Q_OBJECT
   public:
      //在此添加对widget类的封装
+
 };
