@@ -1,6 +1,9 @@
 ﻿#include "sg_ui.h"
-//SG_UI* sgui;              //使用全局变量进行调用maincall的方法
+
+SG_UI* sgui;              //使用全局变量进行调用maincall的方法
 //extern maincall* mainc;
+extern SG_StartGame* ss;
+
 SG_UI::SG_UI(library* m)
 {
     ma = m;
@@ -8,13 +11,13 @@ SG_UI::SG_UI(library* m)
 
 void SG_UI::SG_MainUI()
 {
-    //sgui = this;
+    sgui = this;
     //mainc->AddPixmapItem("E:/Code/cpp/ShipGirlGAL/SG/Background/主界面背景.png",0,0);
-
     //绘制主界面
+
     ma->AddPixmapItem(BG+"主界面背景.png",0,0);
 
-    ma->AddButtonItem(BG+"按钮背景2上.png",BtX,170,"",BG+"按钮背景2下.png");
+    ma->AddButtonItem(BG+"按钮背景2上.png",BtX,170,"SG_StartMainUi",BG+"按钮背景2下.png");
     ma->AddTextItem("新的游戏","微软雅黑",FontSize,153,108,51,FontX,175);
 
     ma->AddButtonItem(BG+"按钮背景2上.png",BtX,240,"",BG+"按钮背景2下.png");
@@ -28,5 +31,6 @@ void SG_UI::SG_MainUI()
 
     ma->AddButtonItem(BG+"按钮背景2上.png",BtX,450,"",BG+"按钮背景2下.png");
     ma->AddTextItem("退出游戏","微软雅黑",FontSize,153,108,51,FontX,455);
+
 
 }

@@ -10,16 +10,18 @@ class maincall : public library
 Q_OBJECT
 public:
     JS_FUNCTION//关于JS操作
+    SG_UI* su = new SG_UI(this);
+    SG_StartGame* start = new SG_StartGame(this);
+
     //入口函数
     void StartGame();
+
     //在此继续添加
-    SG_UI* su = new SG_UI(this);
-    SG_StartGame* sg = new SG_StartGame(this);
 private:
 
 public slots:
     //此处容纳事件处理与线程函数
-
+    void SG_StartMainUi();
 
 };
 
