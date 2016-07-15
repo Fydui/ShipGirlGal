@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>SG/Background/主界面背景.png</file>
+        <file>SG/Background/按钮背景2上.png</file>
+        <file>SG/Background/按钮背景2下.png</file>
+        <file>SG/Background/main_eve_bg.png</file>
+        <file>SG/Background/main_light_bg.png</file>
+        <file>SG/Background/start_item_d.png</file>
+        <file>SG/Background/strat_item_p.png</file>
+    </qresource>
+</RCC>
