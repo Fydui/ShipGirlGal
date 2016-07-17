@@ -3,9 +3,19 @@
         <file>SG/Background/主界面背景.png</file>
         <file>SG/Background/按钮背景2上.png</file>
         <file>SG/Background/按钮背景2下.png</file>
-        <file>SG/Background/main_eve_bg.png</file>
-        <file>SG/Background/main_light_bg.png</file>
         <file>SG/Background/start_item_d.png</file>
         <file>SG/Background/strat_item_p.png</file>
+        <file>SG/startgame/start_item_d.png</file>
+        <file>SG/startgame/strat_item_p.png</file>
+        <file>SG/startgame/支线上.png</file>
+        <file>SG/startgame/支线下.png</file>
+        <file>SG/startgame/中间.png</file>
+        <file>SG/startgame/中间上.png</file>
+        <file>SG/startgame/中间下.png</file>
+        <file>SG/startgame/主线上.png</file>
+        <file>SG/startgame/主线下.png</file>
+        <file>SG/Background/main_light_bg.png</file>
+        <file>SG/startgame/返回上.png</file>
+        <file>SG/startgame/返回下.png</file>
     </qresource>
 </RCC>

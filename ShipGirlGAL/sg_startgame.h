@@ -10,6 +10,7 @@ public:
 private:
     library* sl;
     const QString SG =  ":/SG/Background/";
+    const QString ST = ":/SG/startgame/";
 };
 
 #endif // SG_STARTGAME_H
