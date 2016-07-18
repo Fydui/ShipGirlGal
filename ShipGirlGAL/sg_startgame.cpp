@@ -15,15 +15,15 @@ void SG_StartGame::SG_StartUI()
         ss = this;
         sl->AddPixmapItem(SG+"main_light_bg.png",0,0);
 
-        //SynchronousStart(ff)
+        SynchronousStart(ff)
         Item* m = sl->AddPixmapItem(ST+"中间.png",0,341);
         sl->SetOpacityItem(m,0.0);
-        sl->AnimationSetOpacityItem(m,1,50);
-        //SynchronousFinish()
+        sl->AnimationSetOpacityItem(m,1,50,"ff");
+
 
         Item* mp = sl->AddPixmapItem(ST+"中间上.png",0,343);
         sl->AnimationMoveItem(mp,0,320,50);
-
+        SynchronousFinish()
         Item* md = sl->AddPixmapItem(ST+"中间下.png",0,355);
         sl->AnimationMoveItem(md,0,379,50);
 
@@ -47,5 +47,7 @@ void SG_StartGame::SG_StartUI()
         sl->AnimationRotationItem(re,180,50);
         sl->AnimationMoveItem(re,1000,70,20);
 
-
+    /*
+        //样式二
+        sl->AddPixmapItem(SG+"办公室.png",0,0); */
 }

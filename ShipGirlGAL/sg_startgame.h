@@ -1,7 +1,7 @@
 ﻿#ifndef SG_STARTGAME_H
 #define SG_STARTGAME_H
 #include "library.h"
-class SG_StartGame
+class SG_StartGame  //: public QObject
 {
 public:
     SG_StartGame(library* s);

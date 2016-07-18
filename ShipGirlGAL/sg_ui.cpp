@@ -15,6 +15,7 @@ void SG_UI::SG_MainUI()
     //mainc->AddPixmapItem("E:/Code/cpp/ShipGirlGAL/SG/Background/主界面背景.png",0,0);
     //绘制主界面
 
+
     ma->AddPixmapItem(BG+"主界面背景.png",0,0);
 
     ma->AddButtonItem(BG+"按钮背景2上.png",BtX,170,"SG_StartMainUi",BG+"按钮背景2下.png");

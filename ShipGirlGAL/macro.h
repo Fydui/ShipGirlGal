@@ -1,4 +1,4 @@
-//-----一些宏-----
+﻿//-----一些宏-----
 #pragma once
 
 #define NULL_String ""
@@ -9,7 +9,7 @@
 #define SynchronousStart(fun) {QTimer t;\
                     QEventLoop q;\
                     t.setSingleShot(true);\
-                    connect(lfevent,SIGNAL( fun ()),&q,SLOT(quit()));
+                    QObject::connect(lfevent,SIGNAL( fun ()),&q,SLOT(quit()));
 #define SynchronousFinish() t.start();q.exec();}
 #define RegisterJSType(TypeName,JSName) qRegisterMetaType<TypeName>(JSName)
 
