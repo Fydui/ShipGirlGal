@@ -17,6 +17,22 @@
         <file>SG/Background/main_light_bg.png</file>
         <file>SG/startgame/返回上.png</file>
         <file>SG/startgame/返回下.png</file>
+        <file>SG/startgame/半圆.png</file>
+        <file>SG/startgame/大侧边栏.png</file>
+        <file>SG/startgame/短按钮_上.png</file>
+        <file>SG/startgame/短按钮_下.png</file>
+        <file>SG/startgame/上名称栏.png</file>
+        <file>SG/startgame/信息栏.png</file>
+        <file>SG/startgame/长按钮_上.png</file>
+        <file>SG/startgame/长按钮_下.png</file>
+        <file>SG/startgame/支线剧情_上.png</file>
+        <file>SG/startgame/支线剧情_下.png</file>
+        <file>SG/startgame/中按钮_下.png</file>
+        <file>SG/startgame/中心圆.png</file>
+        <file>SG/startgame/主线剧情_上.png</file>
+        <file>SG/startgame/主线剧情_下.png</file>
         <file>SG/Background/办公室.png</file>
+        <file>SG/startgame/科幻背景.png</file>
+        <file>SG/startgame/中按钮_上.png</file>
     </qresource>
 </RCC>

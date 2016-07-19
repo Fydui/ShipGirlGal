@@ -6,6 +6,7 @@ class SG_StartGame  //: public QObject
 public:
     SG_StartGame(library* s);
     void SG_StartUI();
+    void SG_StartUIDeleteItem(Item* l);
 
 private:
     library* sl;
