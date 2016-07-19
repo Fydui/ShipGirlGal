@@ -57,32 +57,49 @@ void SG_StartGame::SG_StartUI()
 
         sl->AddPixmapItem(ST+"科幻背景.png",0,0);
 
-
+        SynchronousStart(ff)
         Item*mr = sl->AddPixmapItem(ST+"中心圆.png",421,241);
         sl->SetOpacityItem(mr,0.0);
-        sl->AnimationSetOpacityItem(mr,1,150);
+        sl->AnimationSetOpacityItem(mr,1,50,"ff");
 
         SynchronousStart(ff)
         Item*mr2 = sl->AddPixmapItem(ST+"半圆.png",-156,202);
-        sl->AnimationMoveItem(mr2,0,202,80,"ff");
-        SynchronousFinish()
+        sl->AnimationMoveItem(mr2,0,202,40,"ff");
 
-        Item* t1 = sl->AddButtonItem(ST+"长按钮_上.png",-239,231,"",ST+"长按钮_下.png");
-        sl->AnimationMoveItem(t1,43,231,50);
-        Item* t2 = sl->AddButtonItem(ST+"中按钮_上.png",-240,324,"",ST+"中按钮_下.png");
-        sl->AnimationMoveItem(t2,120,324,45);
-        Item* t3 = sl->AddButtonItem(ST+"短按钮_上.png",-200,415,"",ST+"短按钮_下.png");
-        sl->AnimationMoveItem(t3,60,415,40);
         Item* cb = sl->AddPixmapItem(ST+"大侧边栏.png",615,0);
         sl->SetOpacityItem(cb,0.0);
-        sl->AnimationSetOpacityItem(cb,1,100);
+        sl->AnimationSetOpacityItem(cb,1,100,"ff");
 
-        Item* xcb = sl->AddPixmapItem(ST,"信息栏.png",720,76);
+
+
+        SynchronousStart(ff)
+        Item* t1 = sl->AddButtonItem(ST+"长按钮_上.png",-239,231,"",ST+"长按钮_下.png");
+        sl->AnimationMoveItem(t1,43,231,40,"ff");
+        Item* t2 = sl->AddButtonItem(ST+"中按钮_上.png",-240,324,"",ST+"中按钮_下.png");
+        sl->AnimationMoveItem(t2,120,324,45,"ff");
+        Item* t3 = sl->AddButtonItem(ST+"短按钮_上.png",-200,415,"",ST+"短按钮_下.png");
+        sl->AnimationMoveItem(t3,60,415,50,"ff");
+        Item* na = sl->AddPixmapItem(ST+"上名称栏.png",453,-45);
+        sl->AnimationMoveItem(na,453,0,30,"ff");
+        SynchronousFinish()
+
+
+        SynchronousFinish()
+
+        Item* xcb = sl->AddPixmapItem(ST+"信息栏.png",720,76);
         sl->SetOpacityItem(xcb,0.0);
-        sl->AnimationSetOpacityItem(scb,1,100);
+        sl->AnimationSetOpacityItem(xcb,1,100);
 
-        sl->AnimationSetOpacityItem(fn,0.0,50);
-        sl->AnimationSetOpacityItem(mr,0.0,50);
+        Item* zx = sl->AddButtonItem(ST+"主线剧情_上.png",741,414,"",ST+"主线剧情_下.png");
+        sl->SetOpacityItem(zx,0.0);
+        sl->AnimationSetOpacityItem(zx,1,100);
+        Item* zx2 = sl->AddButtonItem(ST+"支线剧情_上.png",741,525,"",ST+"支线剧情_下.png");
+        sl->SetOpacityItem(zx2,0.0);
+        sl->AnimationSetOpacityItem(zx2,1,100);
+
+        sl->AnimationSetOpacityItem(fn,0.0,100);
+        sl->AnimationSetOpacityItem(mr,0.0,100);
+        SynchronousFinish()
 
 
 
