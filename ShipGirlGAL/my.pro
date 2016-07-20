@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     SC.cpp \
     InputEvent.cpp \
     sg_ui.cpp \
-    sg_startgame.cpp
+    sg_startgame.cpp \
+    sg_function.cpp
 
 HEADERS  += widget.h \
     head.h \
@@ -35,7 +36,8 @@ HEADERS  += widget.h \
     js.h \
     macro.h \
     sg_ui.h \
-    sg_startgame.h
+    sg_startgame.h \
+    sg_function.h
 
 FORMS    += widget.ui
 QT += core gui declarative

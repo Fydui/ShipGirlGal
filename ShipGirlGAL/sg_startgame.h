@@ -5,13 +5,12 @@ class SG_StartGame  //: public QObject
 {
 public:
     SG_StartGame(library* s);
-    void SG_StartUI();
-    void SG_StartUIDeleteItem(Item* l);
-
+    //void SG_StartUI();
+    void SG_StartText();
 private:
     library* sl;
     const QString SG =  ":/SG/Background/";
-    const QString ST = ":/SG/startgame/";
+
 };
 
 #endif // SG_STARTGAME_H

@@ -34,5 +34,6 @@
         <file>SG/startgame/科幻背景.png</file>
         <file>SG/startgame/中按钮_上.png</file>
         <file>SG/startgame/中按钮_下.png</file>
+        <file>SG/startgame/关闭图片.png</file>
     </qresource>
 </RCC>

@@ -17,6 +17,9 @@ signals:
     //例子：void FunctionFinish();
     void ff();
     void dd();
+    void cc();
+    void vv();
+    void mm();
 };
 
 //-引擎自带的全局常量

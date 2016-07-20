@@ -8,10 +8,13 @@ class SG_UI
 
 public:
     SG_UI(library*m);
-    void SG_MainUI();              //主界面UI
+    void SG_MainUI();               //主界面UI
+    void SG_StartUI();              //开始游戏UI
+    void SG_StartUiReturn();          //开始游戏UI的返回
 
 private:
     library* ma;                       //指向library的指针在构造的时候将library的this赋值 然后就能在SG_UI里调miancall的方法了,,,,,,,,,
+    const QString ST = ":/SG/startgame/";
     const QString BG = ":/SG/Background/";                  //背景图片的路径
     const int BtX = 400;                                    //按钮的横坐标
     const int FontX = BtX +60;                              //字体的横坐标
