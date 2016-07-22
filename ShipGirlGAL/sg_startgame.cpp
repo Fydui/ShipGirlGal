@@ -12,5 +12,4 @@ SG_StartGame::SG_StartGame(library* s)
 
 void SG_StartGame::SG_StartText()
 {
-//
 }

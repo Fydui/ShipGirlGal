@@ -20,19 +20,26 @@ void maincall::_StartMainUi()
 
 void maincall::_StartText()
 {
+    //_Return();
+    su->SG_StartTextUi();
     start->SG_StartText();
 }
 
 void maincall::_ReturnUi()
 {
-    su->SG_StartUiReturn();
+    su->SG_UiReturn();
     _Return();
 }
 
 void maincall::_Return()
 
 {
-
+    su->SG_UiReturn();
     fun->SG_Return();
     //_Sum = 27;
+}
+
+void maincall::_Exit()
+{
+    exit(0);
 }

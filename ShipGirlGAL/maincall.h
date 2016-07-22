@@ -18,16 +18,18 @@ public:
 
     //入口函数
     void StartGame();
-    void _Return();
+
 
     //在此继续添加
 private:
 
 public slots:
     //此处容纳事件处理与线程函数
-    void _StartMainUi();
-    void _StartText();
-    void _ReturnUi();
+    void _StartMainUi();    //开始界面Ui
+    void _StartText();      //开始游戏
+    void _ReturnUi();       //返回动画
+    void _Return();         //返回
+    void _Exit();           //退出
 
 
 };

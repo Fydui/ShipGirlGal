@@ -37,7 +37,7 @@ void SG_UI::SG_MainUI()
     ma->AddButtonItem(BG+"按钮背景2上.png",BtX,380,"",BG+"按钮背景2下.png");
     ma->AddTextItem("关于舰R","微软雅黑",FontSize,153,108,51,FontX,385);
 
-    ma->AddButtonItem(BG+"按钮背景2上.png",BtX,450,"",BG+"按钮背景2下.png");
+    ma->AddButtonItem(BG+"按钮背景2上.png",BtX,450,"_Exit",BG+"按钮背景2下.png");
     ma->AddTextItem("退出游戏","微软雅黑",FontSize,153,108,51,FontX,455);
 
     Sum = 11;
@@ -140,18 +140,95 @@ void SG_UI::SG_StartUI()
 
 }
 
-void SG_UI::SG_StartUiReturn()
+void SG_UI::SG_StartTextUi()
+{
+
+    sgui = this;
+    ma->AddPixmapItem(BG+"木头海岸.png",0,0);
+    SynchronousStart(mm)
+    Item* fi = ma->AddPixmapItem(ST+"太太_正常.png",-600,0);
+    ma->AnimationMoveItem(fi,0,0,100,"mm");
+    SynchronousFinish()
+
+    Item* dc = ma->AddPixmapItem(ST+"下大文字框.png",0,500);
+    ma->SetOpacityItem(dc,0.0);
+    ma->AnimationSetOpacityItem(dc,1,80);
+
+
+   Item* But[6];
+    QString Bup[6] = {"返回_上.png",
+                      "存档_上.png",
+                      "读档_上.png",
+                      "快进_上.png",
+                      "放大_上.png",
+                      "设置_上.png"};
+
+    QString MainFun[6] =
+    {
+        "_Return",
+        "",
+        "",
+        "",
+        "",
+        ""
+    };
+
+    QString Bdo[6];
+        Bdo[0] = "返回_下.png";
+        Bdo[1] = "存档_下.png";
+        Bdo[2] = "读档_下.png";
+        Bdo[3] = "快进_下.png";
+        Bdo[4] = "放大_下.png";
+        Bdo[5] = "设置_下.png";
+
+    for(int i = 0; i < 6; i++)
+    {
+        But[i] = ma->AddButtonItem(ST+Bup[i],Tbx,Tby,MainFun[i],ST+Bdo[i]);
+        ma->SetOpacityItem(But[i],0.0);
+        ma->AnimationSetOpacityItem(But[i],1,80);
+        Tbx = Tbx+35;
+    }
+
+/*
+    Item* re = ma->AddButtonItem(ST+"返回_上.png",752,Tby,"_Return",ST+"返回_下.png");
+    Item* sa = ma->AddButtonItem(ST+"存档_上.png",787,Tby,"",ST+"存档_下.png");
+    Item* lo = ma->AddButtonItem(ST+"读档_上.png",822,Tby,"",ST+"读档_下.png");
+    Item* qu = ma->AddButtonItem(ST+"快进_上.png",857,Tby,"",ST+"快进_下.png");
+    Item* fd = ma->AddButtonItem(ST+"放大_上.png",882,Tby,"",ST+"放大_下.png");
+    Item* se = ma->AddButtonItem(ST+"设置_上.png",917,Tby,"",ST+"设置_下.png");
+
+    ma->SetOpacityItem(re,0.0);
+    ma->SetOpacityItem(sa,0.0);
+    ma->SetOpacityItem(lo,0.0);
+    ma->SetOpacityItem(qu,0.0);
+    ma->SetOpacityItem(fd,0.0);
+    ma->SetOpacityItem(se,0.0);
+
+    ma->AnimationSetOpacityItem(re,1,100);
+    ma->AnimationSetOpacityItem(sa,1,100);
+    ma->AnimationSetOpacityItem(lo,1,100);
+    ma->AnimationSetOpacityItem(qu,1,100);
+    ma->AnimationSetOpacityItem(fd,1,100);
+    ma->AnimationSetOpacityItem(se,1,100);
+*/
+    Sum = 23;
+    _Sum = 32;
+}
+
+void SG_UI::SG_UiReturn()
 {
     sgui = this;
     SynchronousStart(vv)
-    ma->AddPixmapItem(ST+"关闭背景.png",0,0);
-    Item* cl=ma->AddPixmapItem(ST+"关闭图片.png",0,-2487);
-    ma->AnimationMoveItem(cl,0,0,100,"vv");
-    Item*fo = ma->AddTextItem("Loading...","微软雅黑",28,255,255,255,465,327);
-    ma->AnimationSetOpacityItem(fo,1,0,"vv");
-    Item*mr = ma->AddPixmapItem(ST+"中心圆.png",421,241);
+    Item* bg= ma->AddPixmapItem(ST+"关闭背景.png",0,0);
+    ma->AnimationSetOpacityItem(bg,1,100,"vv");
+    Item* fo = ma->AddTextItem("Loading...","微软雅黑",28,255,255,255,465,327);
+    ma->AnimationSetOpacityItem(fo,1,100,"vv");
+    Item* mr = ma->AddPixmapItem(ST+"中心圆.png",421,241);
     ma->SetOpacityItem(mr,0.0);
     ma->AnimationSetOpacityItem(mr,1,100,"vv");
     SynchronousFinish()
-            _Sum = 27;
+    _Sum = _Sum + 3;
+
 }
+
+
