@@ -40,7 +40,7 @@ HEADERS  += widget.h \
     sg_function.h
 
 FORMS    += widget.ui
-QT += core gui declarative
+QT += core gui
 
 OTHER_FILES +=
 

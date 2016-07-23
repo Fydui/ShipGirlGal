@@ -6,7 +6,9 @@ SG_UI* sgui;                                //使用全局变量进行调用main
 //extern maincall* mainc;
 
 int Sum;                                    //上级界面图元数
-int _Sum;                                   //当前总图元数
+int _Sum;                                   //当前总图元数.
+const int Tby= 502;                                     //TextUi界面的按钮纵坐标
+int Tbx = 752;                                          //TextUi界面的按钮横坐标
 extern SG_StartGame* ss;
 //ParametersStru *Cle_1 = new ParametersStru; //退出函数全局指针
 
@@ -41,6 +43,7 @@ void SG_UI::SG_MainUI()
     ma->AddTextItem("退出游戏","微软雅黑",FontSize,153,108,51,FontX,455);
 
     Sum = 11;
+
 }
 
 void SG_UI::SG_StartUI()
@@ -136,7 +139,6 @@ void SG_UI::SG_StartUI()
     ma->AnimationSetOpacityItem(fn,0.0,100);
     ma->AnimationSetOpacityItem(mr,0.0,100);
     _Sum = 23;
-   // Cle_1->StringVar<<"返回";
 
 }
 
@@ -153,6 +155,7 @@ void SG_UI::SG_StartTextUi()
     Item* dc = ma->AddPixmapItem(ST+"下大文字框.png",0,500);
     ma->SetOpacityItem(dc,0.0);
     ma->AnimationSetOpacityItem(dc,1,80);
+
 
 
    Item* But[6];
@@ -213,6 +216,7 @@ void SG_UI::SG_StartTextUi()
 */
     Sum = 23;
     _Sum = 32;
+
 }
 
 void SG_UI::SG_UiReturn()
@@ -227,7 +231,8 @@ void SG_UI::SG_UiReturn()
     ma->SetOpacityItem(mr,0.0);
     ma->AnimationSetOpacityItem(mr,1,100,"vv");
     SynchronousFinish()
-    _Sum = _Sum + 3;
+    _Sum = _Sum+ 3;
+
 
 }
 

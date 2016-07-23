@@ -20,8 +20,7 @@ private:
     const int BtX = 400;                                    //按钮的横坐标
     const int FontX = BtX +60;                              //字体的横坐标
     const int FontSize = 20;                                //显示字号
-    const int Tby= 502;                                     //TextUi界面的按钮纵坐标
-    int Tbx = 752;                                          //TextUi界面的按钮横坐标
+
 
 };
 
