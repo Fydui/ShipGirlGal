@@ -25,6 +25,11 @@ void maincall::_StartText()
     start->SG_StartText();
 }
 
+void maincall::_ClearTextUi()
+{
+    //fun->FU_ClearTextui();
+}
+
 void maincall::_ReturnUi()
 {
     su->SG_UiReturn();

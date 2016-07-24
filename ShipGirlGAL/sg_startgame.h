@@ -10,7 +10,7 @@ public:
     SG_StartGame(library* s);
     //void SG_StartUI();
     void SG_StartText();
-    QString SG_FileOpen(std::string name, std::string fenge, int sum);
+
 private:
     library* sl;
     const QString SG =  ":/SG/Background/";

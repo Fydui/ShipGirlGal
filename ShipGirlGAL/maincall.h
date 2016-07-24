@@ -30,6 +30,7 @@ public slots:
     void _ReturnUi();       //返回动画
     void _Return();         //返回
     void _Exit();           //退出
+    void _ClearTextUi();    //清除文字图层
 
 
 };

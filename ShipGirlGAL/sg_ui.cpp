@@ -139,7 +139,6 @@ void SG_UI::SG_StartUI()
     ma->AnimationSetOpacityItem(fn,0.0,100);
     ma->AnimationSetOpacityItem(mr,0.0,100);
     _Sum = 23;
-
 }
 
 void SG_UI::SG_StartTextUi()
@@ -154,7 +153,7 @@ void SG_UI::SG_StartTextUi()
 
     Item* dc = ma->AddPixmapItem(ST+"下大文字框.png",0,500);
     ma->SetOpacityItem(dc,0.0);
-    ma->AnimationSetOpacityItem(dc,1,80);
+    ma->AnimationSetOpacityItem(dc,1,50);
 
 
 
@@ -192,6 +191,8 @@ void SG_UI::SG_StartTextUi()
         Tbx = Tbx+35;
     }
 
+    _Sum = 32;
+    Sum = 24;
 /*
     Item* re = ma->AddButtonItem(ST+"返回_上.png",752,Tby,"_Return",ST+"返回_下.png");
     Item* sa = ma->AddButtonItem(ST+"存档_上.png",787,Tby,"",ST+"存档_下.png");
@@ -214,10 +215,20 @@ void SG_UI::SG_StartTextUi()
     ma->AnimationSetOpacityItem(fd,1,100);
     ma->AnimationSetOpacityItem(se,1,100);
 */
-    Sum = 23;
-    _Sum = 32;
 
 }
+
+void SG_UI::SG_OTextUi(QString Qoword)
+{
+    Item* text;
+    //SynchronousStart(tt)
+    text = ma->AddTextItem(Qoword,"微软雅黑",20,0,0,0,0,0);
+    ma->AnimationSetOpacityItem(text,1,1);
+
+    //SynchronousFinish()
+
+}
+
 
 void SG_UI::SG_UiReturn()
 {
@@ -231,7 +242,7 @@ void SG_UI::SG_UiReturn()
     ma->SetOpacityItem(mr,0.0);
     ma->AnimationSetOpacityItem(mr,1,100,"vv");
     SynchronousFinish()
-    _Sum = _Sum+ 3;
+    _Sum = _Sum+3;
 
 
 }

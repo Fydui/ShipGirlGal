@@ -13,6 +13,9 @@ public:
     void SG_StartUiReturn();        //开始游戏UI的返回
     void SG_StartTextUi();          //游戏的界面
     void SG_UiReturn();             //返回时通用动画
+    void SG_OTextUi(QString Qoword);              //开始游戏之后输出文字的ui方法
+    //void SG_ClearOTextUi();         //清除文字图层
+
 private:
     library* ma;                       //指向library的指针在构造的时候将library的this赋值 然后就能在SG_UI里调miancall的方法了,,,,,,,,,
     const QString ST = ":/SG/startgame/";

@@ -52,5 +52,6 @@
         <file>SG/Background/木头海岸.png</file>
         <file>SG/startgame/返回_上.png</file>
         <file>SG/startgame/返回_下.png</file>
+        <file>SG/Text/M_1_1.txt</file>
     </qresource>
 </RCC>
