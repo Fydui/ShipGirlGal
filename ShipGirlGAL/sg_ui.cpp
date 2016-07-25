@@ -143,7 +143,7 @@ void SG_UI::SG_StartUI()
 
 void SG_UI::SG_StartTextUi()
 {
-
+    ma->AddMouseEvent(1,510,1079,710,"_ClearTextUi");
     sgui = this;
     ma->AddPixmapItem(BG+"木头海岸.png",0,0);
     SynchronousStart(mm)
@@ -191,7 +191,7 @@ void SG_UI::SG_StartTextUi()
         Tbx = Tbx+35;
     }
 
-    _Sum = 32;
+    _Sum = 33;
     Sum = 24;
 /*
     Item* re = ma->AddButtonItem(ST+"返回_上.png",752,Tby,"_Return",ST+"返回_下.png");
@@ -220,12 +220,8 @@ void SG_UI::SG_StartTextUi()
 
 void SG_UI::SG_OTextUi(QString Qoword)
 {
-    Item* text;
-    //SynchronousStart(tt)
-    text = ma->AddTextItem(Qoword,"微软雅黑",20,0,0,0,0,0);
-    ma->AnimationSetOpacityItem(text,1,1);
-
-    //SynchronousFinish()
+    //sgui =this;
+    ma->AddTextItem(Qoword,"微软雅黑",20,0,0,0,0,0);
 
 }
 

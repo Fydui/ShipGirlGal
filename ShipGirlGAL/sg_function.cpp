@@ -4,6 +4,8 @@
 extern int Sum;
 extern int _Sum;
 extern int Tbx;
+int DoneSum = 7;
+int Tsum =0;
 extern SG_UI* sgui;
 SG_Function* sgfu;
 
@@ -16,10 +18,10 @@ SG_Function::SG_Function(library* fu)
 
 void SG_Function::FU_ClearTextui()
 {
-    int Dang = 36;
-    int Bao = 35;
-    for(int i = Bao; Dang >= i; Dang--)
-        fn->DeleteItem(fn->AllItem[Dang]);
+    //int Dang = 33;
+    //int Bao = 32;
+    //for(int i = Bao; Dang >= i; Dang--)
+        fn->DeleteItem(fn->AllItem[33]);
 }
 
 void SG_Function::SG_Return()
@@ -33,7 +35,7 @@ void SG_Function::SG_Return()
         fn->DeleteItem(fn->AllItem[_Sum_]);
     }
 
-    if(_Sum == 35 && Sum == 24)
+    if(_Sum == 36 && Sum == 24)
     {
         _Sum = 23;
         Sum = 11;
@@ -43,10 +45,36 @@ void SG_Function::SG_Return()
     Tbx = 752;
 }
 
-void SG_Function::SG_ReadText(string name, string fenge, int sum)
+
+void SG_Function::SG_ReadText(string name, QString fenge)
 {
+    ifstream text(name);
+    string word;
+    string w;
+    QString _word;
 
+    while(getline(text,w))
+    {
+        word += w + "\n";
+    }
+    _word = QString::fromStdString(word);
 
+     QString jiequ;
+     jiequ= _word.section(fenge,Tsum,Tsum);
+     //sgui->SG_OTextUi(jiequ);
+     fn->AddTextItem(jiequ,"微软雅黑",20,0,0,0,0,0);
+     if(Tsum == DoneSum)
+     {
+        //sgui->SG_OTextUi("#DONE#");
+        //FU_ClearTextui();
+        Tsum = 0;
+     }
+     else
+     {
+         Tsum++;
+     }
+
+/*
     ifstream infile(name);			//打开文件
     string word = "";				//全部文本
     string tmp;						//在读的当前行
@@ -72,18 +100,16 @@ void SG_Function::SG_ReadText(string name, string fenge, int sum)
         str_list.push_back(tmp_s);					//把截断的字符串加入容器
     }
 
-
     //int sum;
     string oword = "";
     QString Qoword = "";
 
     for (int i = 0; i < sum; i++) {
-        oword = str_list.at(i);
+
+        oword = str_list.at(0);
         Qoword = QString::fromStdString(oword);
         sgui->SG_OTextUi(Qoword);
-
-        fn->AddMouseEvent(135,500,945,700,"_ClearTextUi");
-
-    }
-
+        //fn->AddMouseEvent(135,500,945,700,"_ClearTextUi");
+    }*/
 }
+
