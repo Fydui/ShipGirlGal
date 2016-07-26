@@ -61,8 +61,7 @@ void SG_Function::SG_ReadText(string name, QString fenge)
 
      QString jiequ;
      jiequ= _word.section(fenge,Tsum,Tsum);
-     //sgui->SG_OTextUi(jiequ);
-     fn->AddTextItem(jiequ,"微软雅黑",20,0,0,0,0,0);
+     sgui->SG_OTextUi(jiequ);
      if(Tsum == DoneSum)
      {
         //sgui->SG_OTextUi("#DONE#");
