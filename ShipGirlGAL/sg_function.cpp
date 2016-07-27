@@ -4,7 +4,7 @@
 extern int Sum;
 extern int _Sum;
 extern int Tbx;
-int DoneSum = 7;
+int DoneSum = 20;
 int Tsum =0;
 extern SG_UI* sgui;
 SG_Function* sgfu;

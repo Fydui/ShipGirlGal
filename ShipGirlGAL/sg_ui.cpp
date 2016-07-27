@@ -221,7 +221,7 @@ void SG_UI::SG_StartTextUi()
 void SG_UI::SG_OTextUi(QString Qoword)
 {
     sgui =this;
-    ma->AddTextItem(Qoword,"微软雅黑",20,0,0,0,0,0);
+    ma->AddTextItem(Qoword,"微软雅黑",20,0,0,0,120,510);
 
 }
 

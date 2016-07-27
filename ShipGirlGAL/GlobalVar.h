@@ -21,6 +21,7 @@ signals:
     void vv();
     void mm();
     void tt();
+
 };
 
 //-引擎自带的全局常量
