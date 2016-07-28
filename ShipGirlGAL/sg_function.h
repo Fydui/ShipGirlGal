@@ -9,9 +9,9 @@ class SG_Function
 {
 public:
     SG_Function(library *fu);
-    void SG_Return();
+    void FU_Return();
     void FU_ClearTextui();
-    void SG_ReadText(string name, QString fenge);
+    void FU_ReadText(string name, QString fenge);
     void FU_Stext(int sum);
 private:
     library* fn;

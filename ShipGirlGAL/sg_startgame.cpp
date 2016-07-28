@@ -16,6 +16,6 @@ void SG_StartGame::SG_StartText()
 {
     //sgfu = this;
     //sl->AddMouseEvent();
-    sgfu->SG_ReadText("M_1_1.txt","#");
+    sgfu->FU_ReadText("M_1_1.txt","#");
 
 }

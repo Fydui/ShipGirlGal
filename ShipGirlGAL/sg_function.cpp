@@ -24,7 +24,7 @@ void SG_Function::FU_ClearTextui()
         fn->DeleteItem(fn->AllItem[33]);
 }
 
-void SG_Function::SG_Return()
+void SG_Function::FU_Return()
 {
 
     int _Sum_ = _Sum;
@@ -46,7 +46,7 @@ void SG_Function::SG_Return()
 }
 
 
-void SG_Function::SG_ReadText(string name, QString fenge)
+void SG_Function::FU_ReadText(string name, QString fenge)
 {
     ifstream text(name);
     string word;
@@ -61,7 +61,7 @@ void SG_Function::SG_ReadText(string name, QString fenge)
 
      QString jiequ;
      jiequ= _word.section(fenge,Tsum,Tsum);
-     sgui->SG_OTextUi(jiequ);
+     sgui->UI_OTextUi(jiequ);
      if(Tsum == DoneSum)
      {
         //sgui->SG_OTextUi("#DONE#");

@@ -12,13 +12,14 @@ int Tbx = 752;                                          //TextUi界面的按钮�
 extern SG_StartGame* ss;
 //ParametersStru *Cle_1 = new ParametersStru; //退出函数全局指针
 
+Item* dc;
 
 SG_UI::SG_UI(library* m)
 {
     ma = m;
 }
 
-void SG_UI::SG_MainUI()
+void SG_UI::UI_MainUI()
 {
     sgui = this;
     //mainc->AddPixmapItem("E:/Code/cpp/ShipGirlGAL/SG/Background/主界面背景.png",0,0);
@@ -46,7 +47,7 @@ void SG_UI::SG_MainUI()
 
 }
 
-void SG_UI::SG_StartUI()
+void SG_UI::UI_StartUI()
 {
     sgui = this;
     //样式一
@@ -141,7 +142,7 @@ void SG_UI::SG_StartUI()
     _Sum = 23;
 }
 
-void SG_UI::SG_StartTextUi()
+void SG_UI::UI_StartTextUi()
 {
     ma->AddMouseEvent(1,510,1079,710,"_ClearTextUi");
     sgui = this;
@@ -151,7 +152,8 @@ void SG_UI::SG_StartTextUi()
     ma->AnimationMoveItem(fi,0,0,100,"mm");
     SynchronousFinish()
 
-    Item* dc = ma->AddPixmapItem(ST+"下大文字框.png",0,500);
+    dc = ma->AddPixmapItem(ST+"下大文字框.png",0,500);
+    ma->SetItemLayer(dc,1);
     ma->SetOpacityItem(dc,0.0);
     ma->AnimationSetOpacityItem(dc,1,50);
 
@@ -218,7 +220,41 @@ void SG_UI::SG_StartTextUi()
 
 }
 
-void SG_UI::SG_OTextUi(QString Qoword)
+void SG_UI::UI_StartFight()
+{
+    Item* lh = ma->AddPixmapItem(ST+"左黑幕.png",-594,0);
+    Item* rh = ma->AddPixmapItem(ST+"右黑幕.png",1080,0);
+    int Y = 460;
+
+    SynchronousStart(ff)
+    ma->AnimationMoveItem(lh,0,0,20,"ff");
+    ma->AnimationMoveItem(rh,485,0,20,"ff");
+    SynchronousFinish()
+
+    Item* fi = ma->AddPixmapItem(ST+"开始战斗.png",280,200);
+    Item* re = ma->AddButtonItem(ST+"战斗返回.png",280,Y,"",ST+"战斗返回_下.png");
+    Item* go = ma->AddButtonItem(ST+"迂回.png",440,Y,"",ST+"迂回_下.png");
+    Item* cx = ma->AddButtonItem(ST+"撤销.png",600,Y,"",ST+"撤销_下.png");
+    Item* ad = ma->AddButtonItem(ST+"攻击.png",760,Y,"",ST+"攻击_下.png");
+    ma->SetItemLayer(ad,2);
+
+    SynchronousStart(mm)
+    ma->SetOpacityItem(fi,0);
+    ma->AnimationSetOpacityItem(fi,1,10,"mm");
+    ma->SetOpacityItem(re,0);
+    ma->AnimationSetOpacityItem(re,1,10,"mm");
+    ma->SetOpacityItem(go,0);
+    ma->AnimationSetOpacityItem(go,1,10,"mm");
+    ma->SetOpacityItem(cx,0);
+    ma->AnimationSetOpacityItem(cx,1,10,"mm");
+    ma->SetOpacityItem(ad,0);
+    ma->AnimationSetOpacityItem(ad,1,10,"mm");
+    SynchronousFinish()
+    ma->SetOpacityItem(fi,0);
+    ma->SetItemOrder(ad,dc);
+}
+
+void SG_UI::UI_OTextUi(QString Qoword)
 {
     sgui =this;
     ma->AddTextItem(Qoword,"微软雅黑",20,0,0,0,120,510);
@@ -226,7 +262,7 @@ void SG_UI::SG_OTextUi(QString Qoword)
 }
 
 
-void SG_UI::SG_UiReturn()
+void SG_UI::UI_UiReturn()
 {
     sgui = this;
     SynchronousStart(vv)

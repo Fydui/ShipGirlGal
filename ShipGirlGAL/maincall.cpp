@@ -8,41 +8,42 @@ extern SG_StartGame* ss;
 void maincall::StartGame()//入口函数
 {
 
-    su->SG_MainUI();
+    su->UI_MainUI();
     //ss->SG_StartText();
     //AddMouseEvent(1,510,1079,710,"_ClearTextUi");
 }
 
 void maincall::_StartMainUi()
 {
-    su->SG_StartUI();
+    su->UI_StartUI();
     //
 }
 
 void maincall::_StartText()
 {
     //_Return();
-    su->SG_StartTextUi();
+    su->UI_StartTextUi();
     start->SG_StartText();
+    su->UI_StartFight();
 }
 
 void maincall::_ClearTextUi()
 {
     fun->FU_ClearTextui();
-    fun->SG_ReadText("M_1_1.txt","#");
+    fun->FU_ReadText("M_1_1.txt","#");
 }
 
 void maincall::_ReturnUi()
 {
-    su->SG_UiReturn();
+    su->UI_UiReturn();
     _Return();
 }
 
 void maincall::_Return()
 
 {
-    su->SG_UiReturn();
-    fun->SG_Return();
+    su->UI_UiReturn();
+    fun->FU_Return();
     //_Sum = 27;
 }
 

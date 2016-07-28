@@ -53,5 +53,12 @@
         <file>SG/startgame/返回_上.png</file>
         <file>SG/startgame/返回_下.png</file>
         <file>SG/Text/M_1_1.txt</file>
+        <file>SG/startgame/左黑幕.png</file>
+        <file>SG/startgame/右黑幕.png</file>
+        <file>SG/startgame/撤销.png</file>
+        <file>SG/startgame/攻击.png</file>
+        <file>SG/startgame/开始战斗.png</file>
+        <file>SG/startgame/迂回.png</file>
+        <file>SG/startgame/战斗返回.png</file>
     </qresource>
 </RCC>

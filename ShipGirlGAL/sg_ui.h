@@ -8,12 +8,13 @@ class SG_UI
 
 public:
     SG_UI(library*m);
-    void SG_MainUI();               //主界面UI
-    void SG_StartUI();              //开始游戏UI
-    void SG_StartUiReturn();        //开始游戏UI的返回
-    void SG_StartTextUi();          //游戏的界面
-    void SG_UiReturn();             //返回时通用动画
-    void SG_OTextUi(QString Qoword);              //开始游戏之后输出文字的ui方法
+    void UI_MainUI();               //主界面UI
+    void UI_StartUI();              //开始游戏UI
+    void UI_StartUiReturn();        //开始游戏UI的返回
+    void UI_StartTextUi();          //游戏的界面
+    void UI_UiReturn();             //返回时通用动画
+    void UI_OTextUi(QString Qoword);              //开始游戏之后输出文字的ui方法
+    void UI_StartFight();           //开始战斗的动画
     //void SG_ClearOTextUi();         //清除文字图层
 
 private:
