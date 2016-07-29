@@ -13,6 +13,8 @@ extern SG_StartGame* ss;
 //ParametersStru *Cle_1 = new ParametersStru; //退出函数全局指针
 
 Item* dc;
+Item* fi;
+Item* But[6];
 
 SG_UI::SG_UI(library* m)
 {
@@ -148,7 +150,7 @@ void SG_UI::UI_StartTextUi()
     sgui = this;
     ma->AddPixmapItem(BG+"木头海岸.png",0,0);
     SynchronousStart(mm)
-    Item* fi = ma->AddPixmapItem(ST+"太太_正常.png",-600,0);
+    fi = ma->AddPixmapItem(ST+"太太_正常.png",-600,0);
     ma->AnimationMoveItem(fi,0,0,100,"mm");
     SynchronousFinish()
 
@@ -159,7 +161,7 @@ void SG_UI::UI_StartTextUi()
 
 
 
-   Item* But[6];
+
     QString Bup[6] = {"返回_上.png",
                       "存档_上.png",
                       "读档_上.png",
@@ -224,7 +226,13 @@ void SG_UI::UI_StartFight()
 {
     Item* lh = ma->AddPixmapItem(ST+"左黑幕.png",-594,0);
     Item* rh = ma->AddPixmapItem(ST+"右黑幕.png",1080,0);
-    int Y = 460;
+    int Y = 465;
+
+    ma->AnimationSetOpacityItem(fi,0.0,20);
+    for(int i = 0;i > 6;i--)
+    {
+        ma->AnimationSetOpacityItem(But[i],0.0,10);
+    }
 
     SynchronousStart(ff)
     ma->AnimationMoveItem(lh,0,0,20,"ff");
@@ -232,10 +240,10 @@ void SG_UI::UI_StartFight()
     SynchronousFinish()
 
     Item* fi = ma->AddPixmapItem(ST+"开始战斗.png",280,200);
-    Item* re = ma->AddButtonItem(ST+"战斗返回.png",280,Y,"",ST+"战斗返回_下.png");
-    Item* go = ma->AddButtonItem(ST+"迂回.png",440,Y,"",ST+"迂回_下.png");
-    Item* cx = ma->AddButtonItem(ST+"撤销.png",600,Y,"",ST+"撤销_下.png");
-    Item* ad = ma->AddButtonItem(ST+"攻击.png",760,Y,"",ST+"攻击_下.png");
+    Item* re = ma->AddButtonItem(ST+"战斗返回_上.png",280,Y,"",ST+"战斗返回_下.png");
+    Item* go = ma->AddButtonItem(ST+"战斗攻击_上.png",430,Y,"",ST+"战斗攻击_下.png");
+    Item* cx = ma->AddButtonItem(ST+"撤销_上.png",570,Y,"",ST+"撤销_下.png");
+    Item* ad = ma->AddButtonItem(ST+"战斗托管_上.png",690,Y,"",ST+"战斗托管_下.png");
     ma->SetItemLayer(ad,2);
 
     SynchronousStart(mm)
@@ -250,7 +258,7 @@ void SG_UI::UI_StartFight()
     ma->SetOpacityItem(ad,0);
     ma->AnimationSetOpacityItem(ad,1,10,"mm");
     SynchronousFinish()
-    ma->SetOpacityItem(fi,0);
+    ma->AnimationSetOpacityItem(fi,0.0,20);
     ma->SetItemOrder(ad,dc);
 }
 

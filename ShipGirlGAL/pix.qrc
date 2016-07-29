@@ -1,64 +1,71 @@
 <RCC>
     <qresource prefix="/">
-        <file>SG/Background/主界面背景.png</file>
+        <file>SG/Background/006aozyTgw1f0fabzz3ouj30pk08c440.jpg</file>
         <file>SG/Background/按钮背景2上.png</file>
         <file>SG/Background/按钮背景2下.png</file>
-        <file>SG/Background/start_item_d.png</file>
-        <file>SG/Background/strat_item_p.png</file>
+        <file>SG/Background/办公室.png</file>
+        <file>SG/Background/木头海岸.png</file>
+        <file>SG/Background/主界面背景.png</file>
         <file>SG/startgame/start_item_d.png</file>
         <file>SG/startgame/strat_item_p.png</file>
-        <file>SG/startgame/支线上.png</file>
-        <file>SG/startgame/支线下.png</file>
-        <file>SG/startgame/中间.png</file>
-        <file>SG/startgame/中间上.png</file>
-        <file>SG/startgame/中间下.png</file>
-        <file>SG/startgame/主线上.png</file>
-        <file>SG/startgame/主线下.png</file>
-        <file>SG/Background/main_light_bg.png</file>
-        <file>SG/startgame/返回上.png</file>
-        <file>SG/startgame/返回下.png</file>
         <file>SG/startgame/半圆.png</file>
-        <file>SG/startgame/大侧边栏.png</file>
-        <file>SG/startgame/短按钮_上.png</file>
-        <file>SG/startgame/短按钮_下.png</file>
-        <file>SG/startgame/上名称栏.png</file>
-        <file>SG/startgame/信息栏.png</file>
-        <file>SG/startgame/长按钮_上.png</file>
-        <file>SG/startgame/长按钮_下.png</file>
-        <file>SG/startgame/支线剧情_上.png</file>
-        <file>SG/startgame/支线剧情_下.png</file>
-        <file>SG/startgame/中心圆.png</file>
-        <file>SG/startgame/主线剧情_上.png</file>
-        <file>SG/startgame/主线剧情_下.png</file>
-        <file>SG/Background/办公室.png</file>
-        <file>SG/startgame/科幻背景.png</file>
-        <file>SG/startgame/中按钮_上.png</file>
-        <file>SG/startgame/中按钮_下.png</file>
-        <file>SG/startgame/关闭图片.png</file>
-        <file>SG/startgame/关闭背景.png</file>
+        <file>SG/startgame/撤销_上.png</file>
+        <file>SG/startgame/撤销_下.png</file>
         <file>SG/startgame/存档_上.png</file>
         <file>SG/startgame/存档_下.png</file>
+        <file>SG/startgame/大侧边栏.png</file>
+        <file>SG/startgame/大号单横.png</file>
+        <file>SG/startgame/大号单纵.png</file>
+        <file>SG/startgame/大号复纵.png</file>
+        <file>SG/startgame/大号轮型.png</file>
+        <file>SG/startgame/大号梯队.png</file>
         <file>SG/startgame/读档_上.png</file>
         <file>SG/startgame/读档_下.png</file>
+        <file>SG/startgame/短按钮_上.png</file>
+        <file>SG/startgame/短按钮_下.png</file>
+        <file>SG/startgame/返回_上.png</file>
+        <file>SG/startgame/返回_下.png</file>
+        <file>SG/startgame/返回上.png</file>
+        <file>SG/startgame/返回下.png</file>
         <file>SG/startgame/放大_上.png</file>
         <file>SG/startgame/放大_下.png</file>
+        <file>SG/startgame/关闭背景.png</file>
+        <file>SG/startgame/关闭图片.png</file>
+        <file>SG/startgame/开始战斗.png</file>
+        <file>SG/startgame/科幻背景.png</file>
         <file>SG/startgame/快进_上.png</file>
         <file>SG/startgame/快进_下.png</file>
+        <file>SG/startgame/上名称栏.png</file>
         <file>SG/startgame/设置_上.png</file>
         <file>SG/startgame/设置_下.png</file>
         <file>SG/startgame/太太_正常.png</file>
         <file>SG/startgame/下大文字框.png</file>
-        <file>SG/Background/木头海岸.jpg</file>
-        <file>SG/Background/木头海岸.png</file>
-        <file>SG/startgame/返回_上.png</file>
-        <file>SG/startgame/返回_下.png</file>
-        <file>SG/Text/M_1_1.txt</file>
-        <file>SG/startgame/左黑幕.png</file>
+        <file>SG/startgame/小号单横.png</file>
+        <file>SG/startgame/小号单纵.png</file>
+        <file>SG/startgame/小号复纵.png</file>
+        <file>SG/startgame/小号轮型.png</file>
+        <file>SG/startgame/小号梯队.png</file>
+        <file>SG/startgame/信息栏.png</file>
         <file>SG/startgame/右黑幕.png</file>
-        <file>SG/startgame/撤销.png</file>
-        <file>SG/startgame/攻击.png</file>
-        <file>SG/startgame/开始战斗.png</file>
-        <file>SG/startgame/迂回.png</file>
-        <file>SG/startgame/战斗返回.png</file>
+        <file>SG/startgame/战斗返回_上.png</file>
+        <file>SG/startgame/战斗返回_下.png</file>
+        <file>SG/startgame/战斗攻击_上.png</file>
+        <file>SG/startgame/战斗攻击_下.png</file>
+        <file>SG/startgame/战斗托管_上.png</file>
+        <file>SG/startgame/战斗托管_下.png</file>
+        <file>SG/startgame/长按钮_上.png</file>
+        <file>SG/startgame/长按钮_下.png</file>
+        <file>SG/startgame/支线剧情_上.png</file>
+        <file>SG/startgame/支线剧情_下.png</file>
+        <file>SG/startgame/支线上.png</file>
+        <file>SG/startgame/支线下.png</file>
+        <file>SG/startgame/中按钮_上.png</file>
+        <file>SG/startgame/中按钮_下.png</file>
+        <file>SG/startgame/中心圆.png</file>
+        <file>SG/startgame/主线剧情_上.png</file>
+        <file>SG/startgame/主线剧情_下.png</file>
+        <file>SG/startgame/主线上.png</file>
+        <file>SG/startgame/主线下.png</file>
+        <file>SG/startgame/左黑幕.png</file>
     </qresource>
 </RCC>

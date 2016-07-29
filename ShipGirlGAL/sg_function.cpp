@@ -112,3 +112,7 @@ void SG_Function::FU_ReadText(string name, QString fenge)
     }*/
 }
 
+void SG_Function::FU_OpenSql(const QString SqlName)
+{
+
+}
