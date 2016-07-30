@@ -241,9 +241,9 @@ void SG_UI::UI_StartFight()
 
     Item* fi = ma->AddPixmapItem(ST+"开始战斗.png",280,200);
     Item* re = ma->AddButtonItem(ST+"战斗返回_上.png",280,Y,"",ST+"战斗返回_下.png");
-    Item* go = ma->AddButtonItem(ST+"战斗攻击_上.png",430,Y,"",ST+"战斗攻击_下.png");
-    Item* cx = ma->AddButtonItem(ST+"撤销_上.png",570,Y,"",ST+"撤销_下.png");
-    Item* ad = ma->AddButtonItem(ST+"战斗托管_上.png",690,Y,"",ST+"战斗托管_下.png");
+    Item* go = ma->AddButtonItem(ST+"战斗攻击_上.png",440,Y,"",ST+"战斗攻击_下.png");
+    Item* cx = ma->AddButtonItem(ST+"撤销_上.png",600,Y,"",ST+"撤销_下.png");
+    Item* ad = ma->AddButtonItem(ST+"战斗托管_上.png",760,Y,"",ST+"战斗托管_下.png");
     ma->SetItemLayer(ad,2);
 
     SynchronousStart(mm)
