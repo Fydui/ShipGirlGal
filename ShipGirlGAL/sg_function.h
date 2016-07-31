@@ -4,6 +4,12 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <QtSql/QSql>
+#include <qsqlquery.h>
+#include <QSqlQuery>
+#include <QtCore/QFile>
+#include <qmainwindow.h>
+
 using namespace std;
 class SG_Function
 {
@@ -13,12 +19,13 @@ public:
     void FU_ClearTextui();   //清除文字图层的实现(其实可以合并到返回)
     void FU_ReadText(string name, QString fenge); //打开并读取文本,fenge是分隔符(要在文本里添加)
     void FU_Stext(int sum);                       //设置要分几次输出文本 sum要和分隔符数目相等
-    void FU_OpenSql(const QString SqlName);       //喜闻乐见,打开数据库
-    void FU_ReadSql(const QString FindName);      //查找数据库 单个名字
+    bool FU_OpenSql(const QString SqlName);       //喜闻乐见,打开数据库
+    QString FU_ReadSql(QString Sqlname,QString TableName,QString FindName);      //查找数据库 数据库名字 表名 数据名
     void FU_ReadSql(QString* (Name[]) );          //查找数据库的重载
 
 private:
     library* fn;
+    SG_Function* ui;
 };
 
 #endif // SG_FUNCTION_H

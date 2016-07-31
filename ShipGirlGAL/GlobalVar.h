@@ -1,4 +1,4 @@
-﻿//-----本文件作为一些全局变量的储存，它们会被描述游戏中的各种信息-----
+//-----本文件作为一些全局变量的储存，它们会被描述游戏中的各种信息-----
 #pragma once
 #include "head.h"
 #include "NewType.h"
@@ -15,24 +15,18 @@ public:
 signals:
     //您可以在此添加异步变同步等功能需要用到的信号，只需声明，无需实现
     //例子：void FunctionFinish();
-    void ff();
-    void dd();
-    void cc();
-    void vv();
-    void mm();
-    void tt();
 
 };
 
 //-引擎自带的全局常量
-static const QString title="舰少GAL";//窗口标题
-static const int WindowsWidth=1080;//窗口宽
-static const int WindowsHeigh=720;//窗口高
+static const QString title="Life-Fire Engine";//窗口标题
+static const int WindowsWidth=800;//窗口宽
+static const int WindowsHeigh=600;//窗口高
 static const int MaximumWidth=10000;//舞台最大宽
 static const int MaximunHeigh=10000;//舞台最大高
 //-引擎自带的全局变量
 extern LFEvent *lfevent;
 extern QObject *thob;
-extern QGraphicsScene *MainScene;//声明舞台
+extern GraphicsScene *MainScene;//声明舞台
 extern GraphicsView *MainView;//声明视图
 //-用户自行添加的全局变量

@@ -1,5 +1,6 @@
 //-----本文件是引擎行为层给用户提供的接口的实现-----
 #include "widget.h"
+#include "configure.h"
 
 Pixmap* Widget::NewPixmap(String PicPath)
 {return new Pixmap(PicPath);}
@@ -157,9 +158,12 @@ void Widget::ClearScene(GraphicsScene *scene)
 
 void Widget::DeleteItem(Item* item)
 {
-   EndAllAnimation(item);
-   AllItem.removeAt(AllItem.indexOf(item));
-   delete item;
+    EndAllAnimation(item);
+    #ifdef SafetyPriority
+        SafeSleep(2);//等待目前进行这帧完成
+    #endif
+    AllItem.removeAt(AllItem.indexOf(item));
+    delete item;
 }
 
 String Widget::GetPath(String str)
@@ -643,6 +647,7 @@ GraphicsView* Widget::AddView(float x, float y, float width, float height)
    view->setGeometry(x,y,width,height);
    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//禁用竖直滚动条
    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//禁用水平滚动条
+   view->s=this;
    view->show();
    return view;
 }
@@ -803,14 +808,19 @@ float Widget::GetItemShearY(Item* item)
 
 void Widget::AddKeyEvent(Qt::Key key,String PressSlotfun,ParametersStru PressPar,String ReleaseSlotfun,ParametersStru ReleasePar)
 {
-    for(auto i:AllEvent)
+    for(auto &i:AllEvent)
     {
         if(i.key==key)
         {
-            i.PressFun=PressSlotfun;
-            i.PressPar=PressPar;
-            i.ReleaseFun=ReleaseSlotfun;
-            i.ReleasePar=ReleasePar;
+            //如果已经有了，不能让空的给覆盖上
+            if(PressSlotfun!=NULL_String)
+            {i.PressFun=PressSlotfun;}
+            if(PressPar!=NULL_ParametersStru)
+            {i.PressPar=PressPar;}
+            if(ReleaseSlotfun!=NULL_String)
+            {i.ReleaseFun=ReleaseSlotfun;}
+            if(ReleasePar!=NULL_ParametersStru)
+            {i.ReleasePar=ReleasePar;}
             return;
         }
     }
@@ -832,17 +842,23 @@ void Widget::DeleteKeyEvent(Qt::Key key)
 
 void Widget::AddMouseEvent(float MouseX,float MouseY,float fMouseX,float fMouseY,String PressSlotfun,ParametersStru PressPar,String ReleaseSlotfun,ParametersStru ReleasePar)
 {
-    for(auto i:AllEvent)
+    for(auto &i:AllEvent)
     {
         if(i.MouseX==MouseX&&i.MouseY==MouseY&&i.fMouseX==fMouseX&&i.fMouseY==fMouseY)
         {
-            i.PressFun=PressSlotfun;
-            i.PressPar=PressPar;
-            i.ReleaseFun=ReleaseSlotfun;
-            i.ReleasePar=ReleasePar;
+            //如果已经有了，不能让空的给覆盖上
+            if(PressSlotfun!=NULL_String)
+            {i.PressFun=PressSlotfun;}
+            if(PressPar!=NULL_ParametersStru)
+            {i.PressPar=PressPar;}
+            if(ReleaseSlotfun!=NULL_String)
+            {i.ReleaseFun=ReleaseSlotfun;}
+            if(ReleasePar!=NULL_ParametersStru)
+            {i.ReleasePar=ReleasePar;}
             return;
         }
     }
+    //没有就无所谓了
     InputEvent event;
     event.MouseX=MouseX;
     event.MouseY=MouseY;

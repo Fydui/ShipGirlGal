@@ -51,3 +51,5 @@ QMAKE_CXXFLAGS += -std=c++11
 
 RESOURCES += \
     pix.qrc
+
+QT += sql

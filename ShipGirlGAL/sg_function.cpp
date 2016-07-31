@@ -8,10 +8,12 @@ int DoneSum = 20;
 int Tsum =0;
 extern SG_UI* sgui;
 SG_Function* sgfu;
-
+QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE"); //添加数据库驱动链接sqlite
+QSqlQuery* query;
 //extern ParametersStru *Cle_1 = new ParametersStru; //退出函数全局指针
 
-SG_Function::SG_Function(library* fu)
+SG_Function::SG_Function(library* fu):
+
 {
     fn = fu;
 }
@@ -112,7 +114,27 @@ void SG_Function::FU_ReadText(string name, QString fenge)
     }*/
 }
 
-void SG_Function::FU_OpenSql(const QString SqlName)
+bool SG_Function::FU_OpenSql(const QString SqlName)
 {
+    db.setDatabaseName(SqlName);
+    if(!db.open())
+    {
+        //
+        return 0;
+    }
+    else
+        return 1;
+}
+
+QString SG_Function::FU_ReadSql(QString Sqlname,QString TableName,QString FindName)
+{
+    QString ming = "SELECT * FROM "+ Sqlname+" WHERE "+ TableName + "LIKE" + " '"+FindName+"%'";
+    QString out;
+    query->exec(ming);
+    while(query->next())
+    {
+        out = query->value(3).toString();
+    }
+
 
 }
