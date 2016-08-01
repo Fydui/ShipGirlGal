@@ -5,10 +5,14 @@
 //extern SG_UI* sgui;
 extern int _Sum;
 extern SG_StartGame* ss;
+//extern QString (*oout)[11];
 void maincall::StartGame()//入口函数
 {
+    fun->FU_OpenSql("SG.db");
+    QString* k = fun->FU_ReadSql("SG","列克星敦");
 
-    su->UI_MainUI();
+    AddTextItem(j,"微软雅黑",20,0,0,0,0,0);
+        //su->UI_MainUI();
     //ss->SG_StartText();
     //AddMouseEvent(1,510,1079,710,"_ClearTextUi");
 }

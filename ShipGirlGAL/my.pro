@@ -37,7 +37,8 @@ HEADERS  += widget.h \
     macro.h \
     sg_function.h \
     sg_startgame.h \
-    sg_ui.h
+    sg_ui.h \
+    configure.h
 
 FORMS    += widget.ui
 QT += core gui
