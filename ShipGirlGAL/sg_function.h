@@ -15,17 +15,29 @@ class SG_Function
 {
 public:
     SG_Function(library *fu);
+    ~SG_Function();
     void FU_Return();        //返回功能的实现
-    void FU_ClearTextui();   //清除文字图层的实现(其实可以合并到返回)
+
+    /*文字输出*/
+    void FU_ClearTextui();                        //清除文字图层的实现(其实可以合并到返回)
     void FU_ReadText(string name, QString fenge); //打开并读取文本,fenge是分隔符(要在文本里添加)
     void FU_Stext(int sum);                       //设置要分几次输出文本 sum要和分隔符数目相等
-    void FU_OpenSql(const QString SqlName);       //喜闻乐见,打开数据库
-    QString *FU_ReadSql(QString TableName, QString FindName);      //查找数据库 数据库名字 表名 数据名
-    //void FU_ReadSql(QString* (Name[]) );          //查找数据库的重载
+
+    /*战斗系统*/
+    void FU_OpenSql(const QString SqlName);                        //喜闻乐见,打开数据库
+    void FU_CloseSql();
+    QString* FU_FindSql(QString TableName, QString FindName);      //查找数据库  表名 数据名
+    //QString** FU_FindSql(QString** Array, QString FigureName,int Sum);
+    QString FU_ReadSql(QString* ReadStr,int Sum);                  //将所查找内容读出 和楼上配合使用
+
 
 private:
     library* fn;
     SG_Function* ui;
+    QSqlQuery* query;
+    QString* out;
+    QString* data;
+    QString** ArrayName;
 };
 
 #endif // SG_FUNCTION_H

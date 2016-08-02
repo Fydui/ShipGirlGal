@@ -9,7 +9,6 @@ int Tsum =0;
 extern SG_UI* sgui;
 SG_Function* sgfu;
 extern QSqlDatabase db;
-QSqlQuery* query;
 //QString (*oout)[11];
 //extern ParametersStru *Cle_1 = new ParametersStru; //退出函数全局指针
 
@@ -126,19 +125,37 @@ void SG_Function::FU_OpenSql(const QString SqlName)
 
 }
 
-QString* SG_Function::FU_ReadSql(QString TableName,QString FindName)
+void SG_Function::FU_CloseSql()
+{
+    db.close();
+}
+
+QString* SG_Function::FU_FindSql(QString TableName,QString FindName)
 {
     QString ming = "SELECT * FROM " + TableName + " WHERE NAME LIKE " + "'"+ FindName +"%'";
-    QString out[11];
+    out = new QString[11];
     query->exec(ming);
-    QString (*oout)[11];
         while(query->next())
         {
-            for(int i = 0; i< 11; i++){
-            out[i] = query->value(i).toString();
+            for(int i = 0; i< 11; i++)
+            {
+                out[i] = query->value(i).toString();
             }
         }
 
-    oout = &out;
-    return (oout)[0];
+    return out;
 }
+
+QString SG_Function::FU_ReadSql(QString *ReadStr, int Sum)
+{
+    data = new QString[11];
+    QString Error = "错误:Sum超出范围";
+    data = ReadStr;
+    if(Sum < 0 || Sum > 11)
+        return Error;
+    else
+        return data[Sum];
+}
+
+
+

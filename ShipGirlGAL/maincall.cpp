@@ -1,18 +1,30 @@
 ﻿//-----本文件是对于maincall.h中部分函数的实现部分-----
 #include "sg_ui.h"
 #include "maincall.h"
+#include <vector>
 //maincall* mainc;
 //extern SG_UI* sgui;
 extern int _Sum;
 extern SG_StartGame* ss;
-//extern QString (*oout)[11];
+using namespace  std;
+
 void maincall::StartGame()//入口函数
 {
-    fun->FU_OpenSql("SG.db");
-    QString* k = fun->FU_ReadSql("SG","列克星敦");
+    vector<vector<QString>> array(2);
+    for(int i=0; i<2; i++)
+    array.resize(2);
 
-    AddTextItem(j,"微软雅黑",20,0,0,0,0,0);
-        //su->UI_MainUI();
+    array[0].resize(6);
+    array[1].resize(6);
+    for(int a = 0; a < 2; a++)
+    {
+        for(int b = 0; b < 6;b++)
+            array[a][b] = "K";
+    }
+
+
+    int i = 0;
+    //su->UI_MainUI();
     //ss->SG_StartText();
     //AddMouseEvent(1,510,1079,710,"_ClearTextUi");
 }
