@@ -9,6 +9,7 @@
 #include <QSqlQuery>
 #include <QtCore/QFile>
 #include <qmainwindow.h>
+#include <map>
 
 using namespace std;
 class SG_Function
@@ -27,9 +28,10 @@ public:
     void FU_OpenSql(const QString SqlName);                        //喜闻乐见,打开数据库
     void FU_CloseSql();
     QString* FU_FindSql(QString TableName, QString FindName);      //查找数据库  表名 数据名
-    //QString** FU_FindSql(QString** Array, QString FigureName,int Sum);
     QString FU_ReadSql(QString* ReadStr,int Sum);                  //将所查找内容读出 和楼上配合使用
-
+    QString FU_ReadSql(QString Name, QString DataName);            //接受名字和要查找的数据名
+    vector<vector<QString>> FU_ArrayReadSql(vector<vector<QString>> &array,QString DataName);
+    vector<QString> FU_ArrayReadSql(vector<QString>,QString DataName);
 
 private:
     library* fn;

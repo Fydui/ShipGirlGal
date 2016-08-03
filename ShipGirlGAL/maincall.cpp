@@ -10,18 +10,8 @@ using namespace  std;
 
 void maincall::StartGame()//入口函数
 {
-    vector<vector<QString>> array(2);
-    for(int i=0; i<2; i++)
-    array.resize(2);
-
-    array[0].resize(6);
-    array[1].resize(6);
-    for(int a = 0; a < 2; a++)
-    {
-        for(int b = 0; b < 6;b++)
-            array[a][b] = "K";
-    }
-
+    fun->FU_OpenSql("SG.db");
+    QString K = fun->FU_ReadSql("昆西","CLASS");
 
     int i = 0;
     //su->UI_MainUI();

@@ -157,5 +157,46 @@ QString SG_Function::FU_ReadSql(QString *ReadStr, int Sum)
         return data[Sum];
 }
 
+QString SG_Function::FU_ReadSql(QString Name, QString DataName)
+{
+    QString id ;
+    QString ming = "SELECT * FROM SG WHERE NAME LIKE '"+ Name +"%'";
+    QString mingg = "SELECT * FROM DS WHERE NAME LIKE '"+ Name +"%'";
 
+    QString re;
+    query->exec(ming);
+    while(query->next())
+     {
+         id = query->value(0).toString();
+     }
+    QString ling = "SELECT SG."+DataName+" FROM SG WHERE ID ="+id;
 
+    query->exec(ling);
+    while(query->next())
+       re = query->value(0).toString();
+    if(re != "")
+        return re;
+
+    else if(re == "")
+    {
+        query->exec(mingg);
+        while(query->next())
+        {
+            id = query->value(0).toString();
+        }
+        QString lingg = "SELECT "+DataName+" FROM DS WHERE ID ="+id;
+
+        query->exec(lingg);
+        while(query->next())
+            re = query->value(0).toString();
+
+        return re;
+    }
+
+    else
+    {
+        //错误界面
+        re = "Error";
+        return re;
+    }
+}
