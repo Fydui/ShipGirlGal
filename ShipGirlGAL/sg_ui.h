@@ -14,8 +14,8 @@ public:
     void UI_StartTextUi();          //游戏的界面
     void UI_UiReturn();             //返回时通用动画
     void UI_OTextUi(QString Qoword);              //开始游戏之后输出文字的ui方法
-    void UI_StartFight(/*QString *FigureName[], QString *DeepName[]*/);           //开始战斗的动画
-    //void SG_ClearOTextUi();         //清除文字图层
+    void UI_StartFight();                         //开始战斗的动画
+    void UI_FigureShow(QString Name, float X, float Y);
 
 private:
     library* ma;                       //指向library的指针在构造的时候将library的this赋值 然后就能在SG_UI里调miancall的方法了,,,,,,,,,

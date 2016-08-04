@@ -10,11 +10,10 @@ using namespace  std;
 
 void maincall::StartGame()//入口函数
 {
-    fun->FU_OpenSql("SG.db");
-    QString K = fun->FU_ReadSql("昆西","CLASS");
+    //AddPixmapItem("E:/Code/cpp/ShipGirlGAL/SG/Background/木头海岸.png",0,0);
+    //AddButtonItem("E:/Code/cpp/ShipGirlGAL/SG/Background/按钮背景2上.png",10,20,"","E:/Code/cpp/ShipGirlGAL/SG/Background/按钮背景2下.png");
 
-    int i = 0;
-    //su->UI_MainUI();
+    su->UI_MainUI();
     //ss->SG_StartText();
     //AddMouseEvent(1,510,1079,710,"_ClearTextUi");
 }

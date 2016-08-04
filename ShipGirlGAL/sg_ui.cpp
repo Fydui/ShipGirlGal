@@ -6,7 +6,7 @@ SG_UI* sgui;                                //使用全局变量进行调用main
 //extern maincall* mainc;
 
 int Sum;                                    //上级界面图元数
-int _Sum;                                   //当前总图元数.
+int _Sum;                                   //当前的总图元数. 总图元数减去上级的
 const int Tby= 502;                                     //TextUi界面的按钮纵坐标
 int Tbx = 752;                                          //TextUi界面的按钮横坐标
 extern SG_StartGame* ss;
@@ -262,11 +262,15 @@ void SG_UI::UI_StartFight()
     ma->SetItemOrder(ad,dc);
 }
 
+void SG_UI::UI_FigureShow(QString Name,float X, float Y)
+{
+    ma->AddButtonItem(Name,X,Y,"");
+}
+
 void SG_UI::UI_OTextUi(QString Qoword)
 {
     sgui =this;
     ma->AddTextItem(Qoword,"微软雅黑",20,0,0,0,120,510);
-
 }
 
 

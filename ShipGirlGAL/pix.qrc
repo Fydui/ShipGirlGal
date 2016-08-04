@@ -67,5 +67,11 @@
         <file>SG/startgame/主线上.png</file>
         <file>SG/startgame/主线下.png</file>
         <file>SG/startgame/左黑幕.png</file>
+        <file>SG/Figure/little/航母Ο级_名片.png</file>
+        <file>SG/Figure/little/昆西_名片.png</file>
+        <file>SG/Figure/little/列克星敦_名片.png</file>
+        <file>SG/Figure/little/罗德尼_名片.png</file>
+        <file>SG/Figure/little/轻巡Ε级_名片.png</file>
+        <file>SG/Figure/little/战列M级_名片.png</file>
     </qresource>
 </RCC>

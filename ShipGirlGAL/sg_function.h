@@ -28,10 +28,9 @@ public:
     void FU_OpenSql(const QString SqlName);                        //喜闻乐见,打开数据库
     void FU_CloseSql();
     QString* FU_FindSql(QString TableName, QString FindName);      //查找数据库  表名 数据名
-    QString FU_ReadSql(QString* ReadStr,int Sum);                  //将所查找内容读出 和楼上配合使用
-    QString FU_ReadSql(QString Name, QString DataName);            //接受名字和要查找的数据名
-    vector<vector<QString>> FU_ArrayReadSql(vector<vector<QString>> &array,QString DataName);
-    vector<QString> FU_ArrayReadSql(vector<QString>,QString DataName);
+    QString FU_ReadSql(QString* ReadStr,int Sum);                  //将所查找内容返回 和楼上配合使用
+    QString FU_ReadSql(QString Name, QString DataName);            //返回指定目标的指定参数
+    QString FU_FigureShow(QString Name);
 
 private:
     library* fn;
@@ -39,7 +38,13 @@ private:
     QSqlQuery* query;
     QString* out;
     QString* data;
-    QString** ArrayName;
+    QString FU  = ":/SG/Figure/little/";
+    float Sx = 0.0;
+    float Sy = 78;
+    float Dx = 803;
+    float Dy = 78;
+
+
 };
 
 #endif // SG_FUNCTION_H
