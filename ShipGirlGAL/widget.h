@@ -1,4 +1,4 @@
-//-----本文件十分重要，它是窗口类、引擎API以及其它自定义类（类型）的声明区域-----
+﻿//-----本文件十分重要，它是窗口类、引擎API以及其它自定义类（类型）的声明区域-----
 #pragma once
 #include "head.h"
 #include "GlobalVar.h"
@@ -137,8 +137,9 @@ public:
     Q_INVOKABLE void DeleteTimer(QTimer* timer);
 
     void PassMousePressEvent(QPointF point);
+    void PassMouseMoveEvent(QMouseEvent *e); //
     void PassMouseReleaseEvent(QPointF point);
-
+    void PassMouseReleaseEvent(QMouseEvent *e);
 protected:
     void keyPressEvent(QKeyEvent *e);
     void mousePressEvent(QMouseEvent *e);

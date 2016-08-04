@@ -21,6 +21,7 @@ private:
     library* ma;                       //指向library的指针在构造的时候将library的this赋值 然后就能在SG_UI里调miancall的方法了,,,,,,,,,
     const QString ST = ":/SG/startgame/";
     const QString BG = ":/SG/Background/";                  //背景图片的路径
+    const QString BT = ":/SG/Button/";
     const int BtX = 400;                                    //按钮的横坐标
     const int FontX = BtX +60;                              //字体的横坐标
     const int FontSize = 20;                                //显示字号
