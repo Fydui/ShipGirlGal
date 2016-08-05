@@ -9,8 +9,13 @@ int Tsum =0;                //文本计数变量
 extern SG_UI* sgui;
 SG_Function* sgfu;
 extern QSqlDatabase db;
+QSqlQuery* query;
 int SGxy = 0;
 int DSxy = 0;
+float Sx = -277.0;
+float Sy = 0.0;
+float Dx = 1080.0;
+float Dy = 0.0;
 //QString (*oout)[11];
 //extern ParametersStru *Cle_1 = new ParametersStru; //退出函数全局指针
 
@@ -236,10 +241,11 @@ QString SG_Function::FU_FigureShow(QString Name)
         }
         if(id != "")                        //如果在DS中
             {
-            Dy = Dy + DSxy*Dy;              //设置人物Y坐标
-            Name = FU + Name+"_名片.png";
-            sgui->UI_FigureShow(Name,Dx,Dy);//显示人物
+            Dy =  DSxy*Dy;                  //设置人物Y坐标
+            Name = ":/SG/Figure/little/" + Name+"_名片.png";
+            sgui->UI_FigureShow(Name,Dx,Dy,803,Dy);//显示人物
             DSxy++;                         //将人物计数变量+1
+            Dy = 78;
         }
         else
         {
@@ -251,10 +257,11 @@ QString SG_Function::FU_FigureShow(QString Name)
     }
     else                                    //如果在SG中
     {
-        Sy = Sy + SGxy*Sy;
-        Name = FU + Name+"_名片.png";
-        sgui->UI_FigureShow(Name,Sx,Sy);
+        Sy = SGxy*Sy;
+        Name = ":/SG/Figure/little/" + Name+"_名片.png";
+        sgui->UI_FigureShow(Name,Sx,Sy,0,Sy);
         SGxy++;
+        Sy = 78;
     }
 
 }

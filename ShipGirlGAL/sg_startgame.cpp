@@ -20,7 +20,11 @@ void SG_StartGame::SG_StartText()
     sgfu->FU_OpenSql("SG.db");
     sgfu->FU_FigureShow("列克星敦");
     sgfu->FU_FigureShow("昆西");
-    sgfu->FU_FigureShow("海伦娜");
+    sgfu->FU_FigureShow("罗德尼");
+    sgfu->FU_FigureShow("航母Ο级");
+    sgfu->FU_FigureShow("战列Μ级");
+    sgfu->FU_FigureShow("轻巡Ε级");
+
 
     int i = 0;
 

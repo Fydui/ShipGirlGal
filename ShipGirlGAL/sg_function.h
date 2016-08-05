@@ -35,14 +35,10 @@ public:
 private:
     library* fn;
     SG_Function* ui;
-    QSqlQuery* query;
     QString* out;
     QString* data;
     QString FU  = ":/SG/Figure/little/";
-    float Sx = 0.0;
-    float Sy = 78;
-    float Dx = 803;
-    float Dy = 78;
+
 
 
 };

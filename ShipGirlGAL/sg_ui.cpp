@@ -7,7 +7,7 @@ SG_UI* sgui;                                //使用全局变量进行调用main
 
 int Sum;                                    //上级界面图元数
 int _Sum;                                   //当前的总图元数. 总图元数减去上级的
-const int Tby= 502;                                     //TextUi界面的按钮纵坐标
+const int Tby= 500;                                     //TextUi界面的按钮纵坐标
 int Tbx = 752;                                          //TextUi界面的按钮横坐标
 extern SG_StartGame* ss;
 //ParametersStru *Cle_1 = new ParametersStru; //退出函数全局指针
@@ -93,8 +93,8 @@ void SG_UI::UI_StartUI()
     //样式二
     ma->AddPixmapItem(BG+"办公室.png",0,0);
     Item*fn = ma->AddTextItem("Loading...","微软雅黑",28,255,255,255,465,327);
-    ma->AddPixmapItem(ST+"科幻背景.png",0,0);
-    Item*mr = ma->AddPixmapItem(ST+"中心圆.png",421,241);
+    ma->AddPixmapItem(BG+"科幻背景.png",0,0);
+    Item*mr = ma->AddPixmapItem(BG+"中心圆.png",421,241);
 
 
 
@@ -108,17 +108,17 @@ void SG_UI::UI_StartUI()
 
 
     SynchronousStart(dd)
-    Item*mr2 = ma->AddPixmapItem(ST+"半圆.png",-156,202);
-    Item* cb = ma->AddPixmapItem(ST+"大侧边栏.png",615,0);
+    Item*mr2 = ma->AddPixmapItem(BG+"半圆.png",-156,202);
+    Item* cb = ma->AddPixmapItem(BG+"大侧边栏.png",615,0);
     ma->AnimationMoveItem(mr2,0,202,40,"dd");
     ma->SetOpacityItem(cb,0.0);
     ma->AnimationSetOpacityItem(cb,1,100,"dd");
     SynchronousFinish()
 
-    Item* xcb = ma->AddPixmapItem(ST+"信息栏.png",720,76);
-    Item* t1 = ma->AddButtonItem(ST+"长按钮_上.png",-239,231,"",ST+"长按钮_下.png");
-    Item* t2 = ma->AddButtonItem(ST+"中按钮_上.png",-240,324,"",ST+"中按钮_下.png");
-    Item* t3 = ma->AddButtonItem(ST+"短按钮_上.png",-200,415,"_ReturnUi",ST+"短按钮_下.png");
+    Item* xcb = ma->AddPixmapItem(BG+"信息栏.png",720,76);
+    Item* t1 = ma->AddButtonItem(BT+"长按钮_上.png",-239,231,"",ST+"长按钮_下.png");
+    Item* t2 = ma->AddButtonItem(BT+"中按钮_上.png",-240,324,"",ST+"中按钮_下.png");
+    Item* t3 = ma->AddButtonItem(BT+"短按钮_上.png",-200,415,"_ReturnUi",ST+"短按钮_下.png");
 
     SynchronousStart(cc)
 
@@ -131,11 +131,11 @@ void SG_UI::UI_StartUI()
 
 
 
-    Item* zx = ma->AddButtonItem(ST+"主线剧情_上.png",741,414,"_StartText",ST+"主线剧情_下.png");
+    Item* zx = ma->AddButtonItem(BT+"主线剧情_上.png",741,414,"_StartText",ST+"主线剧情_下.png");
     ma->SetOpacityItem(zx,0.0);
     ma->AnimationSetOpacityItem(zx,1,100);
 
-    Item* zx2 = ma->AddButtonItem(ST+"支线剧情_上.png",741,525,"",ST+"支线剧情_下.png");
+    Item* zx2 = ma->AddButtonItem(BT+"支线剧情_上.png",741,525,"",ST+"支线剧情_下.png");
     ma->SetOpacityItem(zx2,0.0);
     ma->AnimationSetOpacityItem(zx2,1,100);
 
@@ -150,11 +150,11 @@ void SG_UI::UI_StartTextUi()
     sgui = this;
     ma->AddPixmapItem(BG+"木头海岸.png",0,0);
     SynchronousStart(mm)
-    fi = ma->AddPixmapItem(ST+"太太_正常.png",-600,0);
+    fi = ma->AddPixmapItem(FO+"太太_正常.png",-600,0);
     ma->AnimationMoveItem(fi,0,0,100,"mm");
     SynchronousFinish()
 
-    dc = ma->AddPixmapItem(ST+"下大文字框.png",0,500);
+    dc = ma->AddPixmapItem(BG+"下大文字框.png",0,500);
     ma->SetItemLayer(dc,1);
     ma->SetOpacityItem(dc,0.0);
     ma->AnimationSetOpacityItem(dc,1,50);
@@ -189,7 +189,7 @@ void SG_UI::UI_StartTextUi()
 
     for(int i = 0; i < 6; i++)
     {
-        But[i] = ma->AddButtonItem(ST+Bup[i],Tbx,Tby,MainFun[i],ST+Bdo[i]);
+        But[i] = ma->AddButtonItem(BT+Bup[i],Tbx,Tby,MainFun[i],BT+Bdo[i]);
         ma->SetOpacityItem(But[i],0.0);
         ma->AnimationSetOpacityItem(But[i],1,80);
         Tbx = Tbx+35;
@@ -224,8 +224,8 @@ void SG_UI::UI_StartTextUi()
 
 void SG_UI::UI_StartFight()
 {
-    Item* lh = ma->AddPixmapItem(ST+"左黑幕.png",-594,0);
-    Item* rh = ma->AddPixmapItem(ST+"右黑幕.png",1080,0);
+    Item* lh = ma->AddPixmapItem(BG+"左黑幕.png",-594,0);
+    Item* rh = ma->AddPixmapItem(BG+"右黑幕.png",1080,0);
     int Y = 465;
 
     ma->AnimationSetOpacityItem(fi,0.0,20);
@@ -239,11 +239,11 @@ void SG_UI::UI_StartFight()
     ma->AnimationMoveItem(rh,485,0,20,"ff");
     SynchronousFinish()
 
-    Item* fi = ma->AddPixmapItem(ST+"开始战斗.png",280,200);
-    Item* re = ma->AddButtonItem(ST+"战斗返回_上.png",280,Y,"",ST+"战斗返回_下.png");
-    Item* go = ma->AddButtonItem(ST+"战斗攻击_上.png",440,Y,"",ST+"战斗攻击_下.png");
-    Item* cx = ma->AddButtonItem(ST+"撤销_上.png",600,Y,"",ST+"撤销_下.png");
-    Item* ad = ma->AddButtonItem(ST+"战斗托管_上.png",760,Y,"",ST+"战斗托管_下.png");
+    Item* fi = ma->AddPixmapItem(BT+"开始战斗.png",280,200);
+    Item* re = ma->AddButtonItem(BT+"战斗返回_上.png",280,Y,"",BT+"战斗返回_下.png");
+    Item* go = ma->AddButtonItem(BT+"战斗攻击_上.png",440,Y,"",BT+"战斗攻击_下.png");
+    Item* cx = ma->AddButtonItem(BT+"撤销_上.png",600,Y,"",BT+"撤销_下.png");
+    Item* ad = ma->AddButtonItem(BT+"战斗托管_上.png",760,Y,"",BT+"战斗托管_下.png");
     ma->SetItemLayer(ad,2);
 
     SynchronousStart(mm)
@@ -262,9 +262,14 @@ void SG_UI::UI_StartFight()
     ma->SetItemOrder(ad,dc);
 }
 
-void SG_UI::UI_FigureShow(QString Name,float X, float Y)
+void SG_UI::UI_FigureShow(QString Name,float X, float Y, float X_, float Y_)
 {
-    ma->AddButtonItem(Name,X,Y,"");
+    Item*mp = ma->AddButtonItem(Name,X,Y,"");
+    ma->SetItemLayer(mp,3);
+    ma->SetItemOrder(dc,mp);
+    ma->AnimationMoveItem(mp,X_,Y_,20);
+
+    int i;
 }
 
 void SG_UI::UI_OTextUi(QString Qoword)
@@ -278,11 +283,11 @@ void SG_UI::UI_UiReturn()
 {
     sgui = this;
     SynchronousStart(vv)
-    Item* bg= ma->AddPixmapItem(ST+"关闭背景.png",0,0);
+    Item* bg= ma->AddPixmapItem(BG+"关闭背景.png",0,0);
     ma->AnimationSetOpacityItem(bg,1,100,"vv");
     Item* fo = ma->AddTextItem("Loading...","微软雅黑",28,255,255,255,465,327);
     ma->AnimationSetOpacityItem(fo,1,100,"vv");
-    Item* mr = ma->AddPixmapItem(ST+"中心圆.png",421,241);
+    Item* mr = ma->AddPixmapItem(BG+"中心圆.png",421,241);
     ma->SetOpacityItem(mr,0.0);
     ma->AnimationSetOpacityItem(mr,1,100,"vv");
     SynchronousFinish()
