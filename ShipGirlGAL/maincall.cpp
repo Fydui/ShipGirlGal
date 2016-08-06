@@ -37,7 +37,10 @@ void maincall::_ClearTextUi()
     fun->FU_ClearTextui();
     fun->FU_ReadText("M_1_1.txt","#");
 }
-
+void maincall::_Zoom(ParametersStru name)
+{
+    su->UI_FigureZoom(name);
+}
 void maincall::_ReturnUi()
 {
     su->UI_UiReturn();

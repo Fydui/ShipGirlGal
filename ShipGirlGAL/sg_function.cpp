@@ -1,20 +1,22 @@
 ﻿#include "sg_function.h"
 #include "sg_ui.h"
 
-extern int Sum;
-extern int _Sum;
-extern int Tbx;
+extern int Sum;             //上级界面图元数
+extern int _Sum;            //当前界面图元数
+extern int Tbx;             //文本框上面按钮们的横坐标
 int DoneSum = 20;           //文本判断变量 必须和分隔符数目相等
 int Tsum =0;                //文本计数变量
-extern SG_UI* sgui;
-SG_Function* sgfu;
-extern QSqlDatabase db;
-QSqlQuery* query;
-int SGxy = 0;
-int DSxy = 0;
-float Sx = -277.0;
+//int tablsum = 0;
+extern QSqlDatabase db;     //数据库连接变量
+extern SG_UI* sgui;         //UI界面的指针
+SG_Function* sgfu;          //给别的类用的
+//extern QString* Table[12];  //
+QSqlQuery* query;           //数据库操作指针
+int SGxy = 0;               //我方人物名片的计数变量
+int DSxy = 0;               //敌方人物名片的计数变量
+float Sx = -277.0;          //我方人物名片的横 纵坐标
 float Sy = 0.0;
-float Dx = 1080.0;
+float Dx = 1080.0;          //敌方人物名片的横 纵 坐标
 float Dy = 0.0;
 //QString (*oout)[11];
 //extern ParametersStru *Cle_1 = new ParametersStru; //退出函数全局指针
@@ -212,6 +214,7 @@ QString SG_Function::FU_ReadSql(QString Name, QString DataName)
 
 QString SG_Function::FU_FigureShow(QString Name)
 {
+    QString Tab;
     //首先判断人满了没有
     QString error;
     if(SGxy == 6 || DSxy ==6)
@@ -242,10 +245,11 @@ QString SG_Function::FU_FigureShow(QString Name)
         if(id != "")                        //如果在DS中
             {
             Dy =  DSxy*Dy;                  //设置人物Y坐标
-            Name = ":/SG/Figure/little/" + Name+"_名片.png";
-            sgui->UI_FigureShow(Name,Dx,Dy,803,Dy);//显示人物
+            QString _Name = ":/SG/Figure/little/" + Name+"_名片.png";
+            sgui->UI_FigureShow(_Name,"DS",Dx,Dy,803,Dy);//显示人物
             DSxy++;                         //将人物计数变量+1
             Dy = 78;
+            //Table[tablsum] = "DS";
         }
         else
         {
@@ -258,10 +262,52 @@ QString SG_Function::FU_FigureShow(QString Name)
     else                                    //如果在SG中
     {
         Sy = SGxy*Sy;
-        Name = ":/SG/Figure/little/" + Name+"_名片.png";
-        sgui->UI_FigureShow(Name,Sx,Sy,0,Sy);
+        QString _Name = ":/SG/Figure/little/" + Name+"_名片.png";
+        sgui->UI_FigureShow(_Name,"SG",Sx,Sy,0,Sy);
         SGxy++;
         Sy = 78;
+        //Table[tablsum] = "SG";
     }
 
+}
+
+QString SG_Function::FU_CheckTable(QString Name)
+{
+    //然后判断人物是否在数据库中
+    QString id ;
+    QString ta;
+    QString ming = "SELECT * FROM SG WHERE NAME LIKE '"+ Name +"%'";
+    QString mingg = "SELECT * FROM DS WHERE NAME LIKE '"+ Name +"%'";
+    query->exec(ming);                      //接着看名字在不在SG中
+
+    while(query->next())
+        id = query->value(0).toString();
+
+
+    if(id == "")                            //如果不在SG中 则查看是否在DS中
+    {
+        query->exec(mingg);
+        while(query->next())
+            id = query->value(0).toString();
+
+
+        if(id != "")                        //如果在DS中
+        {
+            ta = "DS";
+            return ta;
+        }
+
+        else
+        {
+            //报错界面
+            QString error = "没有找到该人物,请核对数据库以及人物名字是否正确";
+            return error;
+        }
+    }
+
+    else                                    //如果在SG中
+    {
+        ta = "SG";
+        return ta;
+    }
 }

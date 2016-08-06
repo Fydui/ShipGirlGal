@@ -25,7 +25,4 @@ void SG_StartGame::SG_StartText()
     sgfu->FU_FigureShow("战列Μ级");
     sgfu->FU_FigureShow("轻巡Ε级");
 
-
-    int i = 0;
-
 }

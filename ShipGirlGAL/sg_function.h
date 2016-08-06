@@ -24,13 +24,14 @@ public:
     void FU_ReadText(string name, QString fenge); //打开并读取文本,fenge是分隔符(要在文本里添加)
     void FU_Stext(int sum);                       //设置要分几次输出文本 sum要和分隔符数目相等
 
-    /*战斗系统*/
+    /*数据库相关*/
     void FU_OpenSql(const QString SqlName);                        //喜闻乐见,打开数据库
     void FU_CloseSql();
     QString* FU_FindSql(QString TableName, QString FindName);      //查找数据库  表名 数据名
     QString FU_ReadSql(QString* ReadStr,int Sum);                  //将所查找内容返回 和楼上配合使用
     QString FU_ReadSql(QString Name, QString DataName);            //返回指定目标的指定参数
-    QString FU_FigureShow(QString Name);
+    QString FU_CheckTable(QString Name);                           //检查一个名字在哪个表里 返回表名
+    QString FU_FigureShow(QString Name);                           //显示人物(小)
 
 private:
     library* fn;

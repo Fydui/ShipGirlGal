@@ -68,5 +68,11 @@
         <file>SG/Figure/little/轻巡Ε级_名片.png</file>
         <file>SG/Background/科幻背景.png</file>
         <file>SG/Figure/little/战列Μ级_名片.png</file>
+        <file>SG/Figure/little/航母Ο级_名片_大.png</file>
+        <file>SG/Figure/little/昆西_名片_大.png</file>
+        <file>SG/Figure/little/列克星敦_名片_大.png</file>
+        <file>SG/Figure/little/罗德尼_名片_大.png</file>
+        <file>SG/Figure/little/轻巡Ε级_名片_大.png</file>
+        <file>SG/Figure/little/战列Μ级_名片_大.png</file>
     </qresource>
 </RCC>

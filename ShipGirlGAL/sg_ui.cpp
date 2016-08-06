@@ -1,20 +1,24 @@
 ﻿#include "sg_ui.h"
 #include "sg_function.h"
 
-extern SG_Function* sgfu;
-SG_UI* sgui;                                //使用全局变量进行调用maincall的方法
 //extern maincall* mainc;
+extern SG_Function* sgfu;
+extern SG_StartGame* ss;
+SG_UI* sgui;                                //使用全局变量进行调用maincall的方法
+
 
 int Sum;                                    //上级界面图元数
 int _Sum;                                   //当前的总图元数. 总图元数减去上级的
 const int Tby= 500;                                     //TextUi界面的按钮纵坐标
 int Tbx = 752;                                          //TextUi界面的按钮横坐标
-extern SG_StartGame* ss;
-//ParametersStru *Cle_1 = new ParametersStru; //退出函数全局指针
-
+QString zName = "";
 Item* dc;
 Item* fi;
 Item* But[6];
+Item* sg[6];
+Item* ds[6];
+int ssum = 0;
+int dsum = 0;
 
 SG_UI::SG_UI(library* m)
 {
@@ -262,14 +266,49 @@ void SG_UI::UI_StartFight()
     ma->SetItemOrder(ad,dc);
 }
 
-void SG_UI::UI_FigureShow(QString Name,float X, float Y, float X_, float Y_)
+QString SG_UI::UI_FigureShow(QString Name,QString Ta, float X, float Y, float X_, float Y_)
 {
-    Item*mp = ma->AddButtonItem(Name,X,Y,"");
-    ma->SetItemLayer(mp,3);
-    ma->SetItemOrder(dc,mp);
-    ma->AnimationMoveItem(mp,X_,Y_,20);
+    if(Ta == "SG")
+    {
+        ParametersStru sgg;
+        sgg.ItemVar<< sg[1];
+        sg[ssum] = ma->AddButtonItem(Name,X,Y,"_Zoom","","",100,sgg);//Item*数组sg储存人物
+        ma->SetItemLayer(sg[ssum],3);                         //设置图片等级
+        ma->SetItemOrder(dc,sg[ssum]);                        //把mp[msum]挪到dc之上
+        ma->AnimationMoveItem(sg[ssum],X_,Y_,20);
+        ssum++;
+    }
 
+    else
+    {
+        ParametersStru dss;
+        dss.ItemVar<< ds[dsum];
+        ds[dsum] = ma->AddButtonItem(Name,X,Y,"_Zoom","","",100,dss);          //Item*数组mp储存人物
+        ma->SetItemLayer(ds[dsum],3);                       //设置图片等级
+        ma->SetItemOrder(dc,ds[dsum]);                      //把mp[msum]挪到dc之上
+        ma->AnimationMoveItem(ds[dsum],X_,Y_,20);
+        dsum++;
+    }
     int i;
+
+    return Name;
+}
+
+void SG_UI::UI_FigureZoom(ParametersStru name)
+{
+
+    float zo = 0.0;
+    for(int i = 0; i < ssum; i++)
+    {
+        zo = ma->GetItemScale(sg[i]);
+        if(zo == 1){
+            ma->AnimationScaleItem(name.ItemVar[0],1.5,1);
+        }
+        else
+        {
+
+        }
+    }
 }
 
 void SG_UI::UI_OTextUi(QString Qoword)
@@ -277,7 +316,6 @@ void SG_UI::UI_OTextUi(QString Qoword)
     sgui =this;
     ma->AddTextItem(Qoword,"微软雅黑",20,0,0,0,120,510);
 }
-
 
 void SG_UI::UI_UiReturn()
 {
