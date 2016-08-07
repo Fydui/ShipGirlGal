@@ -27,6 +27,11 @@ private:
     const int BtX = 400;                                    //按钮的横坐标
     const int FontX = BtX +60;                              //字体的横坐标
     const int FontSize = 20;                                //显示字号
+    int ssum = 0;
+    int dsum = 0;
+    int aaa = 0;
+    int bbb = 0;
+
 
 
 };

@@ -19,7 +19,6 @@ float Sy = 0.0;
 float Dx = 1080.0;          //敌方人物名片的横 纵 坐标
 float Dy = 0.0;
 //QString (*oout)[11];
-//extern ParametersStru *Cle_1 = new ParametersStru; //退出函数全局指针
 
 SG_Function::SG_Function(library* fu)
 

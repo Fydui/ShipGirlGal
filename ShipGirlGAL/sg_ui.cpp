@@ -15,10 +15,10 @@ QString zName = "";
 Item* dc;
 Item* fi;
 Item* But[6];
-Item* sg[6];
-Item* ds[6];
-int ssum = 0;
-int dsum = 0;
+Item* sg = new Item[6];
+Item* ds = new Item[6];
+
+
 
 SG_UI::SG_UI(library* m)
 {
@@ -271,42 +271,71 @@ QString SG_UI::UI_FigureShow(QString Name,QString Ta, float X, float Y, float X_
     if(Ta == "SG")
     {
         ParametersStru sgg;
-        sgg.ItemVar<< sg[1];
-        sg[ssum] = ma->AddButtonItem(Name,X,Y,"_Zoom","","",100,sgg);//Item*数组sg储存人物
-        ma->SetItemLayer(sg[ssum],3);                         //设置图片等级
-        ma->SetItemOrder(dc,sg[ssum]);                        //把mp[msum]挪到dc之上
-        ma->AnimationMoveItem(sg[ssum],X_,Y_,20);
+        sgg.ItemVar<< &sg[ssum];
+        sgg.intVar<< aaa;
+        sgg.StringVar<<"SG";
+        aaa++;
+        sg[ssum] = *ma->AddButtonItem(Name,X,Y,"_Zoom","","",100,sgg);//Item*数组sg储存人物
+
+        ma->SetItemLayer(&sg[ssum],3);                         //设置图片等级
+        ma->SetItemOrder(dc,&sg[ssum]);                        //把mp[msum]挪到dc之上
+        ma->AnimationMoveItem(&sg[ssum],X_,Y_,20);
         ssum++;
     }
 
     else
     {
         ParametersStru dss;
-        dss.ItemVar<< ds[dsum];
-        ds[dsum] = ma->AddButtonItem(Name,X,Y,"_Zoom","","",100,dss);          //Item*数组mp储存人物
-        ma->SetItemLayer(ds[dsum],3);                       //设置图片等级
-        ma->SetItemOrder(dc,ds[dsum]);                      //把mp[msum]挪到dc之上
-        ma->AnimationMoveItem(ds[dsum],X_,Y_,20);
+        dss.ItemVar<< &ds[dsum];
+        dss.intVar<< bbb;
+        dss.StringVar<< "DS";
+        bbb++;
+        ds[dsum] = *ma->AddButtonItem(Name,X,Y,"_Zoom","","",100,dss);          //Item*数组mp储存人物
+        ma->SetItemLayer(&ds[dsum],3);                       //设置图片等级
+        ma->SetItemOrder(dc,&ds[dsum]);                      //把mp[msum]挪到dc之上
+        ma->AnimationMoveItem(&ds[dsum],X_,Y_,20);
         dsum++;
     }
-    int i;
 
     return Name;
 }
 
 void SG_UI::UI_FigureZoom(ParametersStru name)
 {
+    int fsum = 0;
+    Item* fgg;
+    if(name.StringVar[0] == "SG")
+    {
+        fsum = ssum;
+        fgg = new Item[6];
+        fgg = sg;
+    }
+    if(name.StringVar[0] == "DS")
+    {
+        fsum = dsum;
+        fgg = new Item[6];
+        fgg = ds;
+    }
 
     float zo = 0.0;
-    for(int i = 0; i < ssum; i++)
+    for(int i = 0; i < fsum; i++)
     {
-        zo = ma->GetItemScale(sg[i]);
-        if(zo == 1){
-            ma->AnimationScaleItem(name.ItemVar[0],1.5,1);
+        zo = ma->GetItemScale(&fgg[i]);
+        if(zo > 1)
+                {
+                    ma->ScaleItem(&fgg[i],1.0);
         }
-        else
-        {
+    }
 
+    for(int j = 0; j < ssum; j++)
+    {
+        if(name.intVar[0] == j)
+        {
+            for(int i =0; i< ssum; i++)
+                ma->SetItemLayer(&fgg[i],3);
+
+            ma->SetItemLayer(&fgg[j],4);
+            ma->AnimationScaleItem(&fgg[j],1.1,1);
         }
     }
 }
