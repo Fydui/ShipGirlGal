@@ -1,3 +1,5 @@
+====
+引擎简介:
 ﻿Life-Fire 2D engine
 ===================================
 Life-Fire is the SG-Studio packages graphics engine base on Qt library, enabling developers do not have to focus on the complex inheritance of Qt, not have to understand all kinds of data type and the use of function, by calling the simple interface function to achieve their 2D effect. Dependent on the power of Qt, this engine has a cross-platform capabilities. Currently supports almost all operating systems, you can do a lot of programmers dream of "write once, deploy everywhere."
@@ -13,3 +15,20 @@ Fixed the BUG that continuous switching animation;Add the assertion for start th
 Next version
 -----------------------------------
 Repair AES encryption Chinese issues, supports direct playback of Gif file.
+
+===================================
+舰少GAL(先叫这名等写完再说)
+===================================
+战舰少女R的同人游戏 [非商业][非商业][非商业]
+-----------------------------------
+# 声明:本游戏素材来源于网络和战舰少女R(感谢舰R感谢辣鸡幻萌),大多舰R的素材来源于萌娘百科舰R区(感谢平板姬感谢萌娘
+
+* 此游戏为GAL向游戏,其中添加了战斗系统
+* 与舰R不同的是本游戏再战斗时玩家自主选择权会丰富一些
+* 您可以自主选择攻击舰娘 被攻击的深海敌舰 以及我方舰娘所使用的武器
+* 您也可以让多个舰娘攻击一艘敌舰 以及不同的武器攻击不同的敌舰
+* 我还将添加编辑系统如果您有兴趣您可以自己编写剧本自己设置剧情
+* 更新中
+
+
+
