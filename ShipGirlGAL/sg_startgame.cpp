@@ -6,6 +6,7 @@ SG_StartGame* ss;
 extern SG_Function* sgfu;
 extern SG_UI* sgui;
 using namespace std;
+
 SG_StartGame::SG_StartGame(library* s)
 {
     sl = s;

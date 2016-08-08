@@ -6,19 +6,14 @@ extern SG_Function* sgfu;
 extern SG_StartGame* ss;
 SG_UI* sgui;                                //使用全局变量进行调用maincall的方法
 
-
+int Yz = 0;                                 //敌方名片纵坐标(用于放大之后缩回)
 int Sum;                                    //上级界面图元数
 int _Sum;                                   //当前的总图元数. 总图元数减去上级的
 const int Tby= 500;                                     //TextUi界面的按钮纵坐标
 int Tbx = 752;                                          //TextUi界面的按钮横坐标
-QString zName = "";
-Item* dc;
-Item* fi;
 Item* But[6];
 Item* sg = new Item[6];
 Item* ds = new Item[6];
-
-
 
 SG_UI::SG_UI(library* m)
 {
@@ -28,7 +23,6 @@ SG_UI::SG_UI(library* m)
 void SG_UI::UI_MainUI()
 {
     sgui = this;
-    //mainc->AddPixmapItem("E:/Code/cpp/ShipGirlGAL/SG/Background/主界面背景.png",0,0);
     //绘制主界面
 
 
@@ -53,7 +47,7 @@ void SG_UI::UI_MainUI()
 
 }
 
-void SG_UI::UI_StartUI()
+void SG_UI::UI_StartUI() //绘制开始菜单界面
 {
     sgui = this;
     //样式一
@@ -148,7 +142,7 @@ void SG_UI::UI_StartUI()
     _Sum = 23;
 }
 
-void SG_UI::UI_StartTextUi()
+void SG_UI::UI_StartTextUi()//绘制开始游戏界面
 {
     ma->AddMouseEvent(1,510,1079,710,"_ClearTextUi");
     sgui = this;
@@ -166,14 +160,14 @@ void SG_UI::UI_StartTextUi()
 
 
 
-    QString Bup[6] = {"返回_上.png",
+    QString Bup[6] = {"返回_上.png",//设置每个按钮图片
                       "存档_上.png",
                       "读档_上.png",
                       "快进_上.png",
                       "放大_上.png",
                       "设置_上.png"};
 
-    QString MainFun[6] =
+    QString MainFun[6] =            //设置每个按钮事件回调
     {
         "_Return",
         "",
@@ -191,12 +185,12 @@ void SG_UI::UI_StartTextUi()
         Bdo[4] = "放大_下.png";
         Bdo[5] = "设置_下.png";
 
-    for(int i = 0; i < 6; i++)
+    for(int i = 0; i < 6; i++)      //循环输出按钮
     {
         But[i] = ma->AddButtonItem(BT+Bup[i],Tbx,Tby,MainFun[i],BT+Bdo[i]);
         ma->SetOpacityItem(But[i],0.0);
         ma->AnimationSetOpacityItem(But[i],1,80);
-        Tbx = Tbx+35;
+        Tbx = Tbx+35;               //每次循环自动增加X坐标
     }
 
     _Sum = 33;
@@ -226,7 +220,7 @@ void SG_UI::UI_StartTextUi()
 
 }
 
-void SG_UI::UI_StartFight()
+void SG_UI::UI_StartFight()//绘制战斗界面
 {
     Item* lh = ma->AddPixmapItem(BG+"左黑幕.png",-594,0);
     Item* rh = ma->AddPixmapItem(BG+"右黑幕.png",1080,0);
@@ -266,7 +260,7 @@ void SG_UI::UI_StartFight()
     ma->SetItemOrder(ad,dc);
 }
 
-QString SG_UI::UI_FigureShow(QString Name,QString Ta, float X, float Y, float X_, float Y_)
+QString SG_UI::UI_FigureShow(QString Name,QString Ta, float X, float Y, float X_, float Y_)//绘制战斗人物显示
 {
     if(Ta == "SG")
     {
@@ -287,7 +281,7 @@ QString SG_UI::UI_FigureShow(QString Name,QString Ta, float X, float Y, float X_
     {
         ParametersStru dss;
         dss.ItemVar<< &ds[dsum];
-        dss.intVar<< bbb;
+        dss.intVar<< bbb << Y_;
         dss.StringVar<< "DS";
         bbb++;
         ds[dsum] = *ma->AddButtonItem(Name,X,Y,"_Zoom","","",100,dss);          //Item*数组mp储存人物
@@ -300,7 +294,7 @@ QString SG_UI::UI_FigureShow(QString Name,QString Ta, float X, float Y, float X_
     return Name;
 }
 
-void SG_UI::UI_FigureZoom(ParametersStru name)
+void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
 {
     int fsum = 0;
     Item* fgg;
@@ -318,35 +312,42 @@ void SG_UI::UI_FigureZoom(ParametersStru name)
     }
 
     float zo = 0.0;
-    for(int i = 0; i < fsum; i++)
+    for(int i = 0; i < fsum; i++)       //判断放大图元
     {
-        zo = ma->GetItemScale(&fgg[i]);
+        zo = ma->GetItemScale(&fgg[i]); //检查所有图元缩放值
         if(zo > 1)
-                {
-                    ma->ScaleItem(&fgg[i],1.0);
+            {
+                ma->ScaleItem(&fgg[i],1.0);     //如果有图元缩放值大于1就改成1
+                if(name.StringVar[0] == "DS")
+                    ma->MoveItem(&fgg[i],803,Yz);//判断是否是敌方图元 重设坐标
         }
     }
 
-    for(int j = 0; j < ssum; j++)
+    for(int j = 0; j < ssum; j++)       //重头开始判断被点击图元
     {
-        if(name.intVar[0] == j)
+        if(name.intVar[0] == j)         //如果被点击图元的标记和当前循环相等
         {
-            for(int i =0; i< ssum; i++)
-                ma->SetItemLayer(&fgg[i],3);
+            for(int i =0; i< ssum; i++) //把所有图元的优先级降级
+            {ma->SetItemLayer(&fgg[i],3);}
+             ma->SetItemLayer(&fgg[j],4);//把被点击图元优先级升级(这样可以确保被点击图元显示时总在高层)
 
-            ma->SetItemLayer(&fgg[j],4);
-            ma->AnimationScaleItem(&fgg[j],1.1,1);
+            /*由于元火缩放图元都是以左上角为标注 但敌方名片UI需要以右上角为基准缩放*/
+            if(name.StringVar[0] == "DS")
+            {   ma->MoveItem(&fgg[j],757,name.intVar[1]);//所以当当前点击为敌方时 先左移出来一部分
+                Yz = name.intVar[1];                     //设置被移动图元的Y
+            }
+                ma->ScaleItem(&fgg[j],1.2);//放大
         }
     }
 }
 
-void SG_UI::UI_OTextUi(QString Qoword)
+void SG_UI::UI_OTextUi(QString Qoword)//文本显示样式
 {
     sgui =this;
     ma->AddTextItem(Qoword,"微软雅黑",20,0,0,0,120,510);
 }
 
-void SG_UI::UI_UiReturn()
+void SG_UI::UI_UiReturn()//返回时的小特♂技
 {
     sgui = this;
     SynchronousStart(vv)

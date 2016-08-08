@@ -18,7 +18,7 @@ float Sx = -277.0;          //我方人物名片的横 纵坐标
 float Sy = 0.0;
 float Dx = 1080.0;          //敌方人物名片的横 纵 坐标
 float Dy = 0.0;
-//QString (*oout)[11];
+
 
 SG_Function::SG_Function(library* fu)
 

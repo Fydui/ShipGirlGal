@@ -13,4 +13,6 @@ int main(int argc, char *argv[])
     m->QWidget::show();
     m->StartGame();//启动游戏
     return a.exec();
+
+    //    C++好难啊QAQ
 }

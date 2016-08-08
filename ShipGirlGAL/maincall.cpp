@@ -8,14 +8,10 @@ extern int _Sum;
 extern SG_StartGame* ss;
 using namespace  std;
 
+/*这里是个"转发平台",按钮,图元等各种事件通过此类跳转到其他类和函数*/
 void maincall::StartGame()//入口函数
 {
-    //AddPixmapItem("E:/Code/cpp/ShipGirlGAL/SG/Background/木头海岸.png",0,0);
-    //AddButtonItem("E:/Code/cpp/ShipGirlGAL/SG/Background/按钮背景2上.png",10,20,"","E:/Code/cpp/ShipGirlGAL/SG/Background/按钮背景2下.png");
-
     su->UI_MainUI();
-    //ss->SG_StartText();
-    //AddMouseEvent(1,510,1079,710,"_ClearTextUi");
 }
 
 void maincall::_StartMainUi()

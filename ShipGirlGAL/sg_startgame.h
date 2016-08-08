@@ -4,7 +4,8 @@
 #include <fstream>
 #include <vector>
 #include <string>
-class SG_StartGame  //: public QObject
+class SG_StartGame  /*对游戏的导演都在此类(一股面向过程味儿扑面而来)*/
+
 {
 public:
     SG_StartGame(library* s);

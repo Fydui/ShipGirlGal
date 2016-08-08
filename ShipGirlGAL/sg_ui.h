@@ -3,7 +3,9 @@
 #define SG_UI_H
 #include "library.h"
 #include "sg_startgame.h"
-class SG_UI
+
+class SG_UI /*游戏的各种UI绘制都在此类((。﹏。*)整个一面向过程) 不可以 这不面向对象*/
+
 {
 
 public:
@@ -27,10 +29,12 @@ private:
     const int BtX = 400;                                    //按钮的横坐标
     const int FontX = BtX +60;                              //字体的横坐标
     const int FontSize = 20;                                //显示字号
-    int ssum = 0;
-    int dsum = 0;
-    int aaa = 0;
-    int bbb = 0;
+    int ssum = 0;       //我方名片计数变量 最终于我方名片数目相同 用于循环
+    int dsum = 0;       //敌方
+    int aaa = 0;        //我方名片序号 用于判断
+    int bbb = 0;        //敌方
+    Item* dc;
+    Item* fi;
 
 
 

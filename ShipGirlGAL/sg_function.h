@@ -12,7 +12,7 @@
 #include <map>
 
 using namespace std;
-class SG_Function
+class SG_Function   /*此游戏所有功能性函数都在这个类里(这是我这破游戏里最面向对象的一个类QAQ)*/
 {
 public:
     SG_Function(library *fu);
