@@ -32,6 +32,7 @@ public:
     QString FU_ReadSql(QString Name, QString DataName);            //返回指定目标的指定参数
     QString FU_CheckTable(QString Name);                           //检查一个名字在哪个表里 返回表名
     QString FU_FigureShow(QString Name);                           //显示人物(小)
+    void FU_FightAtt(QString SG_, QString DS_);
 
 private:
     library* fn;
@@ -39,9 +40,6 @@ private:
     QString* out;
     QString* data;
     QString FU  = ":/SG/Figure/little/";
-
-
-
 };
 
 #endif // SG_FUNCTION_H

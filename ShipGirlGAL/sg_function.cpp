@@ -10,6 +10,8 @@ int Tsum =0;                //文本计数变量
 extern QSqlDatabase db;     //数据库连接变量
 extern SG_UI* sgui;         //UI界面的指针
 SG_Function* sgfu;          //给别的类用的
+QString SG;
+QString DS;
 //extern QString* Table[12];  //
 QSqlQuery* query;           //数据库操作指针
 int SGxy = 0;               //我方人物名片的计数变量
@@ -33,7 +35,18 @@ void SG_Function::FU_ClearTextui()
     //for(int i = Bao; Dang >= i; Dang--)
         fn->DeleteItem(fn->AllItem[33]);
 }
-
+struct DATA
+{
+    QString ID;
+    QString NAME;
+    QString HP;
+    QString ATK;
+    QString ARMOR;
+    QString DODGE;
+    QString PLANESUM;
+    QString AA;
+    QString TORPEDO;
+};
 void SG_Function::FU_Return()
 {
 
@@ -213,7 +226,6 @@ QString SG_Function::FU_ReadSql(QString Name, QString DataName)
 
 QString SG_Function::FU_FigureShow(QString Name)
 {
-    QString Tab;
     //首先判断人满了没有
     QString error;
     if(SGxy == 6 || DSxy ==6)
@@ -245,7 +257,7 @@ QString SG_Function::FU_FigureShow(QString Name)
             {
             Dy =  DSxy*Dy;                  //设置人物Y坐标
             QString _Name = ":/SG/Figure/little/" + Name+"_名片.png";
-            sgui->UI_FigureShow(_Name,"DS",Dx,Dy,803,Dy);//显示人物
+            sgui->UI_FigureShow(_Name,Name,"DS",Dx,Dy,803,Dy);//显示人物
             DSxy++;                         //将人物计数变量+1
             Dy = 78;
             //Table[tablsum] = "DS";
@@ -262,7 +274,7 @@ QString SG_Function::FU_FigureShow(QString Name)
     {
         Sy = SGxy*Sy;
         QString _Name = ":/SG/Figure/little/" + Name+"_名片.png";
-        sgui->UI_FigureShow(_Name,"SG",Sx,Sy,0,Sy);
+        sgui->UI_FigureShow(_Name,Name,"SG",Sx,Sy,0,Sy);
         SGxy++;
         Sy = 78;
         //Table[tablsum] = "SG";
@@ -309,4 +321,25 @@ QString SG_Function::FU_CheckTable(QString Name)
         ta = "SG";
         return ta;
     }
+}
+
+void SG_Function::FU_FightAtt(QString SG_, QString DS_)
+{
+    DATA mSG;
+    mSG.ATK = FU_ReadSql(SG_,"ATK");
+    int atk = mSG.ATK.toInt();
+
+    mSG.HP = FU_ReadSql(DS_,"HP");
+    int hp = mSG.ATK.toInt();
+
+    int sy = hp -atk;
+    if(sy > 0)
+    {
+        //
+    }
+    else
+    {
+        //
+    }
+
 }

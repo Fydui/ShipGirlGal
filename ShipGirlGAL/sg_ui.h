@@ -17,7 +17,7 @@ public:
     void UI_UiReturn();             //返回时通用动画
     void UI_OTextUi(QString Qoword);              //开始游戏之后输出文字的ui方法
     void UI_StartFight();                         //开始战斗的动画
-    QString UI_FigureShow(QString Name, QString Ta, float X, float Y, float X_, float Y_); //显示人物名片并且返回人物所在表 通过FU_FigureShow自动调用(当然手动也可)
+    QString UI_FigureShow(QString Path, QString Name, QString Ta,float X, float Y, float X_, float Y_); //显示人物名片并且返回人物所在表 通过FU_FigureShow自动调用(当然手动也可)
     void UI_FigureZoom(ParametersStru name);
 
 private:
@@ -35,6 +35,7 @@ private:
     int bbb = 0;        //敌方
     Item* dc;
     Item* fi;
+    int G = 0;
 
 
 

@@ -6,6 +6,12 @@
 //extern SG_UI* sgui;
 extern int _Sum;
 extern SG_StartGame* ss;
+QString SG_;
+QString DS_;
+QString SName;
+QString DName;
+ParametersStru N;
+
 using namespace  std;
 
 /*这里是个"转发平台",按钮,图元等各种事件通过此类跳转到其他类和函数*/
@@ -35,7 +41,25 @@ void maincall::_ClearTextUi()
 }
 void maincall::_Zoom(ParametersStru name)
 {
+    N = name;
     su->UI_FigureZoom(name);
+
+    QString s = N.StringVar[0];
+    if(s == "SG")
+    {
+        SG_ = "SG";
+        SName = N.StringVar[2];
+    }
+    if(s == "DS" && SG_ == "SG")
+    {
+        DName = N.StringVar[2];
+    }
+
+}
+
+void maincall::_Att()
+{
+    fun->FU_FightAtt(SName,DName);
 }
 void maincall::_ReturnUi()
 {

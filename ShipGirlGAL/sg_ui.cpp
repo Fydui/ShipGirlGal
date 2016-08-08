@@ -239,7 +239,7 @@ void SG_UI::UI_StartFight()//绘制战斗界面
 
     Item* fi = ma->AddPixmapItem(BT+"开始战斗.png",280,200);
     Item* re = ma->AddButtonItem(BT+"战斗返回_上.png",280,Y,"",BT+"战斗返回_下.png");
-    Item* go = ma->AddButtonItem(BT+"战斗攻击_上.png",440,Y,"",BT+"战斗攻击_下.png");
+    Item* go = ma->AddButtonItem(BT+"战斗攻击_上.png",440,Y,"_Att",BT+"战斗攻击_下.png");
     Item* cx = ma->AddButtonItem(BT+"撤销_上.png",600,Y,"",BT+"撤销_下.png");
     Item* ad = ma->AddButtonItem(BT+"战斗托管_上.png",760,Y,"",BT+"战斗托管_下.png");
     ma->SetItemLayer(ad,2);
@@ -260,16 +260,16 @@ void SG_UI::UI_StartFight()//绘制战斗界面
     ma->SetItemOrder(ad,dc);
 }
 
-QString SG_UI::UI_FigureShow(QString Name,QString Ta, float X, float Y, float X_, float Y_)//绘制战斗人物显示
+QString SG_UI::UI_FigureShow(QString Path, QString Name, QString Ta, float X, float Y, float X_, float Y_)//绘制战斗人物显示
 {
     if(Ta == "SG")
     {
         ParametersStru sgg;
         sgg.ItemVar<< &sg[ssum];
         sgg.intVar<< aaa;
-        sgg.StringVar<<"SG";
+        sgg.StringVar<<"SG"<<Ta<<Name;
         aaa++;
-        sg[ssum] = *ma->AddButtonItem(Name,X,Y,"_Zoom","","",100,sgg);//Item*数组sg储存人物
+        sg[ssum] = *ma->AddButtonItem(Path,X,Y,"_Zoom","","",100,sgg);//Item*数组sg储存人物
 
         ma->SetItemLayer(&sg[ssum],3);                         //设置图片等级
         ma->SetItemOrder(dc,&sg[ssum]);                        //把mp[msum]挪到dc之上
@@ -282,69 +282,77 @@ QString SG_UI::UI_FigureShow(QString Name,QString Ta, float X, float Y, float X_
         ParametersStru dss;
         dss.ItemVar<< &ds[dsum];
         dss.intVar<< bbb << Y_;
-        dss.StringVar<< "DS";
+        dss.StringVar<< "DS"<<Ta<<Name;
         bbb++;
-        ds[dsum] = *ma->AddButtonItem(Name,X,Y,"_Zoom","","",100,dss);          //Item*数组mp储存人物
+        ds[dsum] = *ma->AddButtonItem(Path,X,Y,"_Zoom","","",100,dss);          //Item*数组mp储存人物
         ma->SetItemLayer(&ds[dsum],3);                       //设置图片等级
         ma->SetItemOrder(dc,&ds[dsum]);                      //把mp[msum]挪到dc之上
         ma->AnimationMoveItem(&ds[dsum],X_,Y_,20);
         dsum++;
     }
 
-    return Name;
+    return Ta;
 }
 
 void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
 {
     int fsum = 0;
+
     Item* fgg;
     if(name.StringVar[0] == "SG")
     {
         fsum = ssum;
         fgg = new Item[6];
         fgg = sg;
+        G = 1;
     }
-    if(name.StringVar[0] == "DS")
+    if(name.StringVar[0] == "DS" && G == 1)
     {
         fsum = dsum;
         fgg = new Item[6];
         fgg = ds;
+
     }
 
-    float zo = 0.0;
-    for(int i = 0; i < fsum; i++)       //判断放大图元
+    if(G == 1)
     {
-        zo = ma->GetItemScale(&fgg[i]); //检查所有图元缩放值
-        if(zo > 1)
-            {
-                ma->ScaleItem(&fgg[i],1.0);     //如果有图元缩放值大于1就改成1
-                if(name.StringVar[0] == "DS")
-                    ma->MoveItem(&fgg[i],803,Yz);//判断是否是敌方图元 重设坐标
-        }
-    }
-
-    for(int j = 0; j < ssum; j++)       //重头开始判断被点击图元
-    {
-        if(name.intVar[0] == j)         //如果被点击图元的标记和当前循环相等
+        float zo = 0.0;
+        for(int i = 0; i < fsum; i++)       //判断放大图元
         {
-            for(int i =0; i< ssum; i++) //把所有图元的优先级降级
-            {ma->SetItemLayer(&fgg[i],3);}
-             ma->SetItemLayer(&fgg[j],4);//把被点击图元优先级升级(这样可以确保被点击图元显示时总在高层)
+            zo = ma->GetItemScale(&fgg[i]); //检查所有图元缩放值
+            if(zo > 1)
+                {
+                    ma->ScaleItem(&fgg[i],1.0);     //如果有图元缩放值大于1就改成1
+                    if(name.StringVar[0] == "DS")
+                        ma->MoveItem(&fgg[i],803,Yz);//判断是否是敌方图元 重设坐标
+            }
+        }
+
+        for(int j = 0; j < ssum; j++)       //重头开始判断被点击图元
+        {
+            if(name.intVar[0] == j)         //如果被点击图元的标记和当前循环相等
+            {
+                for(int i =0; i< ssum; i++) //把所有图元的优先级降级
+                {ma->SetItemLayer(&fgg[i],3);}
+                ma->SetItemLayer(&fgg[j],4);//把被点击图元优先级升级(这样可以确保被点击图元显示时总在高层)
 
             /*由于元火缩放图元都是以左上角为标注 但敌方名片UI需要以右上角为基准缩放*/
-            if(name.StringVar[0] == "DS")
-            {   ma->MoveItem(&fgg[j],757,name.intVar[1]);//所以当当前点击为敌方时 先左移出来一部分
-                Yz = name.intVar[1];                     //设置被移动图元的Y
+                if(name.StringVar[0] == "DS")
+                {   ma->MoveItem(&fgg[j],757,name.intVar[1]);//所以当当前点击为敌方时 先左移出来一部分
+                    Yz = name.intVar[1];                     //设置被移动图元的Y
+                }
+                    ma->ScaleItem(&fgg[j],1.2);//放大
             }
-                ma->ScaleItem(&fgg[j],1.2);//放大
         }
     }
+    //return name;
 }
 
 void SG_UI::UI_OTextUi(QString Qoword)//文本显示样式
 {
     sgui =this;
     ma->AddTextItem(Qoword,"微软雅黑",20,0,0,0,120,510);
+    G = 0;
 }
 
 void SG_UI::UI_UiReturn()//返回时的小特♂技
