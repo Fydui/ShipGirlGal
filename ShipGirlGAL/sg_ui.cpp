@@ -153,7 +153,7 @@ void SG_UI::UI_StartTextUi()//绘制开始游戏界面
     SynchronousFinish()
 
     dc = ma->AddPixmapItem(BG+"下大文字框.png",0,500);
-    ma->SetItemLayer(dc,1);
+    ma->SetItemLayer(dc,10);
     ma->SetOpacityItem(dc,0.0);
     ma->AnimationSetOpacityItem(dc,1,50);
 
@@ -237,7 +237,7 @@ void SG_UI::UI_StartFight()//绘制战斗界面
     ma->AnimationMoveItem(rh,485,0,20,"ff");
     SynchronousFinish()
 
-    Item* fi = ma->AddPixmapItem(BT+"开始战斗.png",280,200);
+    Item* fi = ma->AddPixmapItem(BG+"开始战斗.png",280,200);
     Item* re = ma->AddButtonItem(BT+"战斗返回_上.png",280,Y,"",BT+"战斗返回_下.png");
     Item* go = ma->AddButtonItem(BT+"战斗攻击_上.png",440,Y,"_Att",BT+"战斗攻击_下.png");
     Item* cx = ma->AddButtonItem(BT+"撤销_上.png",600,Y,"",BT+"撤销_下.png");
@@ -245,6 +245,9 @@ void SG_UI::UI_StartFight()//绘制战斗界面
     ma->SetItemLayer(ad,2);
 
     SynchronousStart(mm)
+    Item* butt[5] = {fi,re,go,cx,ad};
+        for(int i = 0; i < 5; i++)
+            ma->SetItemLayer(butt[i],8);
     ma->SetOpacityItem(fi,0);
     ma->AnimationSetOpacityItem(fi,1,10,"mm");
     ma->SetOpacityItem(re,0);
@@ -272,7 +275,6 @@ QString SG_UI::UI_FigureShow(QString Path, QString Name, QString Ta, float X, fl
         sg[ssum] = *ma->AddButtonItem(Path,X,Y,"_Zoom","","",100,sgg);//Item*数组sg储存人物
 
         ma->SetItemLayer(&sg[ssum],3);                         //设置图片等级
-        ma->SetItemOrder(dc,&sg[ssum]);                        //把mp[msum]挪到dc之上
         ma->AnimationMoveItem(&sg[ssum],X_,Y_,20);
         ssum++;
     }
@@ -286,7 +288,6 @@ QString SG_UI::UI_FigureShow(QString Path, QString Name, QString Ta, float X, fl
         bbb++;
         ds[dsum] = *ma->AddButtonItem(Path,X,Y,"_Zoom","","",100,dss);          //Item*数组mp储存人物
         ma->SetItemLayer(&ds[dsum],3);                       //设置图片等级
-        ma->SetItemOrder(dc,&ds[dsum]);                      //把mp[msum]挪到dc之上
         ma->AnimationMoveItem(&ds[dsum],X_,Y_,20);
         dsum++;
     }
@@ -347,6 +348,33 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
     }
     //return name;
 }
+
+void SG_UI::UI_AnimationFigure(QString SGname, QString DSname)
+{
+    QString path = FO+SGname+".png";
+    QString pathh =FO+DSname+".png";
+    Item* s;
+    Item* d;
+    s =  ma->AddPixmapItem(path,-1024,-40);
+    d = ma->AddPixmapItem(pathh,1080,-40);
+    ma->AnimationScaleItem(s,1.0,10,"ff");
+    ma->AnimationMoveItem(s,-350,-40,10);
+    ma->AnimationMoveItem(d,474,-40,10);
+    ma->AnimationScaleItem(d,1.0,10);
+    ma->SetItemLayer(s,5);
+    ma->SetItemLayer(d,5);
+    Item* pd = ma->AddPixmapItem(BG+"Paod.png",200,550);
+    SCFun sc;
+    auto lmb = [](int time){
+
+        return SCCurrentModulus{x,y,0};
+    };
+    lmb(10);
+    ma->AnimationMoveItem(pd,sc,15);
+
+}
+
+
 
 void SG_UI::UI_OTextUi(QString Qoword)//文本显示样式
 {

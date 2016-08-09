@@ -37,15 +37,15 @@ void SG_Function::FU_ClearTextui()
 }
 struct DATA
 {
-    QString ID;
-    QString NAME;
-    QString HP;
-    QString ATK;
-    QString ARMOR;
-    QString DODGE;
-    QString PLANESUM;
-    QString AA;
-    QString TORPEDO;
+    QString ID = "";
+    QString NAME = "";
+    QString HP = "";
+    QString ATK = "";
+    QString ARMOR = "";
+    QString DODGE = "";
+    QString PLANESUM = "";
+    QString AA = "";
+    QString TORPEDO = "";
 };
 void SG_Function::FU_Return()
 {
@@ -327,19 +327,13 @@ void SG_Function::FU_FightAtt(QString SG_, QString DS_)
 {
     DATA mSG;
     mSG.ATK = FU_ReadSql(SG_,"ATK");
-    int atk = mSG.ATK.toInt();
+    int satk = mSG.ATK.toInt();
 
-    mSG.HP = FU_ReadSql(DS_,"HP");
-    int hp = mSG.ATK.toInt();
+    DATA mDS;
+    mDS.HP = FU_ReadSql(DS_,"HP");
+    int dhp = mSG.ATK.toInt();
 
-    int sy = hp -atk;
-    if(sy > 0)
-    {
-        //
-    }
-    else
-    {
-        //
-    }
+    int sy = dhp -satk;
+    sgui->UI_AnimationFigure(SG_,DS_);
 
 }
