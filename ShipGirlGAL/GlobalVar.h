@@ -20,6 +20,8 @@ signals:
     void cc();
     void mm();
     void vv();
+    void aa();
+    void bb();
 
 };
 

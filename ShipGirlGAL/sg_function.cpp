@@ -331,9 +331,9 @@ void SG_Function::FU_FightAtt(QString SG_, QString DS_)
 
     DATA mDS;
     mDS.HP = FU_ReadSql(DS_,"HP");
-    int dhp = mSG.ATK.toInt();
+    int dhp = mDS.HP.toInt();
 
     int sy = dhp -satk;
-    sgui->UI_AnimationFigure(SG_,DS_);
+    sgui->UI_AnimationFigure(SG_,DS_,sy);
 
 }

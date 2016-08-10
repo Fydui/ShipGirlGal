@@ -14,6 +14,8 @@ int Tbx = 752;                                          //TextUi界面的按钮�
 Item* But[6];
 Item* sg = new Item[6];
 Item* ds = new Item[6];
+Item* lh;
+Item* rh;
 
 SG_UI::SG_UI(library* m)
 {
@@ -148,8 +150,8 @@ void SG_UI::UI_StartTextUi()//绘制开始游戏界面
     sgui = this;
     ma->AddPixmapItem(BG+"木头海岸.png",0,0);
     SynchronousStart(mm)
-    fi = ma->AddPixmapItem(FO+"太太_正常.png",-600,0);
-    ma->AnimationMoveItem(fi,0,0,100,"mm");
+    fi = ma->AddPixmapItem(FO+"列克星敦.png",-600,0);
+    ma->AnimationMoveItem(fi,-300,0,50,"mm");
     SynchronousFinish()
 
     dc = ma->AddPixmapItem(BG+"下大文字框.png",0,500);
@@ -222,8 +224,8 @@ void SG_UI::UI_StartTextUi()//绘制开始游戏界面
 
 void SG_UI::UI_StartFight()//绘制战斗界面
 {
-    Item* lh = ma->AddPixmapItem(BG+"左黑幕.png",-594,0);
-    Item* rh = ma->AddPixmapItem(BG+"右黑幕.png",1080,0);
+    lh = ma->AddPixmapItem(BG+"左黑幕.png",-594,0);
+    rh = ma->AddPixmapItem(BG+"右黑幕.png",1080,0);
     int Y = 465;
 
     ma->AnimationSetOpacityItem(fi,0.0,20);
@@ -349,28 +351,54 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
     //return name;
 }
 
-void SG_UI::UI_AnimationFigure(QString SGname, QString DSname)
+void SG_UI::UI_AnimationFigure(QString SGname, QString DSname, int SH)
 {
     QString path = FO+SGname+".png";
     QString pathh =FO+DSname+".png";
-    Item* s;
-    Item* d;
-    s =  ma->AddPixmapItem(path,-1024,-40);
-    d = ma->AddPixmapItem(pathh,1080,-40);
-    ma->AnimationScaleItem(s,1.0,10,"ff");
-    ma->AnimationMoveItem(s,-350,-40,10);
-    ma->AnimationMoveItem(d,474,-40,10);
-    ma->AnimationScaleItem(d,1.0,10);
-    ma->SetItemLayer(s,5);
-    ma->SetItemLayer(d,5);
-    Item* pd = ma->AddPixmapItem(BG+"Paod.png",200,550);
-    SCFun sc;
-    auto lmb = [](int time){
 
+
+    Item* s =  ma->AddPixmapItem(path,-1024,-40);
+    Item* d = ma->AddPixmapItem(pathh,1080,-40);
+
+    SynchronousStart(ff)
+    ma->SetItemLayer(s,6);
+    ma->SetItemLayer(d,6);
+    ma->AnimationScaleItem(s,1.0,10,"ff");
+    ma->AnimationMoveItem(s,-350,-40,10,"ff");
+    ma->AnimationMoveItem(d,474,-40,10,"ff");
+    ma->AnimationScaleItem(d,1.0,10,"ff");
+    SynchronousFinish()
+
+    ma->SetItemLayer(lh,5);
+    ma->SetItemLayer(rh,5);
+
+    Item* pd = ma->AddPixmapItem(BG+"炮弹.png",170,450);
+    ma->SetItemLayer(pd,6);
+    SCFun lmb = [](int time){
+        float x = 250+time;
+        float y = (x*x)/2048-x/2+512;
         return SCCurrentModulus{x,y,0};
     };
-    lmb(10);
-    ma->AnimationMoveItem(pd,sc,15);
+
+    SynchronousStart(vv)
+    ma->AnimationMoveItem(pd,lmb,800,"vv");
+    SynchronousFinish()
+
+    QString wor = QString::number(SH);
+    Item* sh = ma->AddTextItem(wor,"Lithos Pro",70,225,255,255,900,300);
+
+    SynchronousStart(aa)
+    ma->MoveItem(d,504,-40);
+    ma->AnimationMoveItem(d,444,-40,5,"aa");
+    SynchronousFinish()
+    ma->AnimationMoveItem(d,474,-40,5);
+    SynchronousStart(bb)
+    ma->AnimationSetOpacityItem(sh,0.0,500,"bb");
+    ma->SetItemLayer(sh,7);
+    SynchronousFinish()
+
+    ma->SetItemLayer(lh,4);
+    ma->SetItemLayer(rh,4);
 
 }
 
