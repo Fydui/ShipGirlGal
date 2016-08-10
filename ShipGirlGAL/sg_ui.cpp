@@ -8,7 +8,7 @@ SG_UI* sgui;                                //使用全局变量进行调用main
 
 int Yz = 0;                                 //敌方名片纵坐标(用于放大之后缩回)
 int Sum;                                    //上级界面图元数
-int _Sum;                                   //当前的总图元数. 总图元数减去上级的
+int _Sum;                                   //当前的总图元数. (总图元数减去上级)
 const int Tby= 500;                                     //TextUi界面的按钮纵坐标
 int Tbx = 752;                                          //TextUi界面的按钮横坐标
 Item* But[6];
@@ -16,6 +16,8 @@ Item* sg = new Item[6];
 Item* ds = new Item[6];
 Item* lh;
 Item* rh;
+int ssum = 0;       //我方名片计数变量 最终于我方名片数目相同 用于循环
+int dsum = 0;       //敌方
 
 SG_UI::SG_UI(library* m)
 {
@@ -250,6 +252,7 @@ void SG_UI::UI_StartFight()//绘制战斗界面
     Item* butt[5] = {fi,re,go,cx,ad};
         for(int i = 0; i < 5; i++)
             ma->SetItemLayer(butt[i],8);
+
     ma->SetOpacityItem(fi,0);
     ma->AnimationSetOpacityItem(fi,1,10,"mm");
     ma->SetOpacityItem(re,0);
@@ -263,6 +266,7 @@ void SG_UI::UI_StartFight()//绘制战斗界面
     SynchronousFinish()
     ma->AnimationSetOpacityItem(fi,0.0,20);
     ma->SetItemOrder(ad,dc);
+    _Sum =41;
 }
 
 QString SG_UI::UI_FigureShow(QString Path, QString Name, QString Ta, float X, float Y, float X_, float Y_)//绘制战斗人物显示
@@ -293,7 +297,6 @@ QString SG_UI::UI_FigureShow(QString Path, QString Name, QString Ta, float X, fl
         ma->AnimationMoveItem(&ds[dsum],X_,Y_,20);
         dsum++;
     }
-
     return Ta;
 }
 
@@ -333,7 +336,7 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
 
         for(int j = 0; j < ssum; j++)       //重头开始判断被点击图元
         {
-            if(name.intVar[0] == j)         //如果被点击图元的标记和当前循环相等
+            if(name.intVar[0] == j)         //如果被点击图元的标记和当前循环数相等
             {
                 for(int i =0; i< ssum; i++) //把所有图元的优先级降级
                 {ma->SetItemLayer(&fgg[i],3);}
@@ -368,7 +371,6 @@ void SG_UI::UI_AnimationFigure(QString SGname, QString DSname, int SH)
     ma->AnimationMoveItem(d,474,-40,10,"ff");
     ma->AnimationScaleItem(d,1.0,10,"ff");
     SynchronousFinish()
-
     ma->SetItemLayer(lh,5);
     ma->SetItemLayer(rh,5);
 
@@ -381,7 +383,9 @@ void SG_UI::UI_AnimationFigure(QString SGname, QString DSname, int SH)
     };
 
     SynchronousStart(vv)
-    ma->AnimationMoveItem(pd,lmb,800,"vv");
+    ma->MoveItem(s,-380,-10);
+    ma->AnimationMoveItem(s,-350,-40,5);
+    ma->AnimationMoveItem(pd,lmb,850,"vv");
     SynchronousFinish()
 
     QString wor = QString::number(SH);
@@ -391,14 +395,17 @@ void SG_UI::UI_AnimationFigure(QString SGname, QString DSname, int SH)
     ma->MoveItem(d,504,-40);
     ma->AnimationMoveItem(d,444,-40,5,"aa");
     SynchronousFinish()
-    ma->AnimationMoveItem(d,474,-40,5);
+
     SynchronousStart(bb)
+    ma->AnimationMoveItem(d,474,-40,5);
     ma->AnimationSetOpacityItem(sh,0.0,500,"bb");
     ma->SetItemLayer(sh,7);
     SynchronousFinish()
-
-    ma->SetItemLayer(lh,4);
-    ma->SetItemLayer(rh,4);
+    ma->DeleteItem(s);
+    ma->DeleteItem(d);
+    ma->DeleteItem(pd);
+    ma->SetItemLayer(lh,2);
+    ma->SetItemLayer(rh,2);
 
 }
 

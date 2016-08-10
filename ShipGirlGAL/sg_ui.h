@@ -19,6 +19,7 @@ public:
     void UI_StartFight();                         //开始战斗的动画
     QString UI_FigureShow(QString Path, QString Name, QString Ta,float X, float Y, float X_, float Y_); //显示人物名片并且返回人物所在表 通过FU_FigureShow自动调用(当然手动也可)
     void UI_FigureZoom(ParametersStru name);
+    //void UI_FigureZoom(QString name);
     void UI_AnimationFigure(QString SGname, QString DSname,int SH);
 
 private:
@@ -30,8 +31,7 @@ private:
     const int BtX = 400;                                    //按钮的横坐标
     const int FontX = BtX +60;                              //字体的横坐标
     const int FontSize = 20;                                //显示字号
-    int ssum = 0;       //我方名片计数变量 最终于我方名片数目相同 用于循环
-    int dsum = 0;       //敌方
+
     int aaa = 0;        //我方名片序号 用于判断
     int bbb = 0;        //敌方
     Item* dc;
