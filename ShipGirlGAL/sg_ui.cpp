@@ -148,18 +148,19 @@ void SG_UI::UI_StartUI() //绘制开始菜单界面
 
 void SG_UI::UI_StartTextUi()//绘制开始游戏界面
 {
-    ma->AddMouseEvent(1,510,1079,710,"_ClearTextUi");
-    sgui = this;
+    ma->AddMouseEvent(0,510,1079,710,"_ClearTextUi");
+    //sgui = this;
     ma->AddPixmapItem(BG+"木头海岸.png",0,0);
     SynchronousStart(mm)
     fi = ma->AddPixmapItem(FO+"列克星敦.png",-600,0);
     ma->AnimationMoveItem(fi,-300,0,50,"mm");
     SynchronousFinish()
 
-    dc = ma->AddPixmapItem(BG+"下大文字框.png",0,500);
+    dc =  ma->AddPixmapItem(BG+"下大文字框.png",0,400);
     ma->SetItemLayer(dc,10);
     ma->SetOpacityItem(dc,0.0);
     ma->AnimationSetOpacityItem(dc,1,50);
+            //ma->AddPixmapItem(BG+"科幻背景.png",0,0);
 
 
 
@@ -241,20 +242,20 @@ void SG_UI::UI_StartFight()//绘制战斗界面
     ma->AnimationMoveItem(rh,485,0,20,"ff");
     SynchronousFinish()
 
-    Item* fi = ma->AddPixmapItem(BG+"开始战斗.png",280,200);
-    Item* re = ma->AddButtonItem(BT+"战斗返回_上.png",280,Y,"",BT+"战斗返回_下.png");
+    Item* fig = ma->AddPixmapItem(BG+"开始战斗.png",280,200);
+    Item* re = ma->AddButtonItem(BT+"战斗返回_上.png",280,Y,"_Return",BT+"战斗返回_下.png");
     Item* go = ma->AddButtonItem(BT+"战斗攻击_上.png",440,Y,"_Att",BT+"战斗攻击_下.png");
     Item* cx = ma->AddButtonItem(BT+"撤销_上.png",600,Y,"",BT+"撤销_下.png");
     Item* ad = ma->AddButtonItem(BT+"战斗托管_上.png",760,Y,"",BT+"战斗托管_下.png");
     ma->SetItemLayer(ad,2);
 
     SynchronousStart(mm)
-    Item* butt[5] = {fi,re,go,cx,ad};
+    Item* butt[5] = {fig,re,go,cx,ad};
         for(int i = 0; i < 5; i++)
             ma->SetItemLayer(butt[i],8);
 
     ma->SetOpacityItem(fi,0);
-    ma->AnimationSetOpacityItem(fi,1,10,"mm");
+    ma->AnimationSetOpacityItem(fig,1,10,"mm");
     ma->SetOpacityItem(re,0);
     ma->AnimationSetOpacityItem(re,1,10,"mm");
     ma->SetOpacityItem(go,0);
@@ -264,9 +265,10 @@ void SG_UI::UI_StartFight()//绘制战斗界面
     ma->SetOpacityItem(ad,0);
     ma->AnimationSetOpacityItem(ad,1,10,"mm");
     SynchronousFinish()
-    ma->AnimationSetOpacityItem(fi,0.0,20);
-    ma->SetItemOrder(ad,dc);
-    _Sum =41;
+    ma->AnimationSetOpacityItem(fig,0.0,20);
+    //ma->SetItemOrder(ad,dc);
+    _Sum = 40+ssum +dsum;
+    Sum = 33;
 }
 
 QString SG_UI::UI_FigureShow(QString Path, QString Name, QString Ta, float X, float Y, float X_, float Y_)//绘制战斗人物显示
@@ -401,20 +403,35 @@ void SG_UI::UI_AnimationFigure(QString SGname, QString DSname, int SH)
     ma->AnimationSetOpacityItem(sh,0.0,500,"bb");
     ma->SetItemLayer(sh,7);
     SynchronousFinish()
+
+    SynchronousStart(qq)
+    ma->AnimationMoveItem(s,-1080,-40,5,"qq");
+    ma->AnimationMoveItem(d,1080,-40,5,"qq");
+    SynchronousFinish()
+
     ma->DeleteItem(s);
     ma->DeleteItem(d);
     ma->DeleteItem(pd);
+    for(int i = 0; i<ssum; i++)
+        ma->ScaleItem(&sg[i],1.0);
+
+    for(int i = 0; i<dsum; i++)
+    {
+        ma->ScaleItem(&ds[i],1.0);
+        float yy = ma->GetItemY(&ds[i]);
+        ma->MoveItem(&ds[i],803,yy);
+    }
+
     ma->SetItemLayer(lh,2);
     ma->SetItemLayer(rh,2);
 
 }
 
-
-
 void SG_UI::UI_OTextUi(QString Qoword)//文本显示样式
 {
     sgui =this;
-    ma->AddTextItem(Qoword,"微软雅黑",20,0,0,0,120,510);
+    Item* re= ma->AddTextItem(Qoword,"微软雅黑",20,0,0,0,120,510);
+    ma->SetItemLayer(re,11);
     G = 0;
 }
 

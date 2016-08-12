@@ -4,7 +4,7 @@
 extern int Sum;             //上级界面图元数
 extern int _Sum;            //当前界面图元数
 extern int Tbx;             //文本框上面按钮们的横坐标
-int DoneSum = 20;           //文本判断变量 必须和分隔符数目相等
+int DoneSum = 21;           //文本判断变量 必须和分隔符数目相等
 int Tsum =0;                //文本计数变量
 //int tablsum = 0;
 extern QSqlDatabase db;     //数据库连接变量
@@ -21,20 +21,6 @@ float Sy = 0.0;
 float Dx = 1080.0;          //敌方人物名片的横 纵 坐标
 float Dy = 0.0;
 
-
-SG_Function::SG_Function(library* fu)
-
-{
-    fn = fu;
-}
-
-void SG_Function::FU_ClearTextui()
-{
-    //int Dang = 33;
-    //int Bao = 32;
-    //for(int i = Bao; Dang >= i; Dang--)
-        fn->DeleteItem(fn->AllItem[33]);
-}
 struct DATA
 {
     QString ID = "";
@@ -47,6 +33,18 @@ struct DATA
     QString AA = "";
     QString TORPEDO = "";
 };
+
+SG_Function::SG_Function(library* fu)
+
+{
+    fn = fu;
+}
+
+void SG_Function::FU_ClearTextui()
+{
+        fn->DeleteItem(fn->AllItem[33]);
+}
+
 void SG_Function::FU_Return()
 {
 
@@ -63,6 +61,11 @@ void SG_Function::FU_Return()
         _Sum = 23;
         Sum = 11;
 
+    }
+    if(Sum == 33)
+    {
+        _Sum = 33;
+        Sum = 24;
     }
 
     Tbx = 752;

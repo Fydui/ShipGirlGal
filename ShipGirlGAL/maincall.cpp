@@ -17,7 +17,17 @@ using namespace  std;
 /*这里是个"转发平台",按钮,图元等各种事件通过此类跳转到其他类和函数*/
 void maincall::StartGame()//入口函数
 {
-    su->UI_MainUI();
+    //su->UI_MainUI();
+    AddMouseEvent(0,510,1079,710,"test");
+    AddPixmapItem("E:/Code/cpp/ShipGirlGAL/SG/Background/下大文字框.png",0,400);
+    //AddPixmapItem("E:/Code/cpp/ShipGirlGAL/SG/Background/科幻背景.png",0,0);
+    //AddPixmapItem("E:/Code/cpp/ShipGirlGAL/SG/Background/左黑幕.png",0,0);
+//*/
+}
+
+void maincall::test()
+{
+    AddTextItem("233333333","微软雅黑",20,0,0,0,0,0);
 }
 
 void maincall::_StartMainUi()
@@ -31,7 +41,7 @@ void maincall::_StartText()
     //_Return();
     su->UI_StartTextUi();
     start->SG_StartText();
-    su->UI_StartFight();
+    //su->UI_StartFight();
 }
 
 void maincall::_ClearTextUi()

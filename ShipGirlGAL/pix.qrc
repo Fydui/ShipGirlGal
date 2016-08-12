@@ -1,28 +1,26 @@
 <RCC>
     <qresource prefix="/">
+        <file>SG/Background/Paod.png</file>
         <file>SG/Background/按钮背景2上.png</file>
         <file>SG/Background/按钮背景2下.png</file>
         <file>SG/Background/办公室.png</file>
         <file>SG/Background/半圆.png</file>
         <file>SG/Background/大侧边栏.png</file>
         <file>SG/Background/关闭背景.png</file>
-        <file>SG/Background/关闭图片.png</file>
+        <file>SG/Background/开始战斗.png</file>
+        <file>SG/Background/科幻背景.png</file>
         <file>SG/Background/木头海岸.png</file>
+        <file>SG/Background/炮弹.png</file>
+        <file>SG/Background/上名称栏.png</file>
         <file>SG/Background/下大文字框.png</file>
         <file>SG/Background/信息栏.png</file>
         <file>SG/Background/右黑幕.png</file>
         <file>SG/Background/中心圆.png</file>
-        <file>SG/Background/左黑幕.png</file>
         <file>SG/Background/主界面背景.png</file>
         <file>SG/Button/撤销_上.png</file>
         <file>SG/Button/撤销_下.png</file>
         <file>SG/Button/存档_上.png</file>
         <file>SG/Button/存档_下.png</file>
-        <file>SG/Button/大号单横.png</file>
-        <file>SG/Button/大号单纵.png</file>
-        <file>SG/Button/大号复纵.png</file>
-        <file>SG/Button/大号轮型.png</file>
-        <file>SG/Button/大号梯队.png</file>
         <file>SG/Button/读档_上.png</file>
         <file>SG/Button/读档_下.png</file>
         <file>SG/Button/短按钮_上.png</file>
@@ -37,11 +35,6 @@
         <file>SG/Button/快进_下.png</file>
         <file>SG/Button/设置_上.png</file>
         <file>SG/Button/设置_下.png</file>
-        <file>SG/Button/小号单横.png</file>
-        <file>SG/Button/小号单纵.png</file>
-        <file>SG/Button/小号复纵.png</file>
-        <file>SG/Button/小号轮型.png</file>
-        <file>SG/Button/小号梯队.png</file>
         <file>SG/Button/战斗返回_上.png</file>
         <file>SG/Button/战斗返回_下.png</file>
         <file>SG/Button/战斗攻击_上.png</file>
@@ -61,26 +54,19 @@
         <file>SG/Button/主线上.png</file>
         <file>SG/Button/主线下.png</file>
         <file>SG/Figure/little/航母Ο级_名片.png</file>
-        <file>SG/Figure/little/昆西_名片.png</file>
         <file>SG/Figure/little/列克星敦_名片.png</file>
         <file>SG/Figure/little/罗德尼_名片.png</file>
         <file>SG/Figure/little/轻巡Ε级_名片.png</file>
-        <file>SG/Background/科幻背景.png</file>
+        <file>SG/Figure/little/战列M级_名片.png</file>
         <file>SG/Figure/little/战列Μ级_名片.png</file>
-        <file>SG/Figure/little/航母Ο级_名片_大.png</file>
-        <file>SG/Figure/little/昆西_名片_大.png</file>
-        <file>SG/Figure/little/列克星敦_名片_大.png</file>
-        <file>SG/Figure/little/罗德尼_名片_大.png</file>
-        <file>SG/Figure/little/轻巡Ε级_名片_大.png</file>
-        <file>SG/Figure/little/战列Μ级_名片_大.png</file>
         <file>SG/Figure/ordinary/海伦娜.png</file>
         <file>SG/Figure/ordinary/航母Ο级.png</file>
         <file>SG/Figure/ordinary/昆西.png</file>
+        <file>SG/Figure/ordinary/列克星敦.png</file>
         <file>SG/Figure/ordinary/罗德尼.png</file>
         <file>SG/Figure/ordinary/轻巡Ε级.png</file>
-        <file>SG/Figure/ordinary/列克星敦.png</file>
+        <file>SG/Figure/ordinary/太太_正常.png</file>
         <file>SG/Figure/ordinary/战列Μ级.png</file>
-        <file>SG/Background/开始战斗.png</file>
-        <file>SG/Background/炮弹.png</file>
+        <file>SG/Background/左黑幕.png</file>
     </qresource>
 </RCC>

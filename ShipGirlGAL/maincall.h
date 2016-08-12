@@ -33,6 +33,7 @@ public slots:
     void _ClearTextUi();    //清除文字图层
     void _Zoom(ParametersStru name);           //缩放人物名片
     void _Att();
+    void test();
 
 
 };

@@ -22,6 +22,7 @@ signals:
     void vv();
     void aa();
     void bb();
+    void qq();
 
 };
 
