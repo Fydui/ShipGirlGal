@@ -12,8 +12,7 @@ class maincall : public library
 Q_OBJECT
 public:
     JS_FUNCTION//关于JS操作
-    SG_UI* su = new SG_UI(this);
-    SG_StartGame* start = new SG_StartGame(this);
+    //SG_UI* su = new SG_UI(this);
     SG_Function* fun = new SG_Function(this);
 
     //入口函数

@@ -8,7 +8,6 @@ int DoneSum = 21;           //文本判断变量 必须和分隔符数目相等
 int Tsum =0;                //文本计数变量
 //int tablsum = 0;
 extern QSqlDatabase db;     //数据库连接变量
-extern SG_UI* sgui;         //UI界面的指针
 SG_Function* sgfu;          //给别的类用的
 QString SG;
 QString DS;
@@ -21,6 +20,7 @@ float Sy = 0.0;
 float Dx = 1080.0;          //敌方人物名片的横 纵 坐标
 float Dy = 0.0;
 
+using namespace SG_UI;
 struct DATA
 {
     QString ID = "";
@@ -35,44 +35,12 @@ struct DATA
 };
 
 SG_Function::SG_Function(library* fu)
-
 {
     fn = fu;
 }
 
-void SG_Function::FU_ClearTextui()
-{
-        fn->DeleteItem(fn->AllItem[33]);
-}
 
-void SG_Function::FU_Return()
-{
-
-    int _Sum_ = _Sum;
-
-
-    for(int i =Sum;_Sum_ >= i; _Sum_--)
-    {
-        fn->DeleteItem(fn->AllItem[_Sum_]); //删除所在界面所有图元 完成返回
-    }
-
-    if(_Sum == 36 && Sum == 24) //判断是否返回到选关 如果返回到选关界面则重设_Sum,Sum
-    {                           //如果不重设 则无法返回到开始主界面
-        _Sum = 23;
-        Sum = 11;
-
-    }
-    if(Sum == 33)
-    {
-        _Sum = 33;
-        Sum = 24;
-    }
-
-    Tbx = 752;
-}
-
-
-void SG_Function::FU_ReadText(string name, QString fenge)
+void SG_Function::ReadText(string name, QString fenge)
 {
     ifstream text(name);
     string word;
@@ -87,7 +55,7 @@ void SG_Function::FU_ReadText(string name, QString fenge)
 
      QString jiequ;
      jiequ= _word.section(fenge,Tsum,Tsum);
-     sgui->UI_OTextUi(jiequ);
+     SG_UI::UI_OTextUi(jiequ);
      if(Tsum == DoneSum)    //如果文本输出完毕
      {
         //sgui->SG_OTextUi("#DONE#");
@@ -138,7 +106,7 @@ void SG_Function::FU_ReadText(string name, QString fenge)
     }*/
 }
 
-void SG_Function::FU_OpenSql(const QString SqlName)
+void SG_Function::OpenSql(const QString SqlName)
 {
     db.setDatabaseName(SqlName);    //设置数据库名字
     if(!db.open())                  //判断是否打开数据库
@@ -149,12 +117,12 @@ void SG_Function::FU_OpenSql(const QString SqlName)
 
 }
 
-void SG_Function::FU_CloseSql()
+void SG_Function::CloseSql()
 {
     db.close();                     //关闭数据库
 }
 
-QString* SG_Function::FU_FindSql(QString TableName,QString FindName)
+QString* SG_Function::FindSql(QString TableName,QString FindName)
 {
     QString ming = "SELECT * FROM " + TableName + " WHERE NAME LIKE " + "'"+ FindName +"%'"; //数据库命令
     out = new QString[11];
@@ -170,7 +138,7 @@ QString* SG_Function::FU_FindSql(QString TableName,QString FindName)
     return out; //返回参数数组
 }
 
-QString SG_Function::FU_ReadSql(QString *ReadStr, int Sum)  //接受参数数组
+QString SG_Function::ReadSql(QString *ReadStr, int Sum)  //接受参数数组
 {
     data = new QString[11];
     QString Error = "错误:Sum超出范围";
@@ -181,7 +149,7 @@ QString SG_Function::FU_ReadSql(QString *ReadStr, int Sum)  //接受参数数组
         return data[Sum];
 }
 
-QString SG_Function::FU_ReadSql(QString Name, QString DataName)
+QString SG_Function::ReadSql(QString Name, QString DataName)
 {
     QString id ;
     QString ming = "SELECT * FROM SG WHERE NAME LIKE '"+ Name +"%'";
@@ -227,7 +195,7 @@ QString SG_Function::FU_ReadSql(QString Name, QString DataName)
     }
 }
 
-QString SG_Function::FU_FigureShow(QString Name)
+QString SG_Function::FigureShow(QString Name)
 {
     //首先判断人满了没有
     QString error;
@@ -260,7 +228,7 @@ QString SG_Function::FU_FigureShow(QString Name)
             {
             Dy =  DSxy*Dy;                  //设置人物Y坐标
             QString _Name = ":/SG/Figure/little/" + Name+"_名片.png";
-            sgui->UI_FigureShow(_Name,Name,"DS",Dx,Dy,803,Dy);//显示人物
+            SG_UI::UI_FigureShow(_Name,Name,"DS",Dx,Dy,803,Dy);//显示人物
             DSxy++;                         //将人物计数变量+1
             Dy = 78;
             //Table[tablsum] = "DS";
@@ -277,7 +245,7 @@ QString SG_Function::FU_FigureShow(QString Name)
     {
         Sy = SGxy*Sy;
         QString _Name = ":/SG/Figure/little/" + Name+"_名片.png";
-        sgui->UI_FigureShow(_Name,Name,"SG",Sx,Sy,0,Sy);
+        SG_UI::UI_FigureShow(_Name,Name,"SG",Sx,Sy,0,Sy);
         SGxy++;
         Sy = 78;
         //Table[tablsum] = "SG";
@@ -285,7 +253,7 @@ QString SG_Function::FU_FigureShow(QString Name)
 
 }
 
-QString SG_Function::FU_CheckTable(QString Name)
+QString SG_Function::CheckTable(QString Name)
 {
     //然后判断人物是否在数据库中
     QString id ;
@@ -326,7 +294,7 @@ QString SG_Function::FU_CheckTable(QString Name)
     }
 }
 
-void SG_Function::FU_FightAtt(QString SG_, QString DS_)
+void SG_Function::FightAtt(QString SG_, QString DS_)
 {
     DATA mSG;
     mSG.ATK = FU_ReadSql(SG_,"ATK");
@@ -337,6 +305,6 @@ void SG_Function::FU_FightAtt(QString SG_, QString DS_)
     int dhp = mDS.HP.toInt();
 
     int sy = dhp -satk;
-    sgui->UI_AnimationFigure(SG_,DS_,sy);
+    SG_UI::UI_AnimationFigure(SG_,DS_,sy);
 
 }

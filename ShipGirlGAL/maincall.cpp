@@ -2,27 +2,24 @@
 #include "sg_ui.h"
 #include "maincall.h"
 #include <vector>
-//maincall* mainc;
-//extern SG_UI* sgui;
+
 extern int _Sum;
-extern SG_StartGame* ss;
 QString SG_;
 QString DS_;
 QString SName;
 QString DName;
 ParametersStru N;
-
+maincall* ma;
+extern Item* fi;
+extern Item* re;
 using namespace  std;
+using namespace SG_UI;
+using namespace SG_StartGame;
 
 /*这里是个"转发平台",按钮,图元等各种事件通过此类跳转到其他类和函数*/
 void maincall::StartGame()//入口函数
-{
-    //su->UI_MainUI();
-    AddMouseEvent(0,510,1079,710,"test");
-    AddPixmapItem("E:/Code/cpp/ShipGirlGAL/SG/Background/下大文字框.png",0,400);
-    //AddPixmapItem("E:/Code/cpp/ShipGirlGAL/SG/Background/科幻背景.png",0,0);
-    //AddPixmapItem("E:/Code/cpp/ShipGirlGAL/SG/Background/左黑幕.png",0,0);
-//*/
+{   ma = this;
+    SG_UI::UI_MainUI();
 }
 
 void maincall::test()
@@ -32,27 +29,25 @@ void maincall::test()
 
 void maincall::_StartMainUi()
 {
-    su->UI_StartUI();
-    //
+    SG_UI::UI_StartUI();
 }
 
 void maincall::_StartText()
 {
-    //_Return();
-    su->UI_StartTextUi();
-    start->SG_StartText();
-    //su->UI_StartFight();
+    SG_UI::UI_StartTextUi();
+    SG_StartGame::SG_StartText();
+    SG_UI::UI_StartFight();
 }
 
 void maincall::_ClearTextUi()
 {
-    fun->FU_ClearTextui();
-    fun->FU_ReadText("M_1_1.txt","#");
+    SG_UI::FU_ClearTextui(re);
+    fun->ReadText("M_1_1.txt","#");
 }
 void maincall::_Zoom(ParametersStru name)
 {
     N = name;
-    su->UI_FigureZoom(name);
+    SG_UI::UI_FigureZoom(name);
 
     QString s = N.StringVar[0];
     if(s == "SG")
@@ -69,19 +64,19 @@ void maincall::_Zoom(ParametersStru name)
 
 void maincall::_Att()
 {
-    fun->FU_FightAtt(SName,DName);
+    fun->FightAtt(SName,DName);
 }
 void maincall::_ReturnUi()
 {
-    su->UI_UiReturn();
+    SG_UI::UI_UiReturn();
     _Return();
 }
 
 void maincall::_Return()
 
 {
-    su->UI_UiReturn();
-    fun->FU_Return();
+    SG_UI::UI_UiReturn();
+    fun->Return();
     //_Sum = 27;
 }
 

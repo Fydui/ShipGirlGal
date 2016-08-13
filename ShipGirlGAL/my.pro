@@ -22,9 +22,9 @@ SOURCES += main.cpp\
     EngineBeh.cpp \
     SC.cpp \
     InputEvent.cpp \
-    sg_function.cpp \
     sg_startgame.cpp \
-    sg_ui.cpp
+    sg_ui.cpp \
+    sg_function.cpp
 
 HEADERS  += widget.h \
     head.h \
