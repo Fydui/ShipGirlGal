@@ -2,7 +2,7 @@
 #include "sg_function.h"
 #include "maincall.h"
 extern maincall* ma;
-extern SG_Function* sgfu;
+extern Function* sgfu;
 
 Item* But[6];
 Item* sg = new Item[6];//我方人物数组
@@ -13,14 +13,13 @@ Item* dc;              //下大文字框
 Item* fi;              //人物
 Item* re;
 int Yz = 0;            //敌方名片纵坐标(用于放大之后缩回)
-int Sum;               //上级界面图元数
-int _Sum;              //当前的总图元数. (总图元数减去上级)
 int Tbx = 752;         //TextUi界面的按钮横坐标
 int aaa = 0;           //我方名片序号 用于判断
 int bbb = 0;           //敌方
 int G = 0;
 int ssum = 0;          //我方名片计数变量 最终于我方名片数目相同 用于循环
 int dsum = 0;          //敌方
+
 using namespace SG_UI;
 
 void SG_UI::UI_MainUI()
@@ -84,7 +83,8 @@ void SG_UI::UI_StartUI() //绘制开始菜单界面
 */
     //样式二
     ParametersStru res;
-    res.intVar<<23+3<<11;
+    res.intVar<<23<<11;
+
     ma->AddPixmapItem(BG+"办公室.png",0,0);
     Item*fn = ma->AddTextItem("Loading...","微软雅黑",28,255,255,255,465,327);
     ma->AddPixmapItem(BG+"科幻背景.png",0,0);
@@ -183,7 +183,7 @@ void SG_UI::UI_StartTextUi()//绘制开始游戏界面
 
     for(int i = 0; i < 6; i++)      //循环输出按钮
     {
-        But[i] = ma->AddButtonItem(BT+Bup[i],Tbx,Tby,MainFun[i],BT+Bdo[i],"",100,parabut[6]);
+        But[i] = ma->AddButtonItem(BT+Bup[i],Tbx,Tby,MainFun[i],BT+Bdo[i],"",100,parabut[i]);
         ma->SetOpacityItem(But[i],0.0);
         ma->AnimationSetOpacityItem(But[i],1,80);
         Tbx = Tbx+35;               //每次循环自动增加X坐标
@@ -220,7 +220,7 @@ void SG_UI::UI_StartFight()//绘制战斗界面
 {
     ParametersStru ref;
     int v = 40+ssum+dsum;
-    ref.intVar<<v+3<<33;
+    ref.intVar<<v<<33;
     lh = ma->AddPixmapItem(BG+"左黑幕.png",-594,0);
     rh = ma->AddPixmapItem(BG+"右黑幕.png",1080,0);
     int Y = 465;
@@ -237,7 +237,7 @@ void SG_UI::UI_StartFight()//绘制战斗界面
     SynchronousFinish()
 
     Item* fig = ma->AddPixmapItem(BG+"开始战斗.png",280,200);
-    Item* re = ma->AddButtonItem(BT+"战斗返回_上.png",280,Y,"_Return",BT+"战斗返回_下.png");
+    Item* re = ma->AddButtonItem(BT+"战斗返回_上.png",280,Y,"_Return",BT+"战斗返回_下.png","",100,ref);
     Item* go = ma->AddButtonItem(BT+"战斗攻击_上.png",440,Y,"_Att",BT+"战斗攻击_下.png");
     Item* cx = ma->AddButtonItem(BT+"撤销_上.png",600,Y,"",BT+"撤销_下.png");
     Item* ad = ma->AddButtonItem(BT+"战斗托管_上.png",760,Y,"",BT+"战斗托管_下.png");
@@ -430,18 +430,24 @@ void SG_UI::UI_OTextUi(QString Qoword)//文本显示样式
 
 void SG_UI::UI_UiReturn()//返回时的小特♂技
 {
+    Item* mr;
+    Item* fo;
+    Item* bg;
     SynchronousStart(vv)
-    Item* bg= ma->AddPixmapItem(BG+"关闭背景.png",0,0);
+    bg= ma->AddPixmapItem(BG+"关闭背景.png",0,0);
     ma->AnimationSetOpacityItem(bg,1,100,"vv");
-    Item* fo = ma->AddTextItem("Loading...","微软雅黑",28,255,255,255,465,327);
+    fo = ma->AddTextItem("Loading...","微软雅黑",28,255,255,255,465,327);
     ma->AnimationSetOpacityItem(fo,1,100,"vv");
-    Item* mr = ma->AddPixmapItem(BG+"中心圆.png",421,241);
+    mr = ma->AddPixmapItem(BG+"中心圆.png",421,241);
     ma->SetOpacityItem(mr,0.0);
     ma->AnimationSetOpacityItem(mr,1,100,"vv");
     SynchronousFinish()
-    //_Sum = _Sum+3;
+    ma->AnimationSetOpacityItem(mr,0.0,5);
 
-
+    ma->DeleteItem(mr);
+    ma->DeleteItem(fo);
+    ma->DeleteItem(bg);
+    Yz =0;
 }
 
 void SG_UI::FU_Return(int ZSum, int SSum)

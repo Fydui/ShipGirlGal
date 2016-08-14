@@ -12,11 +12,13 @@
 #include <map>
 
 using namespace std;
-class SG_Function   /*此游戏所有功能性函数都在这个类里(这是我这破游戏里最面向对象的一个类QAQ)*/
+
+class Function   /*此游戏所有功能性函数都在这个类里(这是我这破游戏里最面向对象的一个类QAQ)*/
 {
 public:
-    SG_Function(library *fu);
-    ~SG_Function();
+    Function(library *fu);
+    Function();
+    ~Function();
 
     /*数据库相关*/
 
@@ -32,9 +34,10 @@ public:
     QString FigureShow(QString Name);                           //显示人物(小)
     void FightAtt(QString SG_, QString DS_);
 
+
 private:
     library* fn;
-    SG_Function* ui;
+    Function* ui;
     QString* out;
     QString* data;
     QString FU  = ":/SG/Figure/little/";

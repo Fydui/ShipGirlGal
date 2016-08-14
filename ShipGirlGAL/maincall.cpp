@@ -3,7 +3,7 @@
 #include "maincall.h"
 #include <vector>
 
-extern int _Sum;
+
 QString SG_;
 QString DS_;
 QString SName;
@@ -64,19 +64,20 @@ void maincall::_Zoom(ParametersStru name)
 
 void maincall::_Att()
 {
+
     fun->FightAtt(SName,DName);
 }
-void maincall::_ReturnUi()
+void maincall::_ReturnUi(ParametersStru re)
 {
     SG_UI::UI_UiReturn();
-    _Return();
+    _Return(re);
 }
 
-void maincall::_Return()
+void maincall::_Return(ParametersStru re)
 
 {
     SG_UI::UI_UiReturn();
-    fun->Return();
+    SG_UI::FU_Return(re.intVar[0],re.intVar[1]);
     //_Sum = 27;
 }
 

@@ -13,7 +13,7 @@ Q_OBJECT
 public:
     JS_FUNCTION//关于JS操作
     //SG_UI* su = new SG_UI(this);
-    SG_Function* fun = new SG_Function(this);
+    Function* fun = new Function(this);
 
     //入口函数
     void StartGame();
@@ -26,8 +26,8 @@ public slots:
     //此处容纳事件处理与线程函数
     void _StartMainUi();    //开始界面Ui
     void _StartText();      //开始游戏
-    void _ReturnUi();       //返回动画
-    void _Return();         //返回
+    void _ReturnUi(ParametersStru re);       //返回动画
+    void _Return(ParametersStru re);         //返回
     void _Exit();           //退出
     void _ClearTextUi();    //清除文字图层
     void _Zoom(ParametersStru name);           //缩放人物名片

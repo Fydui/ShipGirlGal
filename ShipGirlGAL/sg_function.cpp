@@ -8,7 +8,7 @@ int DoneSum = 21;           //文本判断变量 必须和分隔符数目相等
 int Tsum =0;                //文本计数变量
 //int tablsum = 0;
 extern QSqlDatabase db;     //数据库连接变量
-SG_Function* sgfu;          //给别的类用的
+Function* sgfu;          //给别的类用的
 QString SG;
 QString DS;
 //extern QString* Table[12];  //
@@ -34,13 +34,21 @@ struct DATA
     QString TORPEDO = "";
 };
 
-SG_Function::SG_Function(library* fu)
+Function::Function(library* fu)
 {
     fn = fu;
 }
 
+Function::Function()
+{
+    //
+}
 
-void SG_Function::ReadText(string name, QString fenge)
+Function::~Function()
+{
+
+}
+void Function::ReadText(string name, QString fenge)
 {
     ifstream text(name);
     string word;
@@ -106,7 +114,7 @@ void SG_Function::ReadText(string name, QString fenge)
     }*/
 }
 
-void SG_Function::OpenSql(const QString SqlName)
+void Function::OpenSql(const QString SqlName)
 {
     db.setDatabaseName(SqlName);    //设置数据库名字
     if(!db.open())                  //判断是否打开数据库
@@ -117,12 +125,12 @@ void SG_Function::OpenSql(const QString SqlName)
 
 }
 
-void SG_Function::CloseSql()
+void Function::CloseSql()
 {
     db.close();                     //关闭数据库
 }
 
-QString* SG_Function::FindSql(QString TableName,QString FindName)
+QString* Function::FindSql(QString TableName,QString FindName)
 {
     QString ming = "SELECT * FROM " + TableName + " WHERE NAME LIKE " + "'"+ FindName +"%'"; //数据库命令
     out = new QString[11];
@@ -138,7 +146,7 @@ QString* SG_Function::FindSql(QString TableName,QString FindName)
     return out; //返回参数数组
 }
 
-QString SG_Function::ReadSql(QString *ReadStr, int Sum)  //接受参数数组
+QString Function::ReadSql(QString *ReadStr, int Sum)  //接受参数数组
 {
     data = new QString[11];
     QString Error = "错误:Sum超出范围";
@@ -149,7 +157,7 @@ QString SG_Function::ReadSql(QString *ReadStr, int Sum)  //接受参数数组
         return data[Sum];
 }
 
-QString SG_Function::ReadSql(QString Name, QString DataName)
+QString Function::ReadSql(QString Name, QString DataName)
 {
     QString id ;
     QString ming = "SELECT * FROM SG WHERE NAME LIKE '"+ Name +"%'";
@@ -195,7 +203,7 @@ QString SG_Function::ReadSql(QString Name, QString DataName)
     }
 }
 
-QString SG_Function::FigureShow(QString Name)
+QString Function::FigureShow(QString Name)
 {
     //首先判断人满了没有
     QString error;
@@ -253,7 +261,7 @@ QString SG_Function::FigureShow(QString Name)
 
 }
 
-QString SG_Function::CheckTable(QString Name)
+QString Function::CheckTable(QString Name)
 {
     //然后判断人物是否在数据库中
     QString id ;
@@ -294,15 +302,15 @@ QString SG_Function::CheckTable(QString Name)
     }
 }
 
-void SG_Function::FightAtt(QString SG_, QString DS_)
+void Function::FightAtt(QString SG_, QString DS_)
 {
-    DATA mSG;
-    mSG.ATK = FU_ReadSql(SG_,"ATK");
-    int satk = mSG.ATK.toInt();
+    Function sg;
+    QString ssg = sg.ReadSql(SG_,"ATK");
+    int satk = ssg.toInt();
 
-    DATA mDS;
-    mDS.HP = FU_ReadSql(DS_,"HP");
-    int dhp = mDS.HP.toInt();
+    Function ds;
+    QString dds = ds.ReadSql(DS_,"HP");
+    int dhp = dds.toInt();
 
     int sy = dhp -satk;
     SG_UI::UI_AnimationFigure(SG_,DS_,sy);
