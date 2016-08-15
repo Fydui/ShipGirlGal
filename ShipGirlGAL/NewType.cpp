@@ -1,4 +1,4 @@
-﻿//-----本文件是对于NewType.h中定义的新类型的成员函数的实现部分-----
+//-----本文件是对于NewType.h中定义的新类型的成员函数的实现部分-----
 #include "widget.h"
 
 //MyItem
@@ -51,20 +51,17 @@ bool MyItem::IsRegion()
     return true;
 }
 
-void Widget::PassMousePressEvent(QPointF point)
+void Widget::PassMousePressEvent(Pos point)
 {
     QMouseEvent e(QEvent::Type::MouseButtonPress,point,Qt::MouseButton::LeftButton,nullptr,nullptr);
     this->mousePressEvent(&e);
 }
 
-void Widget::PassMouseReleaseEvent(QPointF point)
+void Widget::PassMouseReleaseEvent(Pos point)
 {
     QMouseEvent e(QEvent::Type::MouseButtonRelease,point,Qt::MouseButton::LeftButton,nullptr,nullptr);
     this->mouseReleaseEvent(&e);
 }
-
-void Widget::PassMouseReleaseEvent(QMouseEvent *e)
-{this->mouseReleaseEvent(e);}
 
 void Widget::PassMouseMoveEvent(QMouseEvent *e)
 {this->mouseMoveEvent(e);}
@@ -87,7 +84,9 @@ void MyItem::mousePressEvent(QGraphicsSceneMouseEvent *e)
     if(PressFun!=NULL_String)//如果有事件，就执行
     {RunFun(PressFun,PressPar);}
 
-    s->PassMousePressEvent(e->pos());
+    Pos nowpos=e->pos().toPoint();
+    nowpos=Pos(this->x()+nowpos.x(),this->y()+nowpos.y());
+    s->PassMousePressEvent(nowpos);
 }
 
 void MyItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *e)
@@ -98,7 +97,9 @@ void MyItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *e)
     if(ReleaseFun!=NULL_String&&IsRegion())
     {RunFun(ReleaseFun,ReleasePar);}
 
-    s->PassMouseReleaseEvent(e->pos());
+    Pos nowpos=e->pos().toPoint();
+    nowpos=Pos(this->x()+nowpos.x(),this->y()+nowpos.y());
+    s->PassMouseReleaseEvent(nowpos);
 }
 
 //VideoPlayer
@@ -121,10 +122,10 @@ void VideoPlayer::start()
 {
     mediaPlayer->setMedia(QUrl::fromLocalFile(Path));
     mediaPlayer->play();
-    QObject::connect(mediaPlayer,SIGNAL(stateChanged(QMediaPlayer::State)),this,SLOT(playover(QMediaPlayer::State)));
+    QObject::connect(mediaPlayer,SIGNAL(stateChanged(QMediaPlayer::State)),this,SLOT(playFinished(QMediaPlayer::State))); //绑定槽，播放后自动销毁
 }
 
-void VideoPlayer::playover(QMediaPlayer::State state)
+void VideoPlayer::playFinished(QMediaPlayer::State state)
 {
     if(state!=QMediaPlayer::StoppedState)
     {return;}
@@ -150,7 +151,7 @@ void MusicPlayer::singleplay(String name, int volume)
     this->setMedia(QUrl::fromLocalFile(name));
     this->setVolume(volume);
     this->play();
-    QObject::connect(this,SIGNAL(stateChanged(QMediaPlayer::State)),this,SLOT(playover(QMediaPlayer::State)));
+    QObject::connect(this,SIGNAL(stateChanged(QMediaPlayer::State)),this,SLOT(playFinished(QMediaPlayer::State)));
 }
 
 void MusicPlayer::multipleplay(String name,int volume)
@@ -170,7 +171,7 @@ void MusicPlayer::multipleplay(String name,int volume)
      this->play();
 }
 
-void MusicPlayer::playover(QMediaPlayer::State state)
+void MusicPlayer::playFinished(QMediaPlayer::State state)
 {
     if(state!=QMediaPlayer::StoppedState)
     {return;}
@@ -181,13 +182,13 @@ MusicPlayer::~MusicPlayer()
 {delete cyclelist;}
 
 //GraphicsView
-void GraphicsView::Scale(float sx,float sy)
-{scale(sx,sy);}
+void GraphicsView::Scale(int sX, int sY)
+{scale(sX,sY);}
 
 void GraphicsView::Rotate(float set)
 {rotate(set);}
 
-void GraphicsView::SetCenter(float x, float y)
+void GraphicsView::SetCenter(int x, int y)
 {
     this->centerOn(x,y);
     this->viewX=x;

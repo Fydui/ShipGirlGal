@@ -2,7 +2,7 @@
 #ifndef SG_UI_H
 #define SG_UI_H
 #include "library.h"
-#include "sg_startgame.h"
+#include "sg_function.h"
 
 namespace SG_UI /*游戏的各种UI绘制都在此类((。﹏。*)整个一面向过程) 不可以 这不面向对象*/
 

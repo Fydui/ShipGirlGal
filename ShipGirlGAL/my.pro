@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = my
 TEMPLATE = app
-
+QT += sql
 
 SOURCES += main.cpp\
         widget.cpp \
@@ -20,11 +20,12 @@ SOURCES += main.cpp\
     AES.cpp \
     EngineAPI.cpp \
     EngineBeh.cpp \
-    SC.cpp \
     InputEvent.cpp \
+    gesture.cpp \
+    animation.cpp \
+    sg_function.cpp \
     sg_startgame.cpp \
-    sg_ui.cpp \
-    sg_function.cpp
+    sg_ui.cpp
 
 HEADERS  += widget.h \
     head.h \
@@ -35,10 +36,11 @@ HEADERS  += widget.h \
     AES.h \
     js.h \
     macro.h \
+    configure.h \
+    gesture.h \
     sg_function.h \
     sg_startgame.h \
-    sg_ui.h \
-    configure.h
+    sg_ui.h
 
 FORMS    += widget.ui
 QT += core gui
@@ -52,5 +54,3 @@ QMAKE_CXXFLAGS += -std=c++11
 
 RESOURCES += \
     pix.qrc
-
-QT += sql

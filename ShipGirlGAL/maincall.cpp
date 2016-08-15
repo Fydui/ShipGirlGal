@@ -17,6 +17,7 @@ using namespace SG_UI;
 using namespace SG_StartGame;
 
 /*这里是个"转发平台",按钮,图元等各种事件通过此类跳转到其他类和函数*/
+
 void maincall::StartGame()//入口函数
 {   ma = this;
     SG_UI::UI_MainUI();

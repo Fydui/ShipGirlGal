@@ -1,8 +1,6 @@
 ﻿#include "sg_ui.h"
-#include "sg_function.h"
 #include "maincall.h"
 extern maincall* ma;
-extern Function* sgfu;
 
 Item* But[6];
 Item* sg = new Item[6];//我方人物数组
@@ -403,9 +401,9 @@ void SG_UI::UI_AnimationFigure(QString SGname, QString DSname, int SH)
     ma->AnimationMoveItem(d,1080,-40,5,"qq");
     SynchronousFinish()
 
-    ma->DeleteItem(s);
-    ma->DeleteItem(d);
-    ma->DeleteItem(pd);
+    ma->RemoveItem(s);
+    ma->RemoveItem(d);
+    ma->RemoveItem(pd);
     for(int i = 0; i<ssum; i++)
         ma->ScaleItem(&sg[i],1.0);
 
@@ -444,9 +442,9 @@ void SG_UI::UI_UiReturn()//返回时的小特♂技
     SynchronousFinish()
     ma->AnimationSetOpacityItem(mr,0.0,5);
 
-    ma->DeleteItem(mr);
-    ma->DeleteItem(fo);
-    ma->DeleteItem(bg);
+    ma->RemoveItem(mr);
+    ma->RemoveItem(fo);
+    ma->RemoveItem(bg);
     Yz =0;
 }
 
@@ -455,12 +453,12 @@ void SG_UI::FU_Return(int ZSum, int SSum)
 
     for(int i =SSum;ZSum >= i; ZSum--)
     {
-        ma->DeleteItem(ma->AllItem[ZSum]); //删除所在界面所有图元 完成返回
+        ma->RemoveItem(ma->AllItem[ZSum]); //删除所在界面所有图元 完成返回
     }
     Tbx = 752;
 }
 
 void SG_UI::FU_ClearTextui(Item* te)
 {
-    ma->DeleteItem(te);
+    ma->RemoveItem(te);
 }

@@ -1,5 +1,4 @@
 ﻿#include "sg_startgame.h"
-//#include "sg_ui.h"
 #include "sg_function.h"
 
 extern Function* sgfu;
