@@ -20,7 +20,9 @@ using namespace SG_StartGame;
 
 void maincall::StartGame()//入口函数
 {   ma = this;
-    SG_UI::UI_MainUI();
+    //SG_UI::UI_MainUI();
+    fun->OpenSql("SG.db");
+    fun->FightAtt("列克星敦","战列M级");
 }
 
 void maincall::test()

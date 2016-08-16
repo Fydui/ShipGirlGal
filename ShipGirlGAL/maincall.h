@@ -5,7 +5,7 @@
 #include "js.h"
 #include "sg_ui.h"
 #include "sg_startgame.h"
-#include "sg_function.h"
+#include "sg_figure.h"
 
 class maincall : public library
 {
@@ -13,7 +13,7 @@ Q_OBJECT
 public:
     JS_FUNCTION//关于JS操作
     //SG_UI* su = new SG_UI(this);
-    Function* fun = new Function(this);
+    Figure* fun = new Figure(this);
 
     //入口函数
     void StartGame();
