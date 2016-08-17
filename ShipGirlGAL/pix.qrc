@@ -53,21 +53,20 @@
         <file>SG/Button/主线剧情_下.png</file>
         <file>SG/Button/主线上.png</file>
         <file>SG/Button/主线下.png</file>
-        <file>SG/Figure/little/航母Ο级_名片.png</file>
-        <file>SG/Figure/little/列克星敦_名片.png</file>
-        <file>SG/Figure/little/罗德尼_名片.png</file>
-        <file>SG/Figure/little/轻巡Ε级_名片.png</file>
-        <file>SG/Figure/little/战列M级_名片.png</file>
-        <file>SG/Figure/little/战列Μ级_名片.png</file>
+        <file>SG/Background/左黑幕.png</file>
         <file>SG/Figure/ordinary/海伦娜.png</file>
-        <file>SG/Figure/ordinary/航母Ο级.png</file>
+        <file>SG/Figure/ordinary/航母O级.png</file>
         <file>SG/Figure/ordinary/昆西.png</file>
         <file>SG/Figure/ordinary/列克星敦.png</file>
         <file>SG/Figure/ordinary/罗德尼.png</file>
-        <file>SG/Figure/ordinary/轻巡Ε级.png</file>
+        <file>SG/Figure/ordinary/轻巡E级.png</file>
         <file>SG/Figure/ordinary/太太_正常.png</file>
-        <file>SG/Figure/ordinary/战列Μ级.png</file>
-        <file>SG/Background/左黑幕.png</file>
+        <file>SG/Figure/ordinary/战列E级.png</file>
+        <file>SG/Figure/little/航母Ο级_名片.png</file>
         <file>SG/Figure/little/昆西_名片.png</file>
+        <file>SG/Figure/little/列克星敦_名片.png</file>
+        <file>SG/Figure/little/罗德尼_名片.png</file>
+        <file>SG/Figure/little/轻巡E级_名片.png</file>
+        <file>SG/Figure/little/战列M级_名片.png</file>
     </qresource>
 </RCC>

@@ -13,8 +13,8 @@ void SG_StartGame::SG_StartText()
     sgfu->FigureShow("列克星敦");
     sgfu->FigureShow("昆西");
     sgfu->FigureShow("罗德尼");
-    sgfu->FigureShow("航母Ο级");
-    sgfu->FigureShow("战列Μ级");
-    sgfu->FigureShow("轻巡Ε级");
+    sgfu->FigureShow("航母O级");
+    sgfu->FigureShow("战列M级");
+    sgfu->FigureShow("轻巡E级");
 
 }
