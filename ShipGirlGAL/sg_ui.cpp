@@ -164,7 +164,7 @@ void SG_UI::UI_StartTextUi()//绘制开始游戏界面
                             "",
                             ""};
     ParametersStru parabut[6];
-        parabut[0].intVar<<33<<24;
+        parabut[0].intVar<<32<<24;
         parabut[1] = _NULLParametersStru;
         parabut[2] = _NULLParametersStru;
         parabut[3] = _NULLParametersStru;
