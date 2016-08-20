@@ -69,7 +69,6 @@
         <file>SG/Figure/ordinary/罗德尼.png</file>
         <file>SG/Figure/ordinary/轻巡E级.png</file>
         <file>SG/Figure/ordinary/太太_正常.png</file>
-        <file>SG/Figure/ordinary/战列E级.png</file>
         <file>SG/Figure/little/航母O级_名片.png</file>
         <file>SG/Figure/little/昆西_名片.png</file>
         <file>SG/Figure/little/列克星敦_名片.png</file>
@@ -78,5 +77,10 @@
         <file>SG/Figure/little/战列M级_名片.png</file>
         <file>SG/Background/半圆.png</file>
         <file>SG/Background/炮弹.png</file>
+        <file>SG/Figure/ordinary/战列E级.png</file>
+        <file>SG/Button/武器按钮1.png</file>
+        <file>SG/Button/武器按钮2.png</file>
+        <file>SG/Button/武器按钮3.png</file>
+        <file>SG/Button/武器按钮4.png</file>
     </qresource>
 </RCC>

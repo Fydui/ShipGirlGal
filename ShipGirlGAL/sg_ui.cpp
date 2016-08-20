@@ -10,6 +10,11 @@ Item* rh;              //右边黑幕
 Item* dc;              //下大文字框
 Item* fi;              //人物
 Item* re;
+Item* we1;
+Item* we2;
+Item* we3;
+Item* we4;
+Item* we5;
 int Yz = 0;            //敌方名片纵坐标(用于放大之后缩回)
 int Tbx = 752;         //TextUi界面的按钮横坐标
 int aaa = 0;           //我方名片序号 用于判断
@@ -17,6 +22,8 @@ int bbb = 0;           //敌方
 int G = 0;
 int ssum = 0;          //我方名片计数变量 最终于我方名片数目相同 用于循环
 int dsum = 0;          //敌方
+int GG = 0;
+ParametersStru ggs;
 
 using namespace SG_UI;
 
@@ -236,7 +243,7 @@ void SG_UI::UI_StartFight()//绘制战斗界面
 
     Item* fig = ma->AddPixmapItem(BG+"开始战斗.png",280,200);
     Item* re = ma->AddButtonItem(BT+"战斗返回_上.png",280,Y,"_Return",BT+"战斗返回_下.png","",100,ref);
-    Item* go = ma->AddButtonItem(BT+"战斗攻击_上.png",440,Y,"_Att",BT+"战斗攻击_下.png");
+    Item* go = ma->AddButtonItem(BT+"战斗攻击_上.png",440,Y,"",BT+"战斗攻击_下.png");
     Item* cx = ma->AddButtonItem(BT+"撤销_上.png",600,Y,"",BT+"撤销_下.png");
     Item* ad = ma->AddButtonItem(BT+"战斗托管_上.png",760,Y,"",BT+"战斗托管_下.png");
     ma->SetItemLayer(ad,2);
@@ -269,7 +276,7 @@ QString SG_UI::UI_FigureShow(QString Path, QString Name, QString Ta, float X, fl
     {
         ParametersStru sgg;
         sgg.ItemVar<< &sg[ssum];
-        sgg.intVar<< aaa;
+        sgg.intVar<< aaa << X_ << Y_;
         sgg.StringVar<<"SG"<<Ta<<Name;
         aaa++;
         sg[ssum] = *ma->AddButtonItem(Path,X,Y,"_Zoom","","",100,sgg);//Item*数组sg储存人物
@@ -296,8 +303,9 @@ QString SG_UI::UI_FigureShow(QString Path, QString Name, QString Ta, float X, fl
 
 void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
 {
-    int fsum = 0;
 
+
+    int fsum = 0;
     Item* fgg;
     if(name.StringVar[0] == "SG")
     {
@@ -305,24 +313,40 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
         fgg = new Item[6];
         fgg = sg;
         G = 1;
+        ggs = name;
     }
     if(name.StringVar[0] == "DS" && G == 1)
     {
         fsum = dsum;
         fgg = new Item[6];
         fgg = ds;
-
+        GG = 1;
     }
-
+    Figure* t = new Figure;
+    if(GG == 2)
+    {
+        if(t->ReadSql(name.StringVar[2],"CLASS") == "CV"){
+            ma->RemoveItem(we1);
+            ma->RemoveItem(we2);
+            ma->RemoveItem(we3);
+        }
+        else
+        {
+            ma->RemoveItem(we1);
+            ma->RemoveItem(we2);
+            ma->RemoveItem(we3);
+        }
+        SG_UI::UI_FigureWeapons(ggs,1);
+    }
     if(G == 1)
     {
         float zo = 0.0;
         for(int i = 0; i < fsum; i++)       //判断放大图元
         {
             zo = ma->GetItemScale(&fgg[i]); //检查所有图元缩放值
-            if(zo > 1)
-                {
+            if(zo > 1){
                     ma->ScaleItem(&fgg[i],1.0);     //如果有图元缩放值大于1就改成1
+
                     if(name.StringVar[0] == "DS")
                         ma->MoveItem(&fgg[i],803,Yz);//判断是否是敌方图元 重设坐标
             }
@@ -337,15 +361,49 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
                 ma->SetItemLayer(&fgg[j],4);//把被点击图元优先级升级(这样可以确保被点击图元显示时总在高层)
 
             /*由于元火缩放图元都是以左上角为标注 但敌方名片UI需要以右上角为基准缩放*/
-                if(name.StringVar[0] == "DS")
-                {   ma->MoveItem(&fgg[j],757,name.intVar[1]);//所以当当前点击为敌方时 先左移出来一部分
+                if(name.StringVar[0] == "DS"){
+                    ma->MoveItem(&fgg[j],757,name.intVar[1]);//所以当当前点击为敌方时 先左移出来一部分
                     Yz = name.intVar[1];                     //设置被移动图元的Y
                 }
                     ma->ScaleItem(&fgg[j],1.2);//放大
+                    SG_UI::UI_FigureWeapons(ggs,GG);
             }
         }
     }
     //return name;
+}
+
+ParametersStru* SG_UI::UI_FigureWeapons(ParametersStru Name, int switchh)
+{
+    if(switchh == 1)
+    {
+        Figure* a = new Figure;
+        if(a->ReadSql(Name.StringVar[2],"CLASS") == "CV"){
+            we1 = ma->AddButtonItem(BT+"武器按钮1.png",Name.intVar[1],Name.intVar[2],"","","",100,Name);
+            we2 = ma->AddButtonItem(BT+"武器按钮3.png",Name.intVar[1],Name.intVar[2],"","","",100,Name);
+            we3 = ma->AddButtonItem(BT+"武器按钮4.png",Name.intVar[1],Name.intVar[2],"","","",100,Name);
+            ma->AnimationMoveItem(we1,0,Name.intVar[2],15);
+            ma->AnimationMoveItem(we2,0,Name.intVar[2],15);
+            ma->AnimationMoveItem(we3,0,Name.intVar[2],15);
+            ma->SetItemLayer(we1,11);
+            ma->SetItemLayer(we2,11);
+            ma->SetItemLayer(we3,11);
+            GG = 2;
+        }
+        else
+        {
+            we1 = ma->AddButtonItem(BT+"武器按钮1.png",Name.intVar[1],Name.intVar[2],"","","",100,Name);
+            we2 = ma->AddButtonItem(BT+"武器按钮2.png",Name.intVar[1],Name.intVar[2],"","","",100,Name);
+            we3 = ma->AddTextItem("   ","微软雅黑",20,0,0,0,0,0);
+            ma->AnimationMoveItem(we1,0,Name.intVar[2],15);
+            ma->AnimationMoveItem(we2,0,Name.intVar[2],15);
+            ma->SetItemLayer(we1,11);
+            ma->SetItemLayer(we2,11);
+            GG = 2;
+        }
+    }
+
+    return &Name;
 }
 
 void SG_UI::UI_AnimationFigure(QString SGname, QString DSname, int SH)
