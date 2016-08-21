@@ -13,8 +13,7 @@ Item* re;
 Item* we1;
 Item* we2;
 Item* we3;
-Item* we4;
-Item* we5;
+
 int Yz = 0;            //敌方名片纵坐标(用于放大之后缩回)
 int Tbx = 752;         //TextUi界面的按钮横坐标
 int aaa = 0;           //我方名片序号 用于判断
@@ -23,6 +22,7 @@ int G = 0;
 int ssum = 0;          //我方名片计数变量 最终于我方名片数目相同 用于循环
 int dsum = 0;          //敌方
 int GG = 0;
+int K = 0;
 ParametersStru ggs;
 
 using namespace SG_UI;
@@ -306,22 +306,23 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
 
 
     int fsum = 0;
-    Item* fgg;
+    Item* fgg;                  //判断传进来的是属于SG表还是DS表
     if(name.StringVar[0] == "SG")
-    {
-        fsum = ssum;
-        fgg = new Item[6];
-        fgg = sg;
-        G = 1;
-        ggs = name;
-    }
+        {
+            fsum = ssum;
+            fgg = new Item[6];
+            fgg = sg;
+            G = 1;              //如果第一点击敌方 则不放大(因为第一次点击敌方就放大看着难受
+            ggs = name;
+        }
     if(name.StringVar[0] == "DS" && G == 1)
-    {
-        fsum = dsum;
-        fgg = new Item[6];
-        fgg = ds;
-        GG = 1;
-    }
+        {
+            fsum = dsum;
+            fgg = new Item[6];
+            fgg = ds;
+            GG = 1;
+        }
+
     Figure* t = new Figure;
     if(GG == 2)
     {
@@ -330,14 +331,14 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
             ma->RemoveItem(we2);
             ma->RemoveItem(we3);
         }
-        else
-        {
+        else{
             ma->RemoveItem(we1);
             ma->RemoveItem(we2);
             ma->RemoveItem(we3);
         }
         SG_UI::UI_FigureWeapons(ggs,1);
     }
+
     if(G == 1)
     {
         float zo = 0.0;
@@ -364,9 +365,16 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
                 if(name.StringVar[0] == "DS"){
                     ma->MoveItem(&fgg[j],757,name.intVar[1]);//所以当当前点击为敌方时 先左移出来一部分
                     Yz = name.intVar[1];                     //设置被移动图元的Y
+                    if(K == 0){
+                            SG_UI::UI_FigureWeapons(ggs,GG);
+
+                        }
+                    GG = 2;
                 }
                     ma->ScaleItem(&fgg[j],1.2);//放大
+                if(name.StringVar[0] == "SG" && K == 1)
                     SG_UI::UI_FigureWeapons(ggs,GG);
+
             }
         }
     }
@@ -388,7 +396,8 @@ ParametersStru* SG_UI::UI_FigureWeapons(ParametersStru Name, int switchh)
             ma->SetItemLayer(we1,11);
             ma->SetItemLayer(we2,11);
             ma->SetItemLayer(we3,11);
-            GG = 2;
+            GG = 2; //之后把标记改成2
+            K = 1;
         }
         else
         {
@@ -400,6 +409,7 @@ ParametersStru* SG_UI::UI_FigureWeapons(ParametersStru Name, int switchh)
             ma->SetItemLayer(we1,11);
             ma->SetItemLayer(we2,11);
             GG = 2;
+            K = 1;
         }
     }
 
