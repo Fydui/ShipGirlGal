@@ -1,5 +1,6 @@
 ﻿#include "sg_ui.h"
 #include "maincall.h"
+#include "GlobalVar.h"
 extern maincall* ma;
 
 Item* But[6];
@@ -13,6 +14,9 @@ Item* re;
 Item* we1;
 Item* we2;
 Item* we3;
+Item* t1;
+Item* t2;
+Item* t3;
 
 int Yz = 0;            //敌方名片纵坐标(用于放大之后缩回)
 int Tbx = 752;         //TextUi界面的按钮横坐标
@@ -330,11 +334,17 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
             ma->RemoveItem(we1);
             ma->RemoveItem(we2);
             ma->RemoveItem(we3);
+            ma->RemoveItem(t1);
+            ma->RemoveItem(t2);
+            ma->RemoveItem(t3);
         }
         else{
             ma->RemoveItem(we1);
             ma->RemoveItem(we2);
             ma->RemoveItem(we3);
+            ma->RemoveItem(t1);
+            ma->RemoveItem(t2);
+            ma->RemoveItem(t3);
         }
         SG_UI::UI_FigureWeapons(ggs,1);
     }
@@ -367,7 +377,6 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
                     Yz = name.intVar[1];                     //设置被移动图元的Y
                     if(K == 0){
                             SG_UI::UI_FigureWeapons(ggs,GG);
-
                         }
                     GG = 2;
                 }
@@ -396,6 +405,12 @@ ParametersStru* SG_UI::UI_FigureWeapons(ParametersStru Name, int switchh)
             ma->SetItemLayer(we1,11);
             ma->SetItemLayer(we2,11);
             ma->SetItemLayer(we3,11);
+            t1 = ma->AddTextItem("副 炮","微软雅黑",30,75,185,248,37,17);
+            t2 = ma->AddTextItem("舰载攻击机","微软雅黑",20,75,185,248,190,10);
+            t3 = ma->AddTextItem("舰载轰炸机","微软雅黑",20,75,185,248,155,45);
+            ma->SetItemLayer(t1,12);
+            ma->SetItemLayer(t2,12);
+            ma->SetItemLayer(t3,12);
             GG = 2; //之后把标记改成2
             K = 1;
         }
@@ -408,6 +423,28 @@ ParametersStru* SG_UI::UI_FigureWeapons(ParametersStru Name, int switchh)
             ma->AnimationMoveItem(we2,0,Name.intVar[2],15);
             ma->SetItemLayer(we1,11);
             ma->SetItemLayer(we2,11);
+
+            if(a->ReadSql(Name.StringVar[2],"CLASS") == "BB" || a->ReadSql(Name.StringVar[2],"CLASS") == "CA"
+                    || a->ReadSql(Name.StringVar[2],"CLASS") == "BC")
+                {
+                    t1 = ma->AddTextItem("主 炮","微软雅黑",30,75,185,248,Name.intVar[1]+25,Name.intVar[2]+20);
+                    t2 = ma->AddTextItem("副 炮","微软雅黑",30,75,185,248,Name.intVar[1]+200,Name.intVar[2]+20);
+            }
+            else if(a->ReadSql(Name.StringVar[2],"CLASS") == "DD" || a->ReadSql(Name.StringVar[2],"CLASS") == "CL")
+                {
+                    t1 = ma->AddTextItem("主 炮","微软雅黑",30,75,185,248,Name.intVar[1]+25,Name.intVar[2]+20);
+                    t2 = ma->AddTextItem("鱼 雷","微软雅黑",30,75,185,248,Name.intVar[1]+200,Name.intVar[2]+20);
+            }
+            else if(a->ReadSql(Name.StringVar[2],"CLASS") == "SS")
+                {
+                    t1 = ma->AddTextItem("近防炮","微软雅黑",25,75,185,248,Name.intVar[1]+25,Name.intVar[2]+20);
+                    t1 = ma->AddTextItem("鱼 雷","微软雅黑",30,75,185,248,Name.intVar[1]+200,Name.intVar[2]+20);
+            }
+
+            t3 = ma->AddTextItem("  ","微软雅黑",30,75,185,248,155,61);
+            ma->SetItemLayer(t1,12);
+            ma->SetItemLayer(t2,12);
+            ma->SetItemLayer(t3,12);
             GG = 2;
             K = 1;
         }
