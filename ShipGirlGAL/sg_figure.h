@@ -33,7 +33,7 @@ public:
     QString CheckTable(QString Name);                           //检查一个名字在哪个表里 返回表名
     QString FigureShow(QString Name);                           //显示人物(小)
     Figure* ReadFigureData(QString Name);
-    int FightAtt(QString SG_, QString DS_);
+    int FightAtt(QString SG_, QString DS_, ParametersStru WeaponType);
 
 
 private:

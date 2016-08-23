@@ -65,10 +65,9 @@ void maincall::_Zoom(ParametersStru name)
 
 }
 
-void maincall::_Att()
+void maincall::_Att(ParametersStru WeaponType)
 {
-
-    fun->FightAtt(SName,DName);
+    fun->FightAtt(SName,DName,WeaponType);
 }
 void maincall::_ReturnUi(ParametersStru re)
 {

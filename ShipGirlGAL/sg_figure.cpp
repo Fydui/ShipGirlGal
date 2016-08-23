@@ -306,7 +306,7 @@ Figure* Figure::ReadFigureData(QString Name)
     return FigureData;
 }
 
-int Figure::FightAtt(QString SG_, QString DS_) //默认第一个参数是攻击方,第二个为被攻击方 返回剩余血量
+int Figure::FightAtt(QString SG_, QString DS_,ParametersStru WeaponType) //默认第一个参数是攻击方,第二个为被攻击方,第三个是武器类型 返回剩余血量
 {
     Figure* A = new Figure();
     A = ReadFigureData(SG_);
