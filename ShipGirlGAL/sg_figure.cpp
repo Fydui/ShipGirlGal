@@ -318,43 +318,69 @@ int Figure::FightAtt(QString SG_, QString DS_,ParametersStru WeaponType) //默�
     sh = round(sh*100)/100.0;
 
     int shjs = 0;
+    QString ak = WeaponType.StringVar[0];
     //判断级别 用不同级别的伤害公式计算伤害
     if(A->CLASS == "CV"){//(我方攻击力+我方飞机数*级别系数 + 我方等级*级别系数)*随机伤害系数 -敌方装甲* 级别系数-敌方等级* 级别系数
         int cv = 0.6;
-        double cvsh = (A->ATK + ((A->PLANESUM* cv) + (A->LV* cv))* sh - (B->ARMOR* cv + B->LV* cv));
+        double cvsh;
+        if(ak == "CVMG")
+             cvsh = (A->ATK + (A->LV* cv)* sh - (B->ARMOR + B->LV)* cv);
+        else if(ak == "HZ")
+             cvsh = (A->ATK + (A->PLANESUM + A->LV)* cv* sh - (B->ARMOR + B->LV)* cv);
+        else if(ak == "TP")
+             cvsh = (A->ATK + (A->PLANESUM + A->LV)* cv* sh - (B->ARMOR + B->LV)* cv);
+
         shjs = abs(cvsh);
     }
     else if(A->CLASS == "BB"){
         int bb = 0.7;
-        double bbsh = (A->ATK + A->LV* bb)* sh - (B->ARMOR* bb + B->LV* bb);
+        double bbsh;
+        if(ak == "BBMG")
+             bbsh = (A->ATK + A->LV* bb)* sh - (B->ARMOR* bb + B->LV* bb);
+        else bbsh = (A->ATK* bb)* sh - (B->ARMOR* bb + B->LV* bb);
         shjs = bbsh;
     }
     else if(A->CLASS == "BC"){
         int bc = 0.65;
-        double bcsh = (A->ATK + A->LV* bc)*sh - (B->ARMOR* bc + B->LV* bc);
+        double bcsh;
+        if(ak == "BCMG")
+            bcsh = (A->ATK + A->LV* bc)*sh - (B->ARMOR* bc + B->LV* bc);
+        else bcsh = (A->ATK* bc)*sh - (B->ARMOR* bc + B->LV* bc);
         shjs = bcsh;
     }
     else if(A->CLASS == "CA"){
         int ca = 0.55;
-        double catp = (A->ATK + A->LV* ca + A->TORPEDO* 0.55)*sh - (B->ARMOR* ca +B->LV* ca); //CA鱼雷攻击伤害公式
-        double cash = (A->ATK + A->LV* ca)*sh - (B->ARMOR* ca + B->LV* ca);
-        shjs = cash;
+        double cash;
+            if(ak == "CAMG")
+                 cash = (A->ATK + A->LV* ca)*sh - (B->ARMOR* ca + B->LV* ca);
+            else cash = (A->ATK)*sh - (B->ARMOR* ca +B->LV* ca);
+            shjs = cash;
     }
     else if(A->CLASS == "CL"){
         int cl = 0.45;
-        double cltp = (A->ATK + A->LV* cl +A->TORPEDO* 0.55)*sh - (B->ARMOR* cl + B->LV*cl);
-        double clsh = (A->ATK + A->LV)*sh - (B->ARMOR* cl + B->LV*cl);
-        shjs = clsh;
+        double clsh;
+            if(ak == "CLMG")
+                 clsh = (A->ATK + A->LV* cl +A->TORPEDO* 0.55)*sh - (B->ARMOR* cl + B->LV*cl);
+            else
+                 clsh = (A->ATK + A->LV)*sh - (B->ARMOR* cl + B->LV*cl);
+                shjs = clsh;
     }
     else if(A->CLASS == "DD"){
         int dd = 0.4;
-        double ddtp = (A->ATK + A->LV*dd + A->TORPEDO* 0.65)*sh - (B->ARMOR* dd + B->LV*dd);
-        double ddsh = (A->ATK + A->LV)*sh - (B->ARMOR* dd + B->LV*dd);
+        double ddsh;
+            if(ak == "DDMG")
+                ddsh = (A->ATK + A->LV*dd + A->TORPEDO* 0.65)*sh - (B->ARMOR* dd + B->LV*dd);
+            else
+                ddsh = (A->ATK + A->LV)*sh - (B->ARMOR* dd + B->LV*dd);
         shjs = ddsh;
     }
     else if(A->CLASS == "SS"){
         int ss = 0.35;
-        double sstp = (A->ATK + A->LV*ss +A->TORPEDO* 0.75)*sh - (B->ARMOR* ss + B->LV*ss);
+        double sstp;
+            if(ak == "SSMG")
+                sstp = (A->ATK + A->LV)*ss*sh - (B->ARMOR* ss + B->LV*ss);
+            else
+                sstp = (A->ATK + A->LV*ss +A->TORPEDO* 0.75)*sh - (B->ARMOR* ss + B->LV*ss);
         shjs = sstp;
     }
     else
