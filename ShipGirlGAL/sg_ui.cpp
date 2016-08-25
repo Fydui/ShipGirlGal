@@ -2,7 +2,7 @@
 #include "maincall.h"
 #include "GlobalVar.h"
 extern maincall* ma;
-ParametersStru weapon;
+
 Item* sg = new Item[6];//我方人物数组
 Item* ds = new Item[6];//敌方人物数组
 Item* But[6];
@@ -366,18 +366,18 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
     //return name;
 }
 
-QString SG_UI::UI_FigureWeapons(ParametersStru Name, int switchh)//寻找攻击者的武器类别 switchh是开关1开别的关
+void SG_UI::UI_FigureWeapons(ParametersStru Name, int switchh)//寻找攻击者的武器类别 switchh是开关1开别的关
 {
     if(switchh == 1)
     {
         Figure* a = new Figure;
-
         if(a->ReadSql(Name.StringVar[2],"CLASS") == "CV"){
 
             QString pa[3] = {"武器按钮1.png","武器按钮2.png","武器按钮3.png"};  //武器按钮的名字
-            QString wa[3] = {"CVMG","GJ","HZ"};                                //weapon传递的参数
+            QString wa[3] = {"CVMG","CVTP","CVHZ"};                                //weapon传递的参数
             for(int i = 0; i < 3; i++)
                 {
+                    ParametersStru weapon;
                     weapon.StringVar<<wa[i];
                     Wep[i] = ma->AddButtonItem(BT+pa[i],Name.intVar[1],Name.intVar[2],"_Att","","",100,weapon);
                     ma->AnimationMoveItem(Wep[i],0,Name.intVar[2],15);
@@ -391,6 +391,7 @@ QString SG_UI::UI_FigureWeapons(ParametersStru Name, int switchh)//寻找攻击�
             ma->SetItemLayer(Wep[5],12);
             GG = 2; //之后把标记改成2
             K = 1;
+
         }
         else
         {
@@ -398,6 +399,7 @@ QString SG_UI::UI_FigureWeapons(ParametersStru Name, int switchh)//寻找攻击�
             QString macl = "_Att";
             if(read == "BB" || read == "CA" || read == "BC")
                 {
+                    ParametersStru weapon;
                     if(read == "BB")      weapon.StringVar<<"BBMG";
                     else if(read == "CA") weapon.StringVar<<"CAMG";
                     else                  weapon.StringVar<<"CAMG";
@@ -413,6 +415,7 @@ QString SG_UI::UI_FigureWeapons(ParametersStru Name, int switchh)//寻找攻击�
 
             else if(read == "DD" || read == "CL")
                 {
+                    ParametersStru weapon;
                     if(read == "DD") weapon.StringVar<<"DDMG";
                     else             weapon.StringVar<<"CLMG";
                     Wep[0] = ma->AddButtonItem(BT+"武器按钮1.png",Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
@@ -426,6 +429,7 @@ QString SG_UI::UI_FigureWeapons(ParametersStru Name, int switchh)//寻找攻击�
 
             else if(read == "SS")
                 {
+                    ParametersStru weapon;
                     weapon.StringVar<<"SSMG";
                     Wep[0] = ma->AddButtonItem(BT+"武器按钮1.png",Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
                     Wep[3] = ma->AddTextItem("近防炮","微软雅黑",25,75,185,248,Name.intVar[1]+25,Name.intVar[2]+20);
@@ -449,7 +453,7 @@ QString SG_UI::UI_FigureWeapons(ParametersStru Name, int switchh)//寻找攻击�
         }
     }
 
-    return weapon.StringVar[0];
+
 }
 
 void SG_UI::UI_AnimationFigure(QString SGname, QString DSname, int SH)

@@ -325,9 +325,9 @@ int Figure::FightAtt(QString SG_, QString DS_,ParametersStru WeaponType) //é»˜è®
         double cvsh;
         if(ak == "CVMG")
              cvsh = (A->ATK + (A->LV* cv)* sh - (B->ARMOR + B->LV)* cv);
-        else if(ak == "HZ")
+        else if(ak == "CVHZ")
              cvsh = (A->ATK + (A->PLANESUM + A->LV)* cv* sh - (B->ARMOR + B->LV)* cv);
-        else if(ak == "TP")
+        else if(ak == "CVTP")
              cvsh = (A->ATK + (A->PLANESUM + A->LV)* cv* sh - (B->ARMOR + B->LV)* cv);
 
         shjs = abs(cvsh);
