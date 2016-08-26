@@ -1,10 +1,17 @@
 //-----本文件用于窗口的初始化-----
 #include "widget.h"
 #include "ui_widget.h"
+#include "configure.h"
 
 LFEvent *lfevent;
-QGraphicsScene *MainScene;//声明舞台
-GraphicsView *MainView;//声明视图
+QGraphicsScene *MainScene;
+GraphicsView *MainView;
+JSVM *MainJSVM;
+
+#ifdef SelfAdaption
+float adaptiveRatioX;
+float adaptiveRatioY;
+#endif
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -26,29 +33,51 @@ void Widget::Initialization()
     //编码校正
     QTextCodec *codec = QTextCodec::codecForName("UTF-8");
     QTextCodec::setCodecForLocale(codec);
-    //注册类型
+    //注册普通类型
     RegisterJSType(ParametersStru,"ParametersStru");
     RegisterJSType(LFEvent*,"LFEvent*");
     RegisterJSType(Item*,"Item*");
     RegisterJSType(String,"String");
     RegisterJSType(VideoPlayer*,"VideoPlayer*");
     RegisterJSType(GraphicsView*,"GraphicsView*");
-    RegisterJSType(EasyThread*,"EasyThread*");
+    RegisterJSType(CaluThread*,"CaluThread*");
     RegisterJSType(AnimationType,"AnimationType");
     RegisterJSType(Pixmap*,"Pixmap*");
     RegisterJSType(MusicPlayer*,"MusicPlayer*");
     RegisterJSType(GraphicsScene*,"GraphicsScene*");
-    RegisterJSType(Qt::Key,"QtKey");
-    RegisterJSType(Variant,"Variant");//这个我感觉有点别扭……
+    RegisterJSType(Key,"Key");
+    RegisterJSType(JSVM*,"JSVM*");
+    //注册Vector类型
+    RegisterJSType(QVector<int>,"intVector");
+    RegisterJSType(QVector<float>,"floatVector");
+    RegisterJSType(QVector<String>,"StringVector");
+    RegisterJSType(QVector<bool>,"boolVector");
+    RegisterJSType(QVector<VideoPlayer*>,"VideoPlayerVector");
+    RegisterJSType(QVector<GraphicsView*>,"GraphicsViewVector");
+    RegisterJSType(QVector<CaluThread*>,"CaluThreadVector");
+    RegisterJSType(QVector<AnimationType>,"AnimationTypeVector");
+    RegisterJSType(QVector<Pixmap*>,"PixmapVector");
+    RegisterJSType(QVector<Item*>,"ItemVector");
+    RegisterJSType(QVector<MusicPlayer*>,"MusicPlayerVector");
+    RegisterJSType(QVector<GraphicsScene*>,"GraphicsSceneVector");
+    RegisterJSType(QVector<Key>,"KeyVector");
+    #ifdef SelfAdaption
+    //计算自适应比
+    int scWidth=GetScreenWidth();
+    int scHeigh=GetScreenHeigh();
+    adaptiveRatioX=float(scWidth)/float(WindowsWidth);
+    adaptiveRatioY=float(scHeigh)/float(WindowsHeigh);
+    setGeometry(0,0,scWidth,scHeigh);
+    setFixedSize(GetScreenWidth(),GetScreenHeigh());
+    #else
     //计算窗口出现位置
     int widX=(GetScreenWidth()-WindowsWidth)/2;
     int widY=(GetScreenHeigh()-WindowsHeigh)/2;
-    //设置窗口参数
     setGeometry(widX,widY,WindowsWidth,WindowsHeigh);
     setFixedSize(WindowsWidth,WindowsHeigh);
+    #endif
     setWindowTitle(title);
-    MainScene=AddScene(MaximumWidth,MaximunHeigh);//初始化舞台
-    //定义视图并显示
+    MainScene=AddScene(MaximumWidth,MaximunHeigh);
     MainView=AddView(0,0,WindowsWidth,WindowsHeigh);
-    SetScene();
+    SetViewScene();
 }

@@ -2,6 +2,19 @@
 #include "widget.h"
 #include "configure.h"
 
+#ifdef SelfAdaption
+void adaptive(int &x,int &y)
+{
+    x*=adaptiveRatioX;
+    y*=adaptiveRatioY;
+}
+void adaptive(float &x,float &y)
+{
+    x*=adaptiveRatioX;
+    y*=adaptiveRatioY;
+}
+#endif
+
 Pixmap* Widget::LoadPixmap(String PicPath)
 {return new Pixmap(PicPath);}
 
@@ -17,8 +30,7 @@ int Widget::GetPixmapHeight(Pixmap *pixmap)
 Item* Widget::AddPixmapItem(String PicPath,int x,int y,String PressSlotfun,ParametersStru PressPar,String ReleaseSlotfun,ParametersStru ReleasePar,GraphicsScene *scene)
 {
     Pixmap mainpix(PicPath);
-    MyItem *item=new MyItem(mainpix);
-    item->s=this;
+    MyItem *item=new MyItem(mainpix,this);
     item->SetEvent(PressSlotfun,PressPar,ReleaseSlotfun,ReleasePar);
     scene->addItem(item);
     item->setPos(x,y);
@@ -29,8 +41,7 @@ Item* Widget::AddPixmapItem(String PicPath,int x,int y,String PressSlotfun,Param
 
 Item* Widget::AddPixmapItem(Pixmap *pixmap,int x,int y,String PressSlotfun,ParametersStru PressPar,String ReleaseSlotfun,ParametersStru ReleasePar,GraphicsScene *scene)
 {
-    MyItem *item=new MyItem(*pixmap);
-    item->s=this;
+    MyItem *item=new MyItem(*pixmap,this);
     item->SetEvent(PressSlotfun,PressPar,ReleaseSlotfun,ReleasePar);
     scene->addItem(item);
     item->setPos(x,y);
@@ -42,8 +53,7 @@ Item* Widget::AddPixmapItem(Pixmap *pixmap,int x,int y,String PressSlotfun,Param
 Item* Widget::AddButtonItem(String PicPath,int x,int y,String ReleaseSlotfun, String PressPic, String PressMusic,int volume, ParametersStru ReleasePar, GraphicsScene *scene)
 {
     Pixmap mainpix(PicPath);
-    MyItem *item=new MyItem(mainpix);
-    item->s=this;
+    MyItem *item=new MyItem(mainpix,this);
     if(PressPic!=NULL_String)
     {item->SetButton(mainpix,Pixmap(PressPic),PressMusic,volume);}
     else
@@ -58,8 +68,7 @@ Item* Widget::AddButtonItem(String PicPath,int x,int y,String ReleaseSlotfun, St
 
 Item* Widget::AddButtonItem(Pixmap *pixmap,int x,int y,String ReleaseSlotfun, Pixmap *PressPic, String PressMusic,int volume, ParametersStru ReleasePar, GraphicsScene *scene)
 {
-    MyItem *item=new MyItem(*pixmap);
-    item->s=this;
+    MyItem *item=new MyItem(*pixmap,this);
     if(PressPic!=nullptr)
     {item->SetButton(*pixmap,*PressPic,PressMusic,volume);}
     else
@@ -80,45 +89,51 @@ Item* Widget::AddTextItem(String Text, String Font, int Size, RGBColor color, in
     QGraphicsTextItem *text=new QGraphicsTextItem(Text);
     text->setFont(QFont(Font,Size));
     text->setDefaultTextColor(color);
-    scene->addItem(text);
     text->setPos(x,y);
     Item *item=new Item(nullptr,text);
     AllItem<<item;
+    scene->addItem(text);
     return item;
 }
 
 Item* Widget::AddRectItem(int x,int y,int width,int height,GraphicsScene *scene)
 {
-   QGraphicsRectItem *rect=new QGraphicsRectItem(x,y,width,height);
-   scene->addItem(rect);
-   Item *item=new Item(nullptr,rect);
-   AllItem<<item;
-   return item;
+    QGraphicsRectItem *rect=new QGraphicsRectItem(x,y,width,height);
+    scene->addItem(rect);
+    Item *item=new Item(nullptr,rect);
+    AllItem<<item;
+    return item;
 }
 
 Item* Widget::AddEllipseItem(int x,int y,int width,int height,GraphicsScene *scene)
 {
-   QGraphicsEllipseItem *Ellipse=new QGraphicsEllipseItem(x,y,width,height);
-   scene->addItem(Ellipse);
-   Item *item=new Item(nullptr,Ellipse);
-   AllItem<<item;
-   return item;
+    QGraphicsEllipseItem *Ellipse=new QGraphicsEllipseItem(x,y,width,height);
+    scene->addItem(Ellipse);
+    Item *item=new Item(nullptr,Ellipse);
+    AllItem<<item;
+    return item;
 }
 
 Item* Widget::AddLineItem(int x,int y,int fx,int fy,GraphicsScene *scene)
 {
-   QGraphicsLineItem *line=new QGraphicsLineItem(x,y,fx,fy);
-   scene->addItem(line);
-   Item *item=new Item(nullptr,line);
-   AllItem<<item;
-   return item;
+    QGraphicsLineItem *line=new QGraphicsLineItem(x,y,fx,fy);
+    scene->addItem(line);
+    Item *item=new Item(nullptr,line);
+    AllItem<<item;
+    return item;
 }
 
-void Widget::RotationItem(Item* item, float set)
-{item->ItemPointer->setRotation(set);}
+void Widget::RotationItem(Item* item, float set,Pos originPos)
+{
+    item->ItemPointer->setTransformOriginPoint(QPointF(originPos.x(),originPos.y()));
+    item->ItemPointer->setRotation(set);
+}
 
-void Widget::ScaleItem(Item* item, float set)
-{item->ItemPointer->setScale(set);}
+void Widget::ScaleItem(Item* item, float set,Pos originPos)
+{
+    item->ItemPointer->setTransformOriginPoint(originPos);
+    item->ItemPointer->setScale(set);
+}
 
 void Widget::BlurRadiusItem(Item* item, float set)
 {
@@ -128,15 +143,20 @@ void Widget::BlurRadiusItem(Item* item, float set)
    item->ItemPointer->setGraphicsEffect(item->Blur);
 }
 
-void Widget::DropShadowItem(Item* item, float shadowX,float shadowY)//还没写完
+/*void Widget::DropShadowItem(Item* item, float shadowX,float shadowY)//还没写完
 {
     QGraphicsDropShadowEffect *e2 = new QGraphicsDropShadowEffect(this);
     e2->setOffset(shadowX,shadowY);
     item->ItemPointer->setGraphicsEffect(e2);
-}
+}*/
 
 void Widget::MoveItem(Item* item, int x, int y)
-{item->ItemPointer->setPos(x,y);}
+{
+    item->ItemPointer->setPos(x,y);
+    #ifdef AutoIsColliding
+    itemMoveEvent();
+    #endif
+}
 
 void Widget::SetOpacityItem(Item* item, float set)
 {item->ItemPointer->setOpacity(set);}
@@ -151,7 +171,7 @@ void Widget::SetRGBColorItem(Item* item,int R,int G,int B)
 
 void Widget::ClearScene(GraphicsScene *scene)
 {
-   for(auto i:AllItem)
+   for(Item* i:AllItem)
    {RemoveItem(i);}
    scene->clear();//这句目测没用
 }
@@ -160,7 +180,7 @@ void Widget::RemoveItem(Item* item)
 {
     EndAllAnimation(item);
     #ifdef SafetyPriority
-        SafeSleep(2);//等待目前进行这帧完成
+    SafeSleep(2);//等待目前进行这帧完成
     #endif
     AllItem.removeAt(AllItem.indexOf(item));
     delete item;
@@ -218,41 +238,49 @@ void Widget::RemoveMusic(MusicPlayer *player)
 void Widget::StopMusic(MusicPlayer *player)
 {player->stop();}
 
-EasyThread* Widget::StartThread(String slotfun,ParametersStru par,bool track)
+CaluThread* Widget::StartThread(String slotfun,ParametersStru par,bool track)
 {
-    if(track)
+    ExpansionSlot *slot=FindExpansionSlot(slotfun);
+    if(slot==nullptr)
     {
-        EasyThread *thread=new EasyThread(slotfun,par);
-        thread->start();
-        return thread;
-    }
-    else
-    {
+        //非扩展情况
+        if(track)
+        {
+            CaluThread *thread=new CaluThread(slotfun,par);
+            thread->start();
+            return thread;
+        }
         RunFun(slotfun,par);
         return nullptr;
     }
+    //扩展情况
+    //即使是非追踪，调用扩展槽还是需要CaluThread，区别只是是否自动回收
+    CaluThread *thread=new CaluThread(slot,par,track);
+    thread->start();
+    if(track)
+    {return thread;}
+    return nullptr;
 }
 
-void Widget::RemoveThread(EasyThread *thread)
+void Widget::RemoveThread(CaluThread *thread)
 {
-    thread->terminate();
+    thread->quit();
     thread->wait();
-    delete thread;
+    thread->playFinished();
 }
 
 bool Widget::ItemColliding(Item* item1,Item* item2)
 {return isColliding(item1->ItemPointer,item2->ItemPointer);}
 
-VideoPlayer* Widget::AddVideo(String path,int Volume,int x,int y,int width,int heigh,bool cycle,String signfun,GraphicsScene *scene)
+VideoPlayer* Widget::AddVideo(String path,int Volume,int x,int y,int width,int heigh,bool cycle,String signfun,ParametersStru par,GraphicsScene *scene)
 {
-   if(x==-1)
-   {x=MainView->viewX-(WindowsWidth/2);}
-   if(y==-1)
-   {y=MainView->viewY-(WindowsHeigh/2);}
-   VideoPlayer* video=new VideoPlayer(path,Volume,x,y,width,heigh,cycle,signfun,scene);
-   video->start();
-   return video;
-
+    if(x==-1)
+    {x=MainView->viewX-(WindowsWidth/2);}
+    if(y==-1)
+    {y=MainView->viewY-(WindowsHeigh/2);}
+    VideoPlayer* video=new VideoPlayer(path,Volume,x,y,width,heigh,cycle,signfun,par,scene);
+    video->start();
+    return video;
 }
 
 void Widget::SetVideoVolume(VideoPlayer *video,int volume)
@@ -276,181 +304,128 @@ void Widget::RemoveVideo(VideoPlayer *video)
 void Widget::StopVideo(VideoPlayer *video)
 {video->mediaPlayer->stop();}
 
-void Widget::AnimationRotationItem(Item* item, float set,int times,String signfun)
+void Widget::AnimationRotationItem(Item* item, float set,int time,Pos originPos,String signfun)
 {
    EndAnimation(item,Rotation);
-   QGraphicsItem* gr=item->ItemPointer;
-   float CurrentModulus=gr->rotation();
-   SC *s=new SC(CurrentModulus,set,times);
-   item->scPointer[Rotation]=s;
-   s->gr=gr;
-   s->signfun=signfun;
-   s->num=item;
-   s->start(Rotation);
+   SC *sc=new SC(GetItemRotation(item),set,time,item,signfun,this);
+   item->ItemPointer->setTransformOriginPoint(originPos);
+   item->scPointer[Rotation]=sc;
+   sc->start(Rotation);
 }
 
-void Widget::AnimationRotationItem(Item *item, SCFun scfun, int times, String signfun)
+void Widget::AnimationRotationItem(Item *item, SCFun scfun, int time,Pos originPos,String signfun)
 {
     EndAnimation(item,Rotation);
-    SC *s=new SC(0,0,times);
-    item->scPointer[Rotation]=s;
-    s->gr=item->ItemPointer;
-    s->signfun=signfun;
-    s->UesSCFun(scfun);
-    s->num=item;
-    s->start(Rotation);
+    SC *sc=new SC(0,0,time,item,signfun,this);
+    item->ItemPointer->setTransformOriginPoint(QPointF(originPos.x(),originPos.y()));
+    item->scPointer[Rotation]=sc;
+    sc->UesSCFun(scfun);
+    sc->start(Rotation);
 }
 
-void Widget::AnimationScaleItem(Item* item, float set,int times,String signfun)
-{
-   EndAnimation(item,Scale);
-   QGraphicsItem* gr=item->ItemPointer;
-   float CurrentModulus=gr->scale();
-   SC *s=new SC(CurrentModulus,set,times);
-   item->scPointer[Scale]=s;
-   s->gr=item->ItemPointer;
-   s->signfun=signfun;
-   s->num=item;
-   s->start(Scale);
-}
-
-void Widget::AnimationScaleItem(Item *item, SCFun scfun, int times, String signfun)
+void Widget::AnimationScaleItem(Item* item, float set,int time,Pos originPos,String signfun)
 {
     EndAnimation(item,Scale);
-    SC *s=new SC(0,0,times);
-    item->scPointer[Scale]=s;
-    s->gr=item->ItemPointer;
-    s->signfun=signfun;
-    s->UesSCFun(scfun);
-    s->num=item;
-    s->start(Scale);
+    SC *sc=new SC(item->ItemPointer->scale(),set,time,item,signfun,this);
+    item->ItemPointer->setTransformOriginPoint(QPointF(originPos.x(),originPos.y()));
+    item->scPointer[Scale]=sc;
+    sc->start(Scale);
 }
 
-void Widget::AnimationBlurRadiusItem(Item* item, float set, int times,String signfun)
+void Widget::AnimationScaleItem(Item *item, SCFun scfun, int time,Pos originPos,String signfun)
+{
+    EndAnimation(item,Scale);
+    SC *sc=new SC(0,0,time,item,signfun,this);
+    item->ItemPointer->setTransformOriginPoint(QPointF(originPos.x(),originPos.y()));
+    item->scPointer[Scale]=sc;
+    sc->UesSCFun(scfun);
+    sc->start(Scale);
+}
+
+void Widget::AnimationBlurRadiusItem(Item* item, float set, int time,String signfun)
 {
    EndAnimation(item,BlurRadius);
-   float CurrentModulus;//当前系数
-   if(item->Blur==nullptr)
-   {
-       CurrentModulus=0;
-       item->Blur=new QGraphicsBlurEffect(this);
-   }
-   else
-   {CurrentModulus=item->Blur->blurRadius();}
-   SC *s=new SC(CurrentModulus,set,times);
-   item->scPointer[BlurRadius]=s;
-   s->gr=item->ItemPointer;
-   s->Effect=item->Blur;
-   s->signfun=signfun;
-   s->num=item;
-   s->start(BlurRadius);
+   SC *sc=new SC(GetItemBlur(item),set,time,item,signfun,this);
+   item->scPointer[BlurRadius]=sc;
+   sc->start(BlurRadius);
 }
 
-void Widget::AnimationBlurRadiusItem(Item *item, SCFun scfun, int times, String signfun)
+void Widget::AnimationBlurRadiusItem(Item *item, SCFun scfun, int time, String signfun)
 {
     EndAnimation(item,BlurRadius);
     if(item->Blur==nullptr)
     {item->Blur=new QGraphicsBlurEffect(this);}
-    SC *s=new SC(0,0,times);
-    item->scPointer[BlurRadius]=s;
-    s->gr=item->ItemPointer;
-    s->Effect=item->Blur;
-    s->signfun=signfun;
-    s->UesSCFun(scfun);
-    s->num=item;
-    s->start(BlurRadius);
+    SC *sc=new SC(0,0,time,item,signfun,this);
+    item->scPointer[BlurRadius]=sc;
+    sc->UesSCFun(scfun);
+    sc->start(BlurRadius);
 }
 
-void Widget::AnimationSetOpacityItem(Item* item, float set, int times,String signfun)
+void Widget::AnimationSetOpacityItem(Item* item, float set, int time,String signfun)
 {
    EndAnimation(item,Opacity);
-   QGraphicsItem* gr=item->ItemPointer;
-   float CurrentModulus=gr->opacity();
-   SC *s=new SC(CurrentModulus,set,times);
-   item->scPointer[Opacity]=s;
-   s->gr=gr;
-   s->signfun=signfun;
-   s->num=item;
-   s->start(Opacity);
+   SC *sc=new SC(GetItemOpacity(item),set,time,item,signfun,this);
+   item->scPointer[Opacity]=sc;
+   sc->start(Opacity);
 }
 
-void Widget::AnimationSetOpacityItem(Item *item, SCFun scfun, int times, String signfun)
+void Widget::AnimationSetOpacityItem(Item *item, SCFun scfun, int time, String signfun)
 {
     EndAnimation(item,Opacity);
-    SC *s=new SC(0,0,times);
-    item->scPointer[Opacity]=s;
-    s->gr=item->ItemPointer;
-    s->signfun=signfun;
-    s->UesSCFun(scfun);
-    s->num=item;
-    s->start(Opacity);
+    SC *sc=new SC(0,0,time,item,signfun,this);
+    item->scPointer[Opacity]=sc;
+    sc->UesSCFun(scfun);
+    sc->start(Opacity);
 }
 
 void Widget::AnimationMoveItem(Item* item,int x,int y,int time,String signfun)
 {
-   EndAnimation(item,Move);
-   QGraphicsItem* gr=item->ItemPointer;
-   SC *s=new SC(gr->x(),gr->y(),x,y,time);
-   item->scPointer[Move]=s;
-   s->gr=gr;
-   s->signfun=signfun;
-   s->num=item;
-   s->start(Move);
+    EndAnimation(item,Move);
+    SC *sc=new SC(item->ItemPointer->x(),item->ItemPointer->y(),x,y,time,item,signfun,this);
+    item->scPointer[Move]=sc;
+    sc->start(Move);
 }
 
 void Widget::AnimationMoveItem(Item *item, SCFun scfun, int time, String signfun)
 {
     EndAnimation(item,Move);
-    SC *s=new SC(0,0,0,0,time);
-    item->scPointer[Move]=s;
-    s->gr=item->ItemPointer;
-    s->signfun=signfun;
-    s->UesSCFun(scfun);
-    s->num=item;
-    s->start(Move);
+    SC *sc=new SC(0,0,0,0,time,item,signfun,this);
+    item->scPointer[Move]=sc;
+    sc->UesSCFun(scfun);
+    sc->start(Move);
 }
 
 void Widget::AnimationSetViewCenter(GraphicsView *view, int x, int y, int time, String signfun)
 {
-    SC *s=new SC(view->viewX,view->viewY,x,y,time);
-    s->gv=view;
-    s->signfun=signfun;
-    s->start(20);
+    SC *sc=new SC(view->viewX,view->viewY,x,y,time,view,signfun,this);
+    sc->start(20);
 }
 
 void Widget::AnimationSetViewCenter(GraphicsView *view, SCFun scfun, int time, String signfun)
 {
-    SC *s=new SC(0,0,0,0,time);
-    s->gv=view;
-    s->signfun=signfun;
-    s->UesSCFun(scfun);
-    s->start(20);
+    SC *sc=new SC(0,0,0,0,time,view,signfun,this);
+    sc->UesSCFun(scfun);
+    sc->start(20);
 }
 
 void Widget::AnimationShearItem(Item* item, float fx, float fy, int time, String signfun)
 {
    EndAnimation(item,Shear);
-   SC *s=new SC(item->ShearX,item->ShearY,fx,fy,time);
-   item->scPointer[Shear]=s;
-   s->gr=item->ItemPointer;
-   s->signfun=signfun;
-   s->num=item;
-   s->start(Shear);
+   SC *sc=new SC(item->ShearX,item->ShearY,fx,fy,time,item,signfun,this);
+   item->scPointer[Shear]=sc;
+   sc->start(Shear);
 }
 
 void Widget::AnimationShearItem(Item *item, SCFun scfun, int time, String signfun)
 {
     EndAnimation(item,Shear);
-    SC *s=new SC(0,0,0,0,time);
-    item->scPointer[Shear]=s;
-    s->gr=item->ItemPointer;
-    s->signfun=signfun;
-    s->UesSCFun(scfun);
-    s->num=item;
-    s->start(Shear);
+    SC *sc=new SC(0,0,0,0,time,item,signfun,this);
+    item->scPointer[Shear]=sc;
+    sc->UesSCFun(scfun);
+    sc->start(Shear);
 }
 
-void Widget::AnimationSetRGBColorItem(Item* item, int R, int G, int B, int times,String signfun)
+void Widget::AnimationSetRGBColorItem(Item* item, int R, int G, int B, int time,String signfun)
 {
    EndAnimation(item,Color);
    //当前系数
@@ -472,73 +447,57 @@ void Widget::AnimationSetRGBColorItem(Item* item, int R, int G, int B, int times
         CurrentModulus2=color.green();
         CurrentModulus3=color.blue();
    }
-   SC *s=new SC(CurrentModulus,CurrentModulus2,CurrentModulus3,R,G,B,times);
-   item->scPointer[Color]=s;
-   s->gr=item->ItemPointer;
-   s->co=item->Color;
-   s->signfun=signfun;
-   s->num=item;
-   s->start(Color);
+   SC *sc=new SC(CurrentModulus,CurrentModulus2,CurrentModulus3,R,G,B,time,item,signfun,this);
+   item->scPointer[Color]=sc;
+   sc->start(Color);
 }
 
-void Widget::AnimationSetRGBColorItem(Item *item, SCFun scfun, int times, String signfun)
+void Widget::AnimationSetRGBColorItem(Item *item, SCFun scfun, int time, String signfun)
 {
     EndAnimation(item,Color);
-    SC *s=new SC(0,0,0,0,0,0,times);
-    item->scPointer[Color]=s;
-    s->gr=item->ItemPointer;
-    s->co=item->Color;
-    s->signfun=signfun;
-    s->UesSCFun(scfun);
-    s->num=item;
-    s->start(Color);
+    SC *sc=new SC(0,0,0,0,0,0,time,item,signfun,this);
+    item->scPointer[Color]=sc;
+    sc->UesSCFun(scfun);
+    sc->start(Color);
 }
 
 Item* Widget::AddPicAnimation(QVector<String> address,int x,int y,int time,String signfun,bool cycle,GraphicsScene *scene)
 {
-   assert(!address.isEmpty());//断言，确认传入的图片容器不为空
-   MyItem *temp=new MyItem(address.at(0));//将第一张图片变为图元
-   scene->addItem(temp);//将第一张图片显示在场景中
-   temp->setPos(x,y);//设置其位置
-   Item *item=new Item(temp);
-   AllItem<<item;
+    assert(!address.isEmpty()); //确认传入的图片容器不为空
 
-   SC *sc=new SC(0,0,time);//创建SC实例
-   item->scPointer[Picture]=sc;
-   sc->pi=temp;//将SC操作的图元成员写为第一张图片的图元
-   sc->cycle=cycle;//定义是否循环连续播图
+    MyItem *temp=new MyItem(address.at(0));//将第一张图片变为图元
+    scene->addItem(temp);//将第一张图片显示在场景中
+    temp->setPos(x,y);
+    Item *item=new Item(temp);
+    AllItem<<item;
 
-   if(!cycle)//若不循环（默认是循环，true），搬移一下播放完成要发出的信号
-   {sc->signfun=signfun;}
+    SC *sc=new SC(0,0,time,item,signfun,this);//创建SC实例，这里直接套用双系数的构造函数
+    item->scPointer[Picture]=sc;
+    sc->cycle=cycle;//定义是否循环连续播图
 
-   for(QVector<String>::iterator iter=address.begin();iter!=address.end();++iter)//遍历容器中的所有图片
-   {sc->pixmap.push_back(Pixmap(*iter));}//将所有图片压入SC类中储存图片的成员中
-   sc->start(Picture);
-   sc->num=item;
-   return item;
+    for(QVector<String>::iterator iter=address.begin();iter!=address.end();++iter)//遍历容器中的所有图片
+    {sc->pixmap.push_back(Pixmap(*iter));}//将所有图片压入SC类中储存图片的成员中
+    sc->start(Picture);
+    return item;
 }
 
 Item* Widget::AddPicAnimation(QVector<Pixmap*> allpixmap, int x, int y, int time, String signfun, bool cycle, GraphicsScene *scene)
 {
     assert(!allpixmap.isEmpty());
+
     MyItem *item=new MyItem(*allpixmap.at(0));
     Item *ritem=new Item(item);
     scene->addItem(item);
     item->setPos(x,y);
     AllItem<<ritem;
 
-    SC *sc=new SC(0,0,time);
+    SC *sc=new SC(0,0,time,ritem,signfun,this);
     ritem->scPointer[Picture]=sc;
-    sc->pi=item;
     sc->cycle=cycle;
 
-    if(!cycle)
-    {sc->signfun=signfun;}
-
-    for(auto i:allpixmap)
+    for(Pixmap* i:allpixmap)
     {sc->pixmap.push_back(*i);}
     sc->start(Picture);
-    sc->num=ritem;
     return ritem;
 }
 
@@ -548,18 +507,13 @@ void Widget::ChangePicAnimationItem(QVector<String>allpixmap,Item* item,int time
     EndAnimation(item,Picture);
     MyItem *temp=item->PixmapItemPoniter;
     temp->setPixmap(Pixmap(allpixmap.at(0)));//变更当前图片为图集的第一帧
-    SC *sc=new SC(0,0,time);//创建SC实例
+    SC *sc=new SC(0,0,time,item,signfun,this);//创建SC实例
     item->scPointer[Picture]=sc;
-    sc->pi=temp;//将SC操作的图元成员写为第一张图片的图元
     sc->cycle=cycle;//定义是否循环连续播图
-
-    if(!cycle)//若不循环（默认是循环，true），搬移一下播放完成要发出的信号
-    {sc->signfun=signfun;}
 
     for(QVector<String>::iterator iter=allpixmap.begin();iter!=allpixmap.end();++iter)//遍历容器中的所有图片
     {sc->pixmap.push_back(Pixmap(*iter));}//将所有图片压入SC类中储存图片的成员中
     sc->start(Picture);
-    sc->num=item;
 }
 
 void Widget::ChangePicAnimationItem(QVector<Pixmap*> allpixmap, Item *item, int time, String signfun, bool cycle)
@@ -568,20 +522,16 @@ void Widget::ChangePicAnimationItem(QVector<Pixmap*> allpixmap, Item *item, int 
     EndAnimation(item,Picture);
     MyItem *temp=item->PixmapItemPoniter;
     temp->setPixmap(*allpixmap.at(0));//变更当前图片为图集的第一帧
-    SC *sc=new SC(0,0,time);//创建SC实例
+    SC *sc=new SC(0,0,time,item,signfun,this);//创建SC实例
     item->scPointer[Picture]=sc;
-    sc->pi=temp;//将SC操作的图元成员写为第一张图片的图元
     sc->cycle=cycle;//定义是否循环连续播图
 
-    if(!cycle)//若不循环（默认是循环，true），搬移一下播放完成要发出的信号
-    {sc->signfun=signfun;}
-
-    for(auto i:allpixmap)//遍历容器中的所有图片
+    for(Pixmap* i:allpixmap)//遍历容器中的所有图片
     {sc->pixmap.push_back(*i);}//将所有图片压入SC类中储存图片的成员中
     sc->start(Picture);
-    sc->num=item;
 }
 
+//注意，开启自适应后这两个函数返回的是假坐标，即用户指定的
 int Widget::GetItemX(Item* item)
 {return item->ItemPointer->x();}
 
@@ -647,20 +597,26 @@ int Widget::GetViewY(GraphicsView *gview)
 
 GraphicsView* Widget::AddView(int x, int y, int width, int height)
 {
-   GraphicsView *view=new GraphicsView(this);
-   view->setGeometry(x,y,width,height);
-   view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//禁用竖直滚动条
-   view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//禁用水平滚动条
-   view->s=this;
-   view->show();
-   return view;
+    #ifdef SelfAdaption
+    adaptive(x,y);
+    adaptive(width,height);
+    #endif
+    GraphicsView *view=new GraphicsView(this,this,x,y,width,height);
+    view->show();
+    #ifdef SelfAdaption
+    view->scale(adaptiveRatioX,adaptiveRatioX);
+    #endif
+    return view;
 }
 
 void Widget::SetViewSize(int x, int y, int width, int height, GraphicsView *gview)
 {
+    #ifdef SelfAdaption
+    adaptive(x,y);
+    adaptive(width,height);
+    #endif
     gview->setGeometry(x,y,width,height);
-    gview->viewX=width/2;
-    gview->viewY=height/2;
+    gview->SetCenter(width/2,height/2);
 }
 
 int Widget::GetScreenWidth()
@@ -672,13 +628,16 @@ int Widget::GetScreenHeigh()
 GraphicsScene* Widget::AddScene(int width, int height)
 {return new GraphicsScene(0,0,width,height);}
 
-void Widget::SetScene(GraphicsView *view, GraphicsScene *scene,int viewX,int viewY)
+void Widget::SetViewScene(GraphicsView *view, GraphicsScene *scene,int viewX,int viewY)
 {
     view->setScene(scene);
-    if(viewX==-1)
-    {viewX=view->width()/2;}
-    if(viewY==-1)
-    {viewY=view->height()/2;}
+    #ifdef SelfAdaption
+    if(viewX==-1&&viewY==-1)
+    {
+        viewX=view->width()/adaptiveRatioX/2;
+        viewY=view->height()/adaptiveRatioY/2;
+    }
+    #endif
     SetViewCenter(viewX,viewY);
 }
 
@@ -702,7 +661,12 @@ void Widget::SetItemOrder(Item* Belowitem, Item* Aboveitem)
 {Belowitem->ItemPointer->stackBefore(Aboveitem->ItemPointer);}
 
 void Widget::ScaleView(float sX, float sY, GraphicsView *view)
-{view->Scale(sX,sY);}
+{
+    #ifdef SelfAdaption
+    adaptive(sX,sY);
+    #endif
+    view->Scale(sX,sY);
+}
 
 void Widget::RotateView(float set, GraphicsView *view)
 {view->Rotate(set);}
@@ -796,12 +760,11 @@ void Widget::RemoveFile(String path)
 
 void Widget::ShearItem(Item* item,float X,float Y)
 {
-   QTransform *tranform=new QTransform;
-   tranform->shear(X,Y);
-   item->ItemPointer->setTransform(*tranform);
+   QTransform tranform;
+   tranform.shear(X,Y);
+   item->ItemPointer->setTransform(tranform);
    item->ShearX=X;
    item->ShearY=Y;
-   delete tranform;
 }
 
 float Widget::GetItemShearX(Item* item)
@@ -844,11 +807,15 @@ void Widget::RemoveKeyEvent(Qt::Key key)
     }
 }
 
-void Widget::AddMouseEvent(int MouseX,int MouseY,int fMouseX,int fMouseY,String PressSlotfun,ParametersStru PressPar,String ReleaseSlotfun,ParametersStru ReleasePar)
+void Widget::AddMouseEvent(int mouseX,int mouseY,int fmouseX,int fmouseY,String PressSlotfun,ParametersStru PressPar,String ReleaseSlotfun,ParametersStru ReleasePar)
 {
+    #ifdef SelfAdaption
+    adaptive(mouseX,mouseY);
+    adaptive(fmouseX,fmouseY);
+    #endif
     for(InputEvent &i:AllEvent)
     {
-        if(i.MouseX==MouseX&&i.MouseY==MouseY&&i.fMouseX==fMouseX&&i.fMouseY==fMouseY)
+        if(i.mouseX==mouseX&&i.mouseY==mouseY&&i.fmouseX==fmouseX&&i.fmouseY==fmouseY)
         {
             //如果已经有了，不能让空的给覆盖上
             if(PressSlotfun!=NULL_String)
@@ -864,10 +831,10 @@ void Widget::AddMouseEvent(int MouseX,int MouseY,int fMouseX,int fMouseY,String 
     }
     //没有就无所谓了
     InputEvent event;
-    event.MouseX=MouseX;
-    event.MouseY=MouseY;
-    event.fMouseX=fMouseX;
-    event.fMouseY=fMouseY;
+    event.mouseX=mouseX;
+    event.mouseY=mouseY;
+    event.fmouseX=fmouseX;
+    event.fmouseY=fmouseY;
     event.PressFun=PressSlotfun;
     event.PressPar=PressPar;
     event.ReleaseFun=ReleaseSlotfun;
@@ -875,11 +842,15 @@ void Widget::AddMouseEvent(int MouseX,int MouseY,int fMouseX,int fMouseY,String 
     AllEvent<<event;
 }
 
-void Widget::RemoveMouseEvent(int MouseX, int MouseY,int fMouseX,int fMouseY)
+void Widget::RemoveMouseEvent(int mouseX, int mouseY,int fmouseX,int fmouseY)
 {
+    #ifdef SelfAdaption
+    adaptive(mouseX,mouseY);
+    adaptive(fmouseX,fmouseY);
+    #endif
     for(int i=0;i<AllEvent.length();i++)
     {
-        if(AllEvent.at(i).MouseX==MouseX&&AllEvent.at(i).MouseY==MouseY&&AllEvent.at(i).fMouseX==fMouseX&&AllEvent.at(i).fMouseY==fMouseY)
+        if(AllEvent.at(i).mouseX==mouseX&&AllEvent.at(i).mouseY==mouseY&&AllEvent.at(i).fmouseX==fmouseX&&AllEvent.at(i).fmouseY==fmouseY)
         {
             AllEvent.removeAt(i);
             return;
@@ -922,7 +893,7 @@ void Widget::VerticalFlip(Item *item)
 Pixmap* Widget::VerticalFlip(Pixmap *pixmap)
 {return mirrorAndChange(pixmap,false);}
 
-QTimer* Widget::StartMultipleTimer(String slotfun,int time)
+Timer* Widget::StartMultipleTimer(String slotfun,int time)
 {
     QTimer *timer = new QTimer(this);
     QByteArray ba = slotfun.toLatin1();
@@ -946,18 +917,22 @@ Gesture* Widget::LoadGesture(LocusFunc locus, int tolerance, ProgressStand stand
 {return new Gesture(locus,standard,maxProgress,tolerance,event,false);}
 
 void Widget::AddGesture(int mouseX,int mouseY,int fmouseX,int fmouseY,QList<Pos> posSeq,int tolerance,String event)
-{this->AddGesture(mouseX,mouseY,fmouseX,fmouseY,new Gesture(posSeq,tolerance,event,true));}
+{AddGesture(mouseX,mouseY,fmouseX,fmouseY,new Gesture(posSeq,tolerance,event,true));}
 
 void Widget::AddGesture(int mouseX, int mouseY, int fmouseX, int fmouseY, LocusFunc locus, int tolerance, ProgressStand standard, int maxProgress, String event)
-{this->AddGesture(mouseX,mouseY,fmouseX,fmouseY,new Gesture(locus,standard,maxProgress,tolerance,event,true));}
+{AddGesture(mouseX,mouseY,fmouseX,fmouseY,new Gesture(locus,standard,maxProgress,tolerance,event,true));}
 
 void Widget::AddGesture(int mouseX, int mouseY, int fmouseX, int fmouseY, Gesture *gesture)
 {
-    for(GestureArea* i:this->AllGestureArea)
+    #ifdef SelfAdaption
+    adaptive(mouseX,mouseY);
+    adaptive(fmouseX,fmouseY);
+    #endif
+    for(GestureArea* i:AllGestureArea)
     {
         if(i->mouseX==mouseX&&i->mouseY==mouseY&&i->fmouseX==fmouseX&&i->fmouseX==fmouseX)
         {
-            i->allGesture<<gesture;
+            i->allGesture<<gesture; //一个区域拥有很多手势
             return;
         }
     }
@@ -969,22 +944,27 @@ void Widget::AddGesture(int mouseX, int mouseY, int fmouseX, int fmouseY, Gestur
 
 void Widget::RemoveGesture(Gesture *gesture)
 {
-    for(GestureArea* i:this->AllGestureArea)
+    //注意，这个函数对比地址删除。仅在保存创建的手势指针时才管用，再实例化一个一样的手势删除没用
+    for(GestureArea* i:AllGestureArea)
     {i->allGesture.removeAll(gesture);}
     delete gesture;
 }
 
 void Widget::RemoveGestureArea(int mouseX, int mouseY, int fmouseX, int fmouseY)
 {
-    for(int i=0;i<this->AllGestureArea.length();i++)
+    #ifdef SelfAdaption
+    adaptive(mouseX,mouseY);
+    adaptive(fmouseX,fmouseY);
+    #endif
+    for(int i=0;i<AllGestureArea.length();i++)
     {
-        if(this->AllGestureArea[i]->mouseX==mouseX&&
-            this->AllGestureArea[i]->mouseY==mouseY&&
-            this->AllGestureArea[i]->fmouseX==fmouseX&&
-            this->AllGestureArea[i]->fmouseX==fmouseY)
+        if(AllGestureArea[i]->mouseX==mouseX&&
+            AllGestureArea[i]->mouseY==mouseY&&
+            AllGestureArea[i]->fmouseX==fmouseX&&
+            AllGestureArea[i]->fmouseX==fmouseY)
         {
-            delete this->AllGestureArea[i];
-            this->AllGestureArea.removeAt(i);
+            delete AllGestureArea[i];
+            AllGestureArea.removeAt(i);
             return;
         }
     }
@@ -992,7 +972,53 @@ void Widget::RemoveGestureArea(int mouseX, int mouseY, int fmouseX, int fmouseY)
 
 void Widget::RemoveAllGestureArea()
 {
-    for(GestureArea* i:this->AllGestureArea)
+    for(GestureArea* i:AllGestureArea)
     {delete i;}
     this->AllGestureArea.clear();
+}
+
+void Widget::AddExpansionSlot(String slotname, ParSlot slot)
+{AllExpansionSlot<<new ExpansionSlot(slot,slotname);}
+
+void Widget::AddExpansionSlot(String slotname, VoidSlot slot)
+{AllExpansionSlot<<new ExpansionSlot(slot,slotname);}
+
+void Widget::AddJSExpansionSlot(String JSFun)
+{AllExpansionSlot<<new ExpansionSlot(JSFun);}
+
+#ifdef AutoIsColliding
+void Widget::AddAutoCollision(Item *item1, Item *item2, String slotfun, ParametersStru par)
+{
+    for(Collision &co:AllAutoCollision)
+    {
+        if(co.item1==item1&&co.item2==item2)
+        {
+            co.slot=slotfun;
+            co.par=par;
+            return;
+        }
+    }
+    AllAutoCollision<<Collision{item1,item2,slotfun,par};
+}
+
+void Widget::RemoveAutoCollision(Item *item1, Item *item2)
+{
+    for(int i=0;i<AllAutoCollision.length();i++)
+    {
+        if(AllAutoCollision[i].item1==item1&&AllAutoCollision[i].item2==item2)
+        {
+            AllAutoCollision.removeAt(i);
+            return;
+        }
+    }
+}
+
+void Widget::RemoveAllAutoCollision()
+{AllAutoCollision.clear();}
+#endif
+
+Pos Widget::GetItemCenter(Item *item)
+{
+    assert(item->PixmapItemPoniter!=nullptr);
+    return Pos(item->PixmapItemPoniter->pixmap().width()/2,item->PixmapItemPoniter->pixmap().height()/2);
 }

@@ -370,25 +370,27 @@ void SG_UI::UI_FigureWeapons(ParametersStru Name, int switchh)//寻找攻击者�
 {
     if(switchh == 1)
     {
+        int k = 111;
         Figure* a = new Figure;
         if(a->ReadSql(Name.StringVar[2],"CLASS") == "CV"){
-
-            QString pa[3] = {"武器按钮1.png","武器按钮2.png","武器按钮3.png"};  //武器按钮的名字
+            Item* x[3];
+            QString pa[3] = {"高平炮1_按钮.png","鱼雷机_按钮.png","战斗机_按钮.png"};  //武器按钮的名字
             QString wa[3] = {"CVMG","CVTP","CVHZ"};                                //weapon传递的参数
             for(int i = 0; i < 3; i++)
                 {
                     ParametersStru weapon;
                     weapon.StringVar<<wa[i];
-                    Wep[i] = ma->AddButtonItem(BT+pa[i],Name.intVar[1],Name.intVar[2],"_Att","","",100,weapon);
+                    Item* aa = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
+                    x[i] = ma->AddPixmapItem(BT+"武器按钮_圈.png",k,Name.intVar[2]);
+                    Wep[i] = ma->AddButtonItem(BT+pa[i],k,Name.intVar[2],"_Att","","",100,weapon);
                     ma->AnimationMoveItem(Wep[i],0,Name.intVar[2],15);
+                    Pos cc = ma->GetItemCenter(x[i]);
+                    ma->RotationItem(x[i],3600,cc);
                     ma->SetItemLayer(Wep[i],11);
+                    ma->SetItemLayer(x[i],10);
+                    ma->SetItemLayer(aa,9);
+                    k = k+111;
             }
-            Wep[3] = ma->AddTextItem("副 炮","微软雅黑",30,75,185,248,37,17);
-            Wep[4] = ma->AddTextItem("舰载攻击机","微软雅黑",20,75,185,248,190,10);
-            Wep[5] = ma->AddTextItem("舰载轰炸机","微软雅黑",20,75,185,248,155,45);
-            ma->SetItemLayer(Wep[3],12);
-            ma->SetItemLayer(Wep[4],12);
-            ma->SetItemLayer(Wep[5],12);
             GG = 2; //之后把标记改成2
             K = 1;
 
@@ -466,10 +468,10 @@ void SG_UI::UI_AnimationFigure(QString SGname, QString DSname, int SH)
     SynchronousStart(ff)
     ma->SetItemLayer(s,6);
     ma->SetItemLayer(d,6);
-    ma->AnimationScaleItem(s,1.0,10,"ff");
+    ma->AnimationScaleItem(s,1.0,10,defaultPos,"ff");
     ma->AnimationMoveItem(s,-350,-40,10,"ff");
     ma->AnimationMoveItem(d,474,-40,10,"ff");
-    ma->AnimationScaleItem(d,1.0,10,"ff");
+    ma->AnimationScaleItem(d,1.0,10,defaultPos,"ff");
     SynchronousFinish()
     ma->SetItemLayer(lh,5);
     ma->SetItemLayer(rh,5);

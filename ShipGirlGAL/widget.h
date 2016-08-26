@@ -1,10 +1,10 @@
 //-----本文件十分重要，它是窗口类、引擎API以及其它自定义类（类型）的声明区域-----
 #pragma once
-#include "head.h"
-#include "GlobalVar.h"
-#include "NewType.h"
+#include "globalVar.h"
+#include "reimplemen.h"
 #include "AES.h"
-#include "gesture.h"
+#include "animation.h"
+#include "configure.h"
 
 namespace Ui {class Widget;}
 
@@ -13,10 +13,11 @@ class Widget : public QWidget
     Q_OBJECT
 
 public:
-    explicit Widget(QWidget *parent = 0);
+    explicit Widget(QWidget *parent=nullptr);
     ~Widget();
 
     QList<Item*> AllItem;
+
     //引擎行为（实现于enginebeh）
     Q_INVOKABLE Pixmap* LoadPixmap(String PicPath);
     Q_INVOKABLE RGBColor LoadRGBColor(int R,int G,int B);
@@ -27,15 +28,15 @@ public:
     Q_INVOKABLE Item* AddButtonItem(String PicPath,int x,int y,String ReleaseSlotfun, String PressPic=NULL_String, String PressMusic=NULL_String,int volume=100, ParametersStru ReleasePar=NULL_ParametersStru, GraphicsScene *scene=MainScene);
     Q_INVOKABLE Item* AddButtonItem(Pixmap *pixmap,int x,int y,String ReleaseSlotfun, Pixmap *PressPic=nullptr, String PressMusic=NULL_String,int volume=100, ParametersStru ReleasePar=NULL_ParametersStru, GraphicsScene *scene=MainScene);
     Q_INVOKABLE Item* AddTextItem(String Text,String Font,int Size,int CR,int CG,int CB,int x,int y,GraphicsScene *scene=MainScene);
-    Q_INVOKABLE Item* AddTextItem(String Text,String Font,int Size,RGBColor color,int x,int y,GraphicsScene *scene=MainScene);
+    Q_INVOKABLE Item* AddTextItem(String Text, String Font, int Size, RGBColor color, int x, int y, GraphicsScene *scene=MainScene);
     Q_INVOKABLE Item* AddRectItem(int x,int y,int width,int height,GraphicsScene *scene=MainScene);
     Q_INVOKABLE Item* AddEllipseItem(int x,int y,int width,int height,GraphicsScene *scene=MainScene);
     Q_INVOKABLE Item* AddLineItem(int x,int y,int fx,int fy,GraphicsScene *scene=MainScene);
-    Q_INVOKABLE void RotationItem(Item* item, float set);
-    Q_INVOKABLE void ScaleItem(Item* item, float set);
+    Q_INVOKABLE void RotationItem(Item* item, float set, Pos originPos=defaultPos);
+    Q_INVOKABLE void ScaleItem(Item* item, float set,Pos originPos=defaultPos);
     Q_INVOKABLE void MoveItem(Item* item, int x, int y);
     Q_INVOKABLE void BlurRadiusItem(Item* item, float set);
-    Q_INVOKABLE void DropShadowItem(Item* item, float shadowX,float shadowY);
+    //Q_INVOKABLE void DropShadowItem(Item* item, float shadowX,float shadowY);
     Q_INVOKABLE void SetOpacityItem(Item* item, float set);
     Q_INVOKABLE void SetRGBColorItem(Item* item, int R, int G, int B);
     Q_INVOKABLE void ClearScene(GraphicsScene *scene=MainScene);
@@ -52,32 +53,32 @@ public:
     Q_INVOKABLE void PlayMusic(MusicPlayer *player);
     Q_INVOKABLE void RemoveMusic(MusicPlayer *player);
     Q_INVOKABLE void StopMusic(MusicPlayer *player);
-    Q_INVOKABLE VideoPlayer* AddVideo(String path, int Volume, int x=-1, int y=-1,int width=WindowsWidth,int heigh=WindowsHeigh,bool cycle=false,String signfun=NULL_String,GraphicsScene *scene=MainScene);
+    Q_INVOKABLE VideoPlayer* AddVideo(String path, int Volume, int x=-1, int y=-1,int width=WindowsWidth,int heigh=WindowsHeigh,bool cycle=false,String signfun=NULL_String,ParametersStru par=NULL_ParametersStru,GraphicsScene *scene=MainScene=MainScene);
     Q_INVOKABLE void SetVideoVolume(VideoPlayer *video,int volume);
     Q_INVOKABLE int GetVideoVolume(VideoPlayer *video);
     Q_INVOKABLE void PauseVideo(VideoPlayer *video);
     Q_INVOKABLE void PlayVideo(VideoPlayer *video);
     Q_INVOKABLE void RemoveVideo(VideoPlayer *video);
     Q_INVOKABLE void StopVideo(VideoPlayer *video);
-    Q_INVOKABLE EasyThread* StartThread(String slotfun, ParametersStru par=NULL_ParametersStru, bool track=true);
-    Q_INVOKABLE void RemoveThread(EasyThread *thread);
+    Q_INVOKABLE CaluThread* StartThread(String slotfun, ParametersStru par=NULL_ParametersStru, bool track=true);
+    Q_INVOKABLE void RemoveThread(CaluThread *thread);
     Q_INVOKABLE bool ItemColliding(Item* item1, Item* item2);
-    Q_INVOKABLE void AnimationRotationItem(Item* item, float set,int times,String signfun=NULL_String);
-    Q_INVOKABLE void AnimationRotationItem(Item* item,SCFun scfun,int times,String signfun=NULL_String);
-    Q_INVOKABLE void AnimationScaleItem(Item* item, float set,int times,String signfun=NULL_String);
-    Q_INVOKABLE void AnimationScaleItem(Item* item,SCFun scfun,int times,String signfun=NULL_String);
-    Q_INVOKABLE void AnimationBlurRadiusItem(Item* item, float set,int times,String signfun=NULL_String);
-    Q_INVOKABLE void AnimationBlurRadiusItem(Item* item,SCFun scfun,int times,String signfun=NULL_String);
-    Q_INVOKABLE void AnimationSetOpacityItem(Item* item, float set,int times,String signfun=NULL_String);
-    Q_INVOKABLE void AnimationSetOpacityItem(Item* item,SCFun scfun,int times,String signfun=NULL_String);
+    Q_INVOKABLE void AnimationRotationItem(Item* item, float set,int time,Pos originPos=defaultPos,String signfun=NULL_String);
+    Q_INVOKABLE void AnimationRotationItem(Item* item,SCFun scfun,int time=-1,Pos originPos=defaultPos,String signfun=NULL_String);
+    Q_INVOKABLE void AnimationScaleItem(Item* item, float set, int time, Pos originPos=defaultPos, String signfun=NULL_String);
+    Q_INVOKABLE void AnimationScaleItem(Item* item, SCFun scfun, int time=-1, Pos originPos=defaultPos, String signfun=NULL_String);
+    Q_INVOKABLE void AnimationBlurRadiusItem(Item* item, float set,int time,String signfun=NULL_String);
+    Q_INVOKABLE void AnimationBlurRadiusItem(Item* item,SCFun scfun,int time=-1,String signfun=NULL_String);
+    Q_INVOKABLE void AnimationSetOpacityItem(Item* item, float set,int time,String signfun=NULL_String);
+    Q_INVOKABLE void AnimationSetOpacityItem(Item* item,SCFun scfun,int time=-1,String signfun=NULL_String);
     Q_INVOKABLE void AnimationMoveItem(Item* item,int x,int y,int time,String signfun=NULL_String);
-    Q_INVOKABLE void AnimationMoveItem(Item* item,SCFun scfun,int time,String signfun=NULL_String);
+    Q_INVOKABLE void AnimationMoveItem(Item* item,SCFun scfun,int time=-1,String signfun=NULL_String);
     Q_INVOKABLE void AnimationSetViewCenter(GraphicsView* view,int x,int y,int time,String signfun=NULL_String);
-    Q_INVOKABLE void AnimationSetViewCenter(GraphicsView* view,SCFun scfun,int time,String signfun=NULL_String);
+    Q_INVOKABLE void AnimationSetViewCenter(GraphicsView* view,SCFun scfun,int time=-1,String signfun=NULL_String);
     Q_INVOKABLE void AnimationShearItem(Item* item, float fx, float fy, int time, String signfun=NULL_String);
-    Q_INVOKABLE void AnimationShearItem(Item* item,SCFun scfun,int time, String signfun=NULL_String);
-    Q_INVOKABLE void AnimationSetRGBColorItem(Item* item, int R, int G, int B,int times,String signfun=NULL_String);
-    Q_INVOKABLE void AnimationSetRGBColorItem(Item* item,SCFun scfun,int times,String signfun=NULL_String);
+    Q_INVOKABLE void AnimationShearItem(Item* item,SCFun scfun,int time=-1, String signfun=NULL_String);
+    Q_INVOKABLE void AnimationSetRGBColorItem(Item* item, int R, int G, int B, int time, String signfun=NULL_String);
+    Q_INVOKABLE void AnimationSetRGBColorItem(Item* item,SCFun scfun,int time=-1,String signfun=NULL_String);
     Q_INVOKABLE int GetItemX(Item* item);
     Q_INVOKABLE int GetItemY(Item* item);
     Q_INVOKABLE int GetItemR(Item* item);
@@ -103,7 +104,7 @@ public:
     Q_INVOKABLE int GetScreenHeigh();
     Q_INVOKABLE GraphicsScene* AddScene(int width,int height);
     Q_INVOKABLE void DeleteScene(GraphicsScene* scene){delete scene;}
-    Q_INVOKABLE void SetScene(GraphicsView *view=MainView, GraphicsScene *scene=MainScene, int viewX=-1, int viewY=-1);
+    Q_INVOKABLE void SetViewScene(GraphicsView *view=MainView, GraphicsScene *scene=MainScene, int viewX=-1, int viewY=-1);
     Q_INVOKABLE void SafeSleep(int time);
     Q_INVOKABLE void SetItemLayer(Item* item, int Layer);
     //collidingItems(QGraphicsItem *item)，返回一个与item碰撞的item的表，可以留着做物理引擎用
@@ -125,10 +126,10 @@ public:
     Q_INVOKABLE void ShearItem(Item* item,float X,float Y);
     Q_INVOKABLE float GetItemShearX(Item* item);
     Q_INVOKABLE float GetItemShearY(Item* item);
-    Q_INVOKABLE void AddKeyEvent(Qt::Key key, String PressSlotfun=NULL_String, ParametersStru PressPar=NULL_ParametersStru, String ReleaseSlotfun=NULL_String, ParametersStru ReleasePar=NULL_ParametersStru);
-    Q_INVOKABLE void RemoveKeyEvent(Qt::Key key);
-    Q_INVOKABLE void AddMouseEvent(int MouseX, int MouseY, int fMouseX, int fMouseY, String PressSlotfun=NULL_String, ParametersStru PressPar=NULL_ParametersStru, String ReleaseSlotfun=NULL_String, ParametersStru ReleasePar=NULL_ParametersStru);
-    Q_INVOKABLE void RemoveMouseEvent(int MouseX, int MouseY,int fMouseX,int fMouseY);
+    Q_INVOKABLE void AddKeyEvent(Key key, String PressSlotfun=NULL_String, ParametersStru PressPar=NULL_ParametersStru, String ReleaseSlotfun=NULL_String, ParametersStru ReleasePar=NULL_ParametersStru);
+    Q_INVOKABLE void RemoveKeyEvent(Key key);
+    Q_INVOKABLE void AddMouseEvent(int mouseX, int mouseY, int fmouseX, int fmouseY, String PressSlotfun=NULL_String, ParametersStru PressPar=NULL_ParametersStru, String ReleaseSlotfun=NULL_String, ParametersStru ReleasePar=NULL_ParametersStru);
+    Q_INVOKABLE void RemoveMouseEvent(int mouseX, int mouseY,int fmouseX,int fmouseY);
     Q_INVOKABLE void RemoveAllEvent();
     Q_INVOKABLE void WaitSign(String signfun);
     Q_INVOKABLE void HorizontallyFlip(Item *item);
@@ -146,10 +147,24 @@ public:
     Q_INVOKABLE void RemoveGesture(Gesture* gesture);
     Q_INVOKABLE void RemoveGestureArea(int mouseX,int mouseY,int fmouseX,int fmouseY);
     Q_INVOKABLE void RemoveAllGestureArea();
+    Q_INVOKABLE void AddExpansionSlot(String slotname, ParSlot slot);
+    Q_INVOKABLE void AddExpansionSlot(String slotname, VoidSlot slot);
+    Q_INVOKABLE void AddJSExpansionSlot(String JSFun);
+    #ifdef AutoIsColliding
+    Q_INVOKABLE void AddAutoCollision(Item *item1,Item *item2,String slotfun,ParametersStru par=NULL_ParametersStru);
+    Q_INVOKABLE void RemoveAutoCollision(Item *item1,Item *item2);
+    Q_INVOKABLE void RemoveAllAutoCollision();
+    #endif
+    Q_INVOKABLE Pos NewPos(float x,float y){return Pos(x,y);}
+    Q_INVOKABLE Pos GetItemCenter(Item *item);
+    Q_INVOKABLE ParametersStru NewParametersStru(){return ParametersStru();}
 
     void PassMousePressEvent(Pos point);
     void PassMouseReleaseEvent(Pos point);
     void PassMouseMoveEvent(QMouseEvent *e);
+    #ifdef AutoIsColliding
+    void itemMoveEvent();
+    #endif
 
 protected:
     void keyPressEvent(QKeyEvent *e);
@@ -164,9 +179,12 @@ private:
     void Initialization();
     bool isColliding(QGraphicsItem* RItem1,QGraphicsItem* RItem2);
     Pixmap* mirrorAndChange(Pixmap *pixmap, bool mirrorMode);
-    //关于输入事件
+    //关于事件
     QList<InputEvent> AllEvent;
     QList<GestureArea*> AllGestureArea;
+    #ifdef AutoIsColliding
+    QList<Collision> AllAutoCollision;
+    #endif
     //关于IO优化
     QFile *PreQFile=nullptr;
     String PreQFileName;

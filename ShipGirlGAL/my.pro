@@ -10,11 +10,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = my
 TEMPLATE = app
-QT += sql
+
 
 SOURCES += main.cpp\
         widget.cpp \
-    NewType.cpp \
     maincall.cpp \
     js.cpp \
     AES.cpp \
@@ -23,30 +22,34 @@ SOURCES += main.cpp\
     InputEvent.cpp \
     gesture.cpp \
     animation.cpp \
+    basics.cpp \
+    reimplemen.cpp \
+    sg_figure.cpp \
     sg_startgame.cpp \
-    sg_ui.cpp \
-    sg_figure.cpp
+    sg_ui.cpp
 
 HEADERS  += widget.h \
     head.h \
-    GlobalVar.h \
     maincall.h \
     library.h \
-    NewType.h \
     AES.h \
     js.h \
     macro.h \
     configure.h \
     gesture.h \
+    basics.h \
+    globalVar.h \
+    reimplemen.h \
+    animation.h \
+    sg_figure.h \
     sg_startgame.h \
-    sg_ui.h \
-    sg_figure.h
+    sg_ui.h
 
 FORMS    += widget.ui
 QT += core gui
 
 OTHER_FILES +=
-
+QT += sql
 QT += multimedia multimediawidgets
 INSTALLS += target
 QT += script

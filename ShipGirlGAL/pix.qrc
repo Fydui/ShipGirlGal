@@ -82,5 +82,18 @@
         <file>SG/Button/武器按钮3.png</file>
         <file>SG/Button/武器按钮4.png</file>
         <file>SG/Figure/ordinary/战列M级.png</file>
+        <file>SG/Button/高平炮1_按钮.png</file>
+        <file>SG/Button/轰炸机_按钮.png</file>
+        <file>SG/Button/甲板炮_按钮.png</file>
+        <file>SG/Button/投弹器_按钮.png</file>
+        <file>SG/Button/武器按钮_背景.png</file>
+        <file>SG/Button/武器按钮_圈.png</file>
+        <file>SG/Button/巡洋炮_按钮.png</file>
+        <file>SG/Button/鱼雷1_按钮.png</file>
+        <file>SG/Button/鱼雷2_按钮.png</file>
+        <file>SG/Button/战斗机_按钮.png</file>
+        <file>SG/Button/战列炮_按钮.png</file>
+        <file>SG/Button/重巡炮_按钮.png</file>
+        <file>SG/Button/鱼雷机_按钮.png</file>
     </qresource>
 </RCC>
