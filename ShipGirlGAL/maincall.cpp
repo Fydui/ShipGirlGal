@@ -12,6 +12,7 @@ ParametersStru N;
 maincall* ma;
 extern Item* fi;
 extern Item* re;
+extern Figure* sgfu;
 using namespace  std;
 using namespace SG_UI;
 using namespace SG_StartGame;
@@ -20,7 +21,8 @@ using namespace SG_StartGame;
 
 void maincall::StartGame()//入口函数
 {   ma = this;
-    SG_UI::UI_MainUI();
+    sgfu->PixToAscii("E:/Code/cpp/ShipGirlGAL/SG/","太太.png");
+    //SG_UI::UI_MainUI();
     //fun->OpenSql("SG.db");
     //fun->FightAtt("列克星敦","战列M级");
 }

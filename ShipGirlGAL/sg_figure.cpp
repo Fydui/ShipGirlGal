@@ -1,9 +1,10 @@
 ﻿#include "sg_figure.h"
 #include "sg_ui.h"
-
+#include "maincall.h"
 extern int Sum;             //上级界面图元数
 extern int _Sum;            //当前界面图元数
 extern int Tbx;             //文本框上面按钮们的横坐标
+extern maincall* ma;
 int DoneSum = 21;           //文本判断变量 必须和分隔符数目相等
 int Tsum =0;                //文本计数变量
 //int tablsum = 0;
@@ -388,4 +389,36 @@ int Figure::FightAtt(QString SG_, QString DS_,ParametersStru WeaponType) //默�
 
     SG_UI::UI_AnimationFigure(SG_,DS_,abs(shjs));
     return B->HP - abs(shjs);
+}
+
+void Figure::PixToAscii(QString pach, QString Pixname, int Z)
+{
+    QImage* img = new QImage(pach+Pixname);
+    QString ch[11] = {"@","#","&","Q","C","o","*",",",".","`"," "};
+    map<int,QString> M;
+        for(int i=0; i<256;i++){
+        int in = i/25;
+        M[i] = ch[in];
+    }
+    QFile my("ASCII.txt");
+    my.open(QIODevice::WriteOnly);
+    if(Z == 0)
+        {
+            if(img->width()<=150 || img->height()<=150)
+                img->scaled(img->width()*2,img->height()*2);
+            else if((img->width()>=900 || img->height()>=900))
+                img->scaled(img->width()/2,img->height()/2);
+    }
+
+    for(int i = 0; i<img->height();i+=1)
+        for(int j = 0; j<img->width();j+=1)
+            {
+                QColor c = img->pixel(j,i);
+                int R = c.red();
+                int G = c.green();
+                int B = c.blue();
+                int gary = (R*30 + G*59 +B*11)/100;
+                if(M.find(gary) != M.end())
+                my.write(M.find(gary)->second.toLatin1().data());
+        }
 }

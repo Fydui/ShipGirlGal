@@ -6,7 +6,7 @@ extern maincall* ma;
 Item* sg = new Item[6];//我方人物数组
 Item* ds = new Item[6];//敌方人物数组
 Item* But[6];
-Item* Wep[6];
+Item* Wep[3];
 Item* lh;              //左边的 黑幕
 Item* rh;              //右边黑幕
 Item* dc;              //下大文字框
@@ -87,16 +87,17 @@ void SG_UI::UI_StartUI() //绘制开始菜单界面
 */
     //样式二
     ParametersStru res;
-    res.intVar<<23<<11;
+    res.intVar<<21<<11;
 
     ma->AddPixmapItem(BG+"办公室.png",0,0);
-    Item*fn = ma->AddTextItem("Loading...","微软雅黑",28,255,255,255,465,327);
+    //Item*fn = ma->AddTextItem("Loading...","微软雅黑",28,255,255,255,465,327);
     ma->AddPixmapItem(BG+"科幻背景.png",0,0);
-    Item*mr = ma->AddPixmapItem(BG+"中心圆.png",421,241);
+    //Item*mr = ma->AddPixmapItem(BG+"中心圆.png",421,241);
+    SG_UI::UI_UiReturn();
 
     SynchronousStart(ff)
-    ma->SetOpacityItem(mr,0.0);
-    ma->AnimationSetOpacityItem(mr,1,50,"ff");
+    //ma->SetOpacityItem(mr,0.0);
+    //ma->AnimationSetOpacityItem(mr,1,50,"ff");
     Item* na = ma->AddPixmapItem(ST+"上名称栏.png",453,-45);
     ma->AnimationMoveItem(na,453,0,30,"ff");
     SynchronousFinish()
@@ -131,8 +132,8 @@ void SG_UI::UI_StartUI() //绘制开始菜单界面
     ma->SetOpacityItem(zx2,0.0);
     ma->AnimationSetOpacityItem(zx2,1,100);
 
-    ma->AnimationSetOpacityItem(fn,0.0,100);
-    ma->AnimationSetOpacityItem(mr,0.0,100);
+    //ma->AnimationSetOpacityItem(fn,0.0,100);
+    //ma->AnimationSetOpacityItem(mr,0.0,100);
 }
 
 void SG_UI::UI_StartTextUi()//绘制开始游戏界面
@@ -370,7 +371,7 @@ void SG_UI::UI_FigureWeapons(ParametersStru Name, int switchh)//寻找攻击者�
 {
     if(switchh == 1)
     {
-        int k = 111;
+        int k = 0;
         Figure* a = new Figure;
         if(a->ReadSql(Name.StringVar[2],"CLASS") == "CV"){
             Item* x[3];
@@ -382,10 +383,10 @@ void SG_UI::UI_FigureWeapons(ParametersStru Name, int switchh)//寻找攻击者�
                     weapon.StringVar<<wa[i];
                     Item* aa = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
                     x[i] = ma->AddPixmapItem(BT+"武器按钮_圈.png",k,Name.intVar[2]);
-                    Wep[i] = ma->AddButtonItem(BT+pa[i],k,Name.intVar[2],"_Att","","",100,weapon);
-                    ma->AnimationMoveItem(Wep[i],0,Name.intVar[2],15);
+                    Wep[i] = ma->AddButtonItem(BT+pa[i],-k,Name.intVar[2],"_Att","","",100,weapon);
+                    ma->AnimationMoveItem(Wep[i],k,Name.intVar[2],500);
                     Pos cc = ma->GetItemCenter(x[i]);
-                    ma->RotationItem(x[i],3600,cc);
+                    ma->RotationItem(x[i],36000,cc);
                     ma->SetItemLayer(Wep[i],11);
                     ma->SetItemLayer(x[i],10);
                     ma->SetItemLayer(aa,9);
@@ -547,6 +548,8 @@ void SG_UI::UI_UiReturn()//返回时的小特♂技
     fo = ma->AddTextItem("Loading...","微软雅黑",28,255,255,255,465,327);
     ma->AnimationSetOpacityItem(fo,1,100,"vv");
     mr = ma->AddPixmapItem(BG+"中心圆.png",421,241);
+    Pos a = ma->GetItemCenter(mr);
+    ma->AnimationRotationItem(mr,720,500,a);
     ma->SetOpacityItem(mr,0.0);
     ma->AnimationSetOpacityItem(mr,1,100,"vv");
     SynchronousFinish()
