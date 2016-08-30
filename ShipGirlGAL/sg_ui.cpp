@@ -5,8 +5,8 @@ extern maincall* ma;
 
 Item* sg = new Item[6];//我方人物数组
 Item* ds = new Item[6];//敌方人物数组
-Item* But[6];
-Item* Wep[3];
+Item* But[3];
+Item* Wep[3][3];
 Item* lh;              //左边的 黑幕
 Item* rh;              //右边黑幕
 Item* dc;              //下大文字框
@@ -321,8 +321,9 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
             GG = 1;
         }
     if(GG == 2){
-        for(int i = 0; i < 6; i++)
-            ma->RemoveItem(Wep[i]);
+        for(int i = 0; i < 3; i++)
+            for(int j = 0; j < 3; j++)
+                ma->RemoveItem(Wep[i][j]);
 
         SG_UI::UI_FigureWeapons(ggs,1);
     }
@@ -371,92 +372,129 @@ void SG_UI::UI_FigureWeapons(ParametersStru Name, int switchh)//寻找攻击者�
 {
     if(switchh == 1)
     {
-        int k = 0;
-        Figure* a = new Figure;
-        if(a->ReadSql(Name.StringVar[2],"CLASS") == "CV"){
-            Item* x[3];
+
+        Figure a;
+        QString macl = "_Att";
+        QString read = a.ReadSql(Name.StringVar[2],"CLASS");
+        if(read == "CV"){
             QString pa[3] = {"高平炮1_按钮.png","鱼雷机_按钮.png","战斗机_按钮.png"};  //武器按钮的名字
-            QString wa[3] = {"CVMG","CVTP","CVHZ"};                                //weapon传递的参数
-            for(int i = 0; i < 3; i++)
-                {
-                    ParametersStru weapon;
-                    weapon.StringVar<<wa[i];
-                    Item* aa = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
-                    x[i] = ma->AddPixmapItem(BT+"武器按钮_圈.png",k,Name.intVar[2]);
-                    Wep[i] = ma->AddButtonItem(BT+pa[i],-k,Name.intVar[2],"_Att","","",100,weapon);
-                    ma->AnimationMoveItem(Wep[i],k,Name.intVar[2],500);
-                    Pos cc = ma->GetItemCenter(x[i]);
-                    ma->RotationItem(x[i],36000,cc);
-                    ma->SetItemLayer(Wep[i],11);
-                    ma->SetItemLayer(x[i],10);
-                    ma->SetItemLayer(aa,9);
-                    k = k+111;
-            }
+            QString wa[3] = {"CVMG","CVTP","CVHZ"};                     //weapon传递的参数
+            int k = 0;
+                for(int i = 0; i < 3; i++)
+                    {
+                        ParametersStru weapon;
+                        weapon.StringVar<<wa[i];
+                        Wep[i][0] = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
+                        Wep[i][1] = ma->AddPixmapItem(BT+"武器按钮_圈.png",k,Name.intVar[2]);
+                        Wep[i][2] = ma->AddButtonItem(BT+pa[i],-k,Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
+                        ma->AnimationMoveItem(Wep[i][2],k,Name.intVar[2],500);
+                        for(int j =0,k = 9; j<3; j++,k++)
+                            ma->SetItemLayer(Wep[i][j],k);
+                        k = k+111;
+                }
             GG = 2; //之后把标记改成2
             K = 1;
 
         }
+        else if(read == "DD" || read == "CL")
+            {
+                QString pa[3] = {"高平炮1_按钮.png","鱼雷1_按钮.png","投弹器_按钮.png"};
+                QString ddd[3] = {"DDMG","DDTP","DDTD"};
+                QString ccc[3] = {"CLMG","CLTP","CLTD"};
+                int k = 0;
+                for(int i = 0; i<3; i++)
+                    {
+
+                        ParametersStru weapon;
+                        Wep[i][0] = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
+                        Wep[i][1] = ma->AddPixmapItem(BT+"武器按钮_圈.png",k,Name.intVar[2]);
+                        if(read == "DD")
+                            weapon.StringVar<<ddd[i];
+                        else
+                            weapon.StringVar<<ccc[i];
+                        Wep[i][2] = ma->AddButtonItem(BT+pa[i],Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
+
+                        ma->AnimationMoveItem(Wep[i][2],k,Name.intVar[2],500);
+                        for(int j =0,k = 9; j<3; j++,k++)
+                            ma->SetItemLayer(Wep[i][j],k);
+                        k = k+111;
+                        GG = 2;
+                        K = 1;
+                    }
+                }
+        else if(read == "CA")
+            {
+                QString pa[3] = {"重巡炮_按钮.png","高平炮1_按钮.png","鱼雷1_按钮.png"};
+                QString paa[3] = {"重巡炮_按钮.png","高平炮1_按钮.png","透明图层.png"};
+                QString cac[3] = {"CAMG","CASG","CATP"};
+                Figure b;
+                int k = 0;
+                for(int i = 0; i<3; i++)
+                    {
+                        ParametersStru weapon;
+                        weapon.StringVar<<cac[i];
+                        Wep[i][0] = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
+                        Wep[i][1] = ma->AddPixmapItem(BT+"武器按钮_圈.png",k,Name.intVar[2]);
+                        if(b.ReadSql(Name.StringVar[2],"TORPEDO") == 0)
+                            Wep[i][2] = ma->AddButtonItem(BT+paa[i],Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
+                        else
+                            Wep[i][2] = ma->AddButtonItem(BT+pa[i],Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
+
+                        ma->AnimationMoveItem(Wep[i][2],k,Name.intVar[2],500);
+                        for(int j =0,k = 9; j<3; j++,k++)
+                            ma->SetItemLayer(Wep[i][j],k);
+                        k = k+111;
+                        GG = 2;
+                        K = 1;
+                }
+        }
+        else if(read == "BB" || read == "BC")
+            {
+                QString pa[3] = {"战列炮_按钮.png","透明图层.png","高平炮1_按钮.png"};
+                QString bbb[3] = {"BBMG","","BBSG"};
+                QString bbc[3] = {"BCMG","","BCSG"};
+                int k = 0;
+                for(int i = 0; i<3; i++)
+                    {
+                        ParametersStru weapon;
+                        Wep[i][0] = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
+                        Wep[i][1] = ma->AddPixmapItem(BT+"武器按钮_圈.png",k,Name.intVar[2]);
+                        if(read == "BB")
+                            weapon.StringVar<<bbb[i];
+                        else
+                            weapon.StringVar<<bbc[i];
+                        Wep[i][2] = ma->AddButtonItem(BT+pa[i],Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
+
+                        ma->AnimationMoveItem(Wep[i][2],k,Name.intVar[2],500);
+                        for(int j =0,k = 9; j<3; j++,k++)
+                            ma->SetItemLayer(Wep[i][j],k);
+                        k = k+111;
+                        GG = 2;
+                        K = 1;
+                }
+        }
         else
         {
-            QString read = a->ReadSql(Name.StringVar[2],"CLASS");
-            QString macl = "_Att";
-            if(read == "BB" || read == "CA" || read == "BC")
+            QString pa[3] = {"甲板炮_按钮.png","透明图层.png","鱼雷2_按钮.png"};
+            QString ss[3] = {"SSMG","","SSTP"};
+            int k = 0;
+            for(int i = 0; i<3; i++)
                 {
                     ParametersStru weapon;
-                    if(read == "BB")      weapon.StringVar<<"BBMG";
-                    else if(read == "CA") weapon.StringVar<<"CAMG";
-                    else                  weapon.StringVar<<"CAMG";
-                    Wep[0] = ma->AddButtonItem(BT+"武器按钮1.png",Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
-                    Wep[3] = ma->AddTextItem("主 炮","微软雅黑",30,75,185,248,Name.intVar[1]+25,Name.intVar[2]+20);
-
-                    if(read == "BB")      weapon.StringVar<<"BBSG";
-                    else if(read == "CA") weapon.StringVar<<"CASG";
-                    else                  weapon.StringVar<<"CASG";
-                    Wep[1] = ma->AddButtonItem(BT+"武器按钮2.png",Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
-                    Wep[4] = ma->AddTextItem("副 炮","微软雅黑",30,75,185,248,Name.intVar[1]+200,Name.intVar[2]+20);
+                    weapon.StringVar<<ss[i];
+                    Wep[i][0] = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
+                    Wep[i][1] = ma->AddPixmapItem(BT+"武器按钮_圈.png",k,Name.intVar[2]);
+                    Wep[i][2] = ma->AddButtonItem(BT+pa[i],Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
+                    ma->AnimationMoveItem(Wep[i][2],k,Name.intVar[2],500);
+                    for(int j =0,k = 9; j<3; j++,k++)
+                        ma->SetItemLayer(Wep[i][j],k);
+                    k = k+111;
+                    GG = 2;
+                    K = 1;
             }
-
-            else if(read == "DD" || read == "CL")
-                {
-                    ParametersStru weapon;
-                    if(read == "DD") weapon.StringVar<<"DDMG";
-                    else             weapon.StringVar<<"CLMG";
-                    Wep[0] = ma->AddButtonItem(BT+"武器按钮1.png",Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
-                    Wep[3] = ma->AddTextItem("主 炮","微软雅黑",30,75,185,248,Name.intVar[1]+25,Name.intVar[2]+20);
-
-                    if(read == "DD") weapon.StringVar<<"DDTP";
-                    else             weapon.StringVar<<"CLTP";
-                    Wep[1] = ma->AddButtonItem(BT+"武器按钮2.png",Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
-                    Wep[4] = ma->AddTextItem("鱼 雷","微软雅黑",30,75,185,248,Name.intVar[1]+200,Name.intVar[2]+20);
-            }
-
-            else if(read == "SS")
-                {
-                    ParametersStru weapon;
-                    weapon.StringVar<<"SSMG";
-                    Wep[0] = ma->AddButtonItem(BT+"武器按钮1.png",Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
-                    Wep[3] = ma->AddTextItem("近防炮","微软雅黑",25,75,185,248,Name.intVar[1]+25,Name.intVar[2]+20);
-                    weapon.StringVar<<"SSTP";
-                    Wep[1] = ma->AddButtonItem(BT+"武器按钮2.png",Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
-                    Wep[4] = ma->AddTextItem("鱼 雷","微软雅黑",30,75,185,248,Name.intVar[1]+200,Name.intVar[2]+20);
-            }
-
-
-            Wep[2] = ma->AddTextItem("   ","微软雅黑",20,0,0,0,0,0);
-            Wep[5] = ma->AddTextItem("  ","微软雅黑",30,75,185,248,155,61);
-            ma->AnimationMoveItem(Wep[0],0,Name.intVar[2],15);
-            ma->AnimationMoveItem(Wep[1],0,Name.intVar[2],15);
-            ma->SetItemLayer(Wep[0],11);
-            ma->SetItemLayer(Wep[1],11);
-            ma->SetItemLayer(Wep[3],12);
-            ma->SetItemLayer(Wep[4],12);
-            ma->SetItemLayer(Wep[5],12);
-            GG = 2;
-            K = 1;
         }
+
     }
-
-
 }
 
 void SG_UI::UI_AnimationFigure(QString SGname, QString DSname, int SH)
@@ -513,8 +551,9 @@ void SG_UI::UI_AnimationFigure(QString SGname, QString DSname, int SH)
     ma->RemoveItem(d);
     ma->RemoveItem(pd);
 
-    for(int i = 0; i < 6; i++)
-        ma->MoveItem(Wep[i],-350,ma->GetItemY(Wep[i]));
+    for(int i = 0; i < 3; i++)
+        for(int j = 0; j < 3; j++)
+            ma->MoveItem(Wep[i][j],-350,ma->GetItemY(Wep[i][j]));
 
     for(int i = 0; i<ssum; i++)
         ma->ScaleItem(&sg[i],1.0);
