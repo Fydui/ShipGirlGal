@@ -87,7 +87,7 @@ void SG_UI::UI_StartUI() //绘制开始菜单界面
 */
     //样式二
     ParametersStru res;
-    res.intVar<<21<<11;
+    res.intVar<<21<<10;
 
     ma->AddPixmapItem(BG+"办公室.png",0,0);
     //Item*fn = ma->AddTextItem("Loading...","微软雅黑",28,255,255,255,465,327);
@@ -95,12 +95,12 @@ void SG_UI::UI_StartUI() //绘制开始菜单界面
     //Item*mr = ma->AddPixmapItem(BG+"中心圆.png",421,241);
     SG_UI::UI_UiReturn();
 
-    SynchronousStart(ff)
+    //SynchronousStart(ff)
     //ma->SetOpacityItem(mr,0.0);
     //ma->AnimationSetOpacityItem(mr,1,50,"ff");
-    Item* na = ma->AddPixmapItem(ST+"上名称栏.png",453,-45);
-    ma->AnimationMoveItem(na,453,0,30,"ff");
-    SynchronousFinish()
+    Item* na = ma->AddPixmapItem(BG+"上名称栏.png",453,-45);
+    ma->AnimationMoveItem(na,453,0,30);
+    //SynchronousFinish()
 
     SynchronousStart(dd)
     Item*mr2 = ma->AddPixmapItem(BG+"半圆.png",-156,202);
@@ -142,7 +142,7 @@ void SG_UI::UI_StartTextUi()//绘制开始游戏界面
     //sgui = this;
     ParametersStru ret;
     ret.ItemVar<< re;
-    ret.intVar<<33<<24;
+    ret.intVar<<31<<21;
     ma->AddPixmapItem(BG+"木头海岸.png",0,0);
     SynchronousStart(mm)
     fi = ma->AddPixmapItem(FO+"列克星敦.png",-600,0);
@@ -224,8 +224,9 @@ void SG_UI::UI_StartTextUi()//绘制开始游戏界面
 void SG_UI::UI_StartFight()//绘制战斗界面
 {
     ParametersStru ref;
-    int v = 40+ssum+dsum;
-    ref.intVar<<v<<33;
+    int v = 37+ssum+dsum;
+    ref.intVar<<v<<30;
+    ref.ItemVar<<fi;
     lh = ma->AddPixmapItem(BG+"左黑幕.png",-594,0);
     rh = ma->AddPixmapItem(BG+"右黑幕.png",1080,0);
     int Y = 465;
@@ -603,7 +604,7 @@ void SG_UI::UI_UiReturn()//返回时的小特♂技
 void SG_UI::FU_Return(int ZSum, int SSum)
 {
 
-    for(int i =SSum;ZSum >= i; ZSum--)
+    for(int i =SSum;ZSum > i; ZSum--)
     {
         ma->RemoveItem(ma->AllItem[ZSum]); //删除所在界面所有图元 完成返回
     }

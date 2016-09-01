@@ -41,7 +41,7 @@ void maincall::_StartText()
 {
     SG_UI::UI_StartTextUi();
     SG_StartGame::SG_StartText();
-    SG_UI::UI_StartFight();
+    //SG_UI::UI_StartFight();
 }
 
 void maincall::_ClearTextUi()

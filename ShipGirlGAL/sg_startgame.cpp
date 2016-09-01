@@ -10,11 +10,11 @@ void SG_StartGame::SG_StartText()
     Figure RW;
     RW.ReadText("M_1_1.txt","#");
     sgfu->OpenSql("SG.db");
-    sgfu->FigureShow("列克星敦");
+    /*sgfu->FigureShow("列克星敦");
     sgfu->FigureShow("昆西");
     sgfu->FigureShow("罗德尼");
     sgfu->FigureShow("航母O级");
     sgfu->FigureShow("战列M级");
-    sgfu->FigureShow("轻巡E级");
+    sgfu->FigureShow("轻巡E级");*/
 
 }
