@@ -142,19 +142,18 @@ void SG_UI::UI_StartTextUi()//绘制开始游戏界面
     //sgui = this;
     ParametersStru ret;
     ret.ItemVar<< re;
-    ret.intVar<<31<<21;
     ma->AddPixmapItem(BG+"木头海岸.png",0,0);
     SynchronousStart(mm)
     fi = ma->AddPixmapItem(FO+"列克星敦.png",-600,0);
     ma->AnimationMoveItem(fi,-300,0,50,"mm");
     SynchronousFinish()
 
-    dc =  ma->AddPixmapItem(BG+"下大文字框.png",0,500,"_ClearTextUi",ret);
+    dc =  ma->AddPixmapItem(BG+"下大文字框.png",0,500);
     ma->SetItemLayer(dc,10);
     ma->SetOpacityItem(dc,0.0);
     ma->AnimationSetOpacityItem(dc,1,50);
 
-    //ma->AddMouseEvent(0,520,1080,720,"_ClearTextUi");
+    ma->AddMouseEvent(0,520,1080,720,"_ClearTextUi");
 
     //用循环来输出图元 不过感觉更麻烦了QwQ
     QString Bup[6] = {"返回_上.png",//设置每个按钮图片
@@ -171,7 +170,7 @@ void SG_UI::UI_StartTextUi()//绘制开始游戏界面
                             "",
                             ""};
     ParametersStru parabut[6];
-        parabut[0].intVar<<32<<24;
+        parabut[0].intVar<<31<<21;
         parabut[1] = _NULLParametersStru;
         parabut[2] = _NULLParametersStru;
         parabut[3] = _NULLParametersStru;
@@ -224,8 +223,11 @@ void SG_UI::UI_StartTextUi()//绘制开始游戏界面
 void SG_UI::UI_StartFight()//绘制战斗界面
 {
     ParametersStru ref;
-    int v = 37+ssum+dsum;
-    ref.intVar<<v<<30;
+    int v = 0;
+    if(GG == 1) v = 47+ssum+dsum;
+    else        v = 38+ssum+dsum;
+
+    ref.intVar<<v<<31;
     ref.ItemVar<<fi;
     lh = ma->AddPixmapItem(BG+"左黑幕.png",-594,0);
     rh = ma->AddPixmapItem(BG+"右黑幕.png",1080,0);
@@ -303,8 +305,6 @@ QString SG_UI::UI_FigureShow(QString Path, QString Name, QString Ta, float X, fl
 
 void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
 {
-
-
     int fsum = 0;
     Item* fgg;                  //判断传进来的是属于SG表还是DS表
     if(name.StringVar[0] == "SG"){
@@ -603,12 +603,12 @@ void SG_UI::UI_UiReturn()//返回时的小特♂技
 
 void SG_UI::FU_Return(int ZSum, int SSum)
 {
-
     for(int i =SSum;ZSum > i; ZSum--)
     {
         ma->RemoveItem(ma->AllItem[ZSum]); //删除所在界面所有图元 完成返回
     }
     Tbx = 752;
+
 }
 
 void SG_UI::FU_ClearTextui(Item* te)
