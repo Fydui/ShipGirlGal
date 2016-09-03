@@ -90,17 +90,11 @@ void SG_UI::UI_StartUI() //绘制开始菜单界面
     res.intVar<<21<<10;
 
     ma->AddPixmapItem(BG+"办公室.png",0,0);
-    //Item*fn = ma->AddTextItem("Loading...","微软雅黑",28,255,255,255,465,327);
     ma->AddPixmapItem(BG+"科幻背景.png",0,0);
-    //Item*mr = ma->AddPixmapItem(BG+"中心圆.png",421,241);
     SG_UI::UI_UiReturn();
 
-    //SynchronousStart(ff)
-    //ma->SetOpacityItem(mr,0.0);
-    //ma->AnimationSetOpacityItem(mr,1,50,"ff");
     Item* na = ma->AddPixmapItem(BG+"上名称栏.png",453,-45);
     ma->AnimationMoveItem(na,453,0,30);
-    //SynchronousFinish()
 
     SynchronousStart(dd)
     Item*mr2 = ma->AddPixmapItem(BG+"半圆.png",-156,202);
@@ -268,9 +262,7 @@ void SG_UI::UI_StartFight()//绘制战斗界面
     ma->AnimationSetOpacityItem(ad,1,10,"mm");
     SynchronousFinish()
     ma->AnimationSetOpacityItem(fig,0.0,20);
-    //ma->SetItemOrder(ad,dc);
-    //_Sum = 41+ssum +dsum;
-    //Sum = 33;
+
 }
 
 QString SG_UI::UI_FigureShow(QString Path, QString Name, QString Ta, float X, float Y, float X_, float Y_)//绘制战斗人物显示
