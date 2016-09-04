@@ -592,6 +592,12 @@ void SG_UI::UI_UiReturn()//返回时的小特♂技
     ma->RemoveItem(bg);
     Yz =0;
 }
+void SG_UI::UI_ArticleBlood(Item* figure,int X, int Y, int Ablood, int Bblood)
+{
+    QString ab = QString::number(Ablood);
+    QString bb = QString::number(Bblood);
+    figure.ItemVar[0] = ma->AddTextItem(ab+"/"+bb,"微软雅黑",15,178,255,0,X,Y);
+}
 
 void SG_UI::FU_Return(int ZSum, int SSum)
 {
