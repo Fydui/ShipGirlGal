@@ -5,6 +5,7 @@ extern maincall* ma;
 
 Item* sg = new Item[6];//我方人物数组
 Item* ds = new Item[6];//敌方人物数组
+Item* font;
 Item* But[3];
 Item* Wep[3][3];
 Item* lh;              //左边的 黑幕
@@ -270,24 +271,30 @@ QString SG_UI::UI_FigureShow(QString Path, QString Name, QString Ta, float X, fl
     if(Ta == "SG")
     {
         ParametersStru sgg;
-        sgg.ItemVar<< &sg[ssum];
+        Figure* m = new Figure;
+        sgg.ItemVar<< &sg[ssum]<<font;
         sgg.intVar<< aaa << X_ << Y_;
         sgg.StringVar<<"SG"<<Ta<<Name;
         aaa++;
         sg[ssum] = *ma->AddButtonItem(Path,X,Y,"_Zoom","","",100,sgg);//Item*数组sg储存人物
-
+        //SG_UI::UI_ArticleBlood(&sf[ssum],X_,Y_,my.ReadSql(Name,"HP"));
+        font = ma->AddTextItem(m->ReadSql(Name,"HP")+"/"+m->ReadSql(Name,"HP"),"微软雅黑",15,225,225,225,X_,Y_);
         ma->SetItemLayer(&sg[ssum],3);                         //设置图片等级
         ma->AnimationMoveItem(&sg[ssum],X_,Y_,20);
+        ma->SetItemLayer(font,12);
         ssum++;
     }
     else
     {
         ParametersStru dss;
-        dss.ItemVar<< &ds[dsum];
+        Figure* m = new Figure;
+        dss.ItemVar<< &ds[dsum]<<font;
         dss.intVar<< bbb << Y_;
         dss.StringVar<< "DS"<<Ta<<Name;
         bbb++;
         ds[dsum] = *ma->AddButtonItem(Path,X,Y,"_Zoom","","",100,dss);          //Item*数组mp储存人物
+        font = ma->AddTextItem(m->ReadSql(Name,"HP")+"/"+m->ReadSql(Name,"HP"),"微软雅黑",15,225,225,225,X_,Y_);
+        ma->SetItemLayer(font,12);
         ma->SetItemLayer(&ds[dsum],3);                       //设置图片等级
         ma->AnimationMoveItem(&ds[dsum],X_,Y_,20);
         dsum++;
@@ -596,7 +603,7 @@ void SG_UI::UI_ArticleBlood(Item* figure,int X, int Y, int Ablood, int Bblood)
 {
     QString ab = QString::number(Ablood);
     QString bb = QString::number(Bblood);
-    figure.ItemVar[0] = ma->AddTextItem(ab+"/"+bb,"微软雅黑",15,178,255,0,X,Y);
+    figure = ma->AddTextItem(ab+"/"+bb,"微软雅黑",15,178,255,0,X,Y);
 }
 
 void SG_UI::FU_Return(int ZSum, int SSum)

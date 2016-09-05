@@ -7,6 +7,7 @@ extern int Tbx;             //文本框上面按钮们的横坐标
 extern maincall* ma;
 int DoneSum = 21;           //文本判断变量 必须和分隔符数目相等
 int Tsum =0;                //文本计数变量
+extern Item* font;
 //int tablsum = 0;
 extern QSqlDatabase db;     //数据库连接变量
 Figure* sgfu;          //给别的类用的
@@ -391,6 +392,7 @@ int Figure::FightAtt(QString SG_, QString DS_,ParametersStru WeaponType) //默�
     {return 8888;}
 
     SG_UI::UI_AnimationFigure(SG_,DS_,abs(shjs));
+    SG_UI::UI_ArticleBlood(font,font->ShearX,font->ShearY,B->HP-abs(shjs),A->HP);
     return B->HP - abs(shjs);
 }
 
