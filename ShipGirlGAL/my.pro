@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = my
 TEMPLATE = app
-
+QT += sql
 
 SOURCES += main.cpp\
         widget.cpp \
@@ -43,13 +43,14 @@ HEADERS  += widget.h \
     animation.h \
     sg_figure.h \
     sg_startgame.h \
+    sg_ui.cpp.oy4668 \
     sg_ui.h
 
 FORMS    += widget.ui
 QT += core gui
 
 OTHER_FILES +=
-QT += sql
+
 QT += multimedia multimediawidgets
 INSTALLS += target
 QT += script

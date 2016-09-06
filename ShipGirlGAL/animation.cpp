@@ -15,7 +15,7 @@ void SC::changepixmap()
         {iter=pixmap.begin();}//若需循环，就重播
         else//若不循环，发信号退出一切
         {
-            this->over=1;
+            over=true;
             if(signfun!=NULL_String)
             {
                 QByteArray ba = signfun.toLatin1();
@@ -34,7 +34,6 @@ void SC::start(int choose)
 {
     this->choose=choose;
     timer=new QTimer(this);
-    over=0;
     switch(choose)
     {
         case 0:
@@ -97,6 +96,14 @@ void SC::start(int choose)
             timer->start(2);
             break;
         }
+        case 8:
+        {
+            temp=0;
+            temp1=2*(TargetModulus-CurrentModulus)/times;
+            temp2=2*(TargetModulus2-CurrentModulus2)/times;
+            timer->start(2);
+            break;
+        }
         case 20:
         {
             temp=0;
@@ -115,7 +122,7 @@ void SC::isend()
     if(times!=-1)
     {
         if(temp==times || temp==times+1 || temp==times-1) //temp实际上是记录目前时间的
-        {over=1;}
+        {over=true;}
     }
 }
 
@@ -209,6 +216,19 @@ void SC::SlowChange()
             {
                 SCCurrentModulus scc=scfun(temp);
                 s->ShearItem(item,scc.CurrentModulus,scc.CurrentModulus2);
+            }
+            isend();
+            break;
+        }
+        case FreeScale:
+        {
+            temp+=2;
+            if(!isfunction)
+            {s->FreeScaleItem(item,CurrentModulus+=temp1,CurrentModulus2+=temp2);}
+            else
+            {
+                SCCurrentModulus scc=scfun(temp);
+                s->FreeScaleItem(item,scc.CurrentModulus,scc.CurrentModulus2);
             }
             isend();
             break;

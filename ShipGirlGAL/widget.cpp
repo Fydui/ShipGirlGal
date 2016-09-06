@@ -35,6 +35,7 @@ void Widget::Initialization()
     QTextCodec::setCodecForLocale(codec);
     //注册普通类型
     RegisterJSType(ParametersStru,"ParametersStru");
+    RegisterJSType(ParametersStru*,"ParametersStru*"); //被逼无奈
     RegisterJSType(LFEvent*,"LFEvent*");
     RegisterJSType(Item*,"Item*");
     RegisterJSType(String,"String");
@@ -47,20 +48,6 @@ void Widget::Initialization()
     RegisterJSType(GraphicsScene*,"GraphicsScene*");
     RegisterJSType(Key,"Key");
     RegisterJSType(JSVM*,"JSVM*");
-    //注册Vector类型
-    RegisterJSType(QVector<int>,"intVector");
-    RegisterJSType(QVector<float>,"floatVector");
-    RegisterJSType(QVector<String>,"StringVector");
-    RegisterJSType(QVector<bool>,"boolVector");
-    RegisterJSType(QVector<VideoPlayer*>,"VideoPlayerVector");
-    RegisterJSType(QVector<GraphicsView*>,"GraphicsViewVector");
-    RegisterJSType(QVector<CaluThread*>,"CaluThreadVector");
-    RegisterJSType(QVector<AnimationType>,"AnimationTypeVector");
-    RegisterJSType(QVector<Pixmap*>,"PixmapVector");
-    RegisterJSType(QVector<Item*>,"ItemVector");
-    RegisterJSType(QVector<MusicPlayer*>,"MusicPlayerVector");
-    RegisterJSType(QVector<GraphicsScene*>,"GraphicsSceneVector");
-    RegisterJSType(QVector<Key>,"KeyVector");
     #ifdef SelfAdaption
     //计算自适应比
     int scWidth=GetScreenWidth();

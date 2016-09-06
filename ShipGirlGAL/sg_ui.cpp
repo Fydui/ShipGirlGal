@@ -5,6 +5,8 @@ extern maincall* ma;
 
 Item* sg = new Item[6];//我方人物数组
 Item* ds = new Item[6];//敌方人物数组
+Item* sf = new Item[6];
+Item* df = new Item[6];
 Item* font;
 Item* But[3];
 Item* Wep[3][3];
@@ -272,7 +274,7 @@ QString SG_UI::UI_FigureShow(QString Path, QString Name, QString Ta, float X, fl
     {
         ParametersStru sgg;
         Figure* m = new Figure;
-        sgg.ItemVar<< &sg[ssum]<<font;
+        sgg.ItemVar<< &sg[ssum]<<&sg[ssum];
         sgg.intVar<< aaa << X_ << Y_;
         sgg.StringVar<<"SG"<<Ta<<Name;
         aaa++;

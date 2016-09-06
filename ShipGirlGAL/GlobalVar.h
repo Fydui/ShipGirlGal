@@ -27,7 +27,7 @@ signals:
 };
 
 //-引擎自带的全局常量，可以在这里调节一些基础设定
-static const QString title="舰少GAL";//窗口标题
+static const QString title="Life-Fire Engine";//窗口标题
 static const int WindowsWidth=1080;//窗口宽
 static const int WindowsHeigh=720;//窗口高
 static const int MaximumWidth=10000;//舞台最大宽
