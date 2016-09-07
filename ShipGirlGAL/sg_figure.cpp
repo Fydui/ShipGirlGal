@@ -17,10 +17,10 @@ QString DS;
 QSqlQuery* query;           //数据库操作指针
 int SGxy = 0;               //我方人物名片的计数变量
 int DSxy = 0;               //敌方人物名片的计数变量
-float Sx = -277.0;          //我方人物名片的横 纵坐标
-float Sy = 0.0;
-float Dx = 1080.0;          //敌方人物名片的横 纵 坐标
-float Dy = 0.0;
+int Sx = -277.0;          //我方人物名片的横 纵坐标
+int Sy = 0.0;
+int Dx = 1080.0;          //敌方人物名片的横 纵 坐标
+int Dy = 0.0;
 using namespace SG_UI;
 
 Figure::Figure(library* fu)
@@ -392,7 +392,7 @@ int Figure::FightAtt(QString SG_, QString DS_,ParametersStru WeaponType) //默�
     {return 8888;}
 
     SG_UI::UI_AnimationFigure(SG_,DS_,abs(shjs));
-    //SG_UI::UI_ArticleBlood(font,font->ShearX,font->ShearY,B->HP-abs(shjs),A->HP);
+    SG_UI::UI_ArticleBlood(WeaponType,WeaponType.intVar[0],WeaponType.intVar[1],B->HP-abs(shjs),B->HP);
     return B->HP - abs(shjs);
 }
 
