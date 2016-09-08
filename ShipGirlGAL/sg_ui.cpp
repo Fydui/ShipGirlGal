@@ -25,6 +25,7 @@ int ssum = 0;          //我方名片计数变量 最终于我方名片数目相
 int dsum = 0;          //敌方
 int GG = 0;
 int K = 0;
+int Ty = 0;
 ParametersStru ggs;
 
 using namespace SG_UI;
@@ -221,8 +222,8 @@ void SG_UI::UI_StartFight()//绘制战斗界面
 {
     ParametersStru ref;
     int v = 0;
-    if(GG == 1) v = 47+ssum+dsum;
-    else        v = 38+ssum+dsum;
+    if(GG == 1) v = 47+ 2*(ssum+dsum);
+    else        v = 38+ 2*(ssum+dsum);
 
     ref.intVar<<v<<31;
     ref.ItemVar<<fi;
@@ -274,11 +275,12 @@ QString SG_UI::UI_FigureShow(QString Path, QString Name, QString Ta, int X, int 
     {
         ParametersStru sgg;
         Figure* m = new Figure;
-        sgg.ItemVar<< &sg[ssum]<<&sg[ssum];
-        sgg.intVar<< aaa << 803 << Y_;
+        sgg.ItemVar<< &sg[ssum]<<&sf[ssum];
+        sgg.intVar<< aaa<< 803 << Y_;
         sgg.StringVar<<"SG"<<Ta<<Name;
         aaa++;
         sg[ssum] = *ma->AddButtonItem(Path,X,Y,"_Zoom","","",100,sgg);//Item*数组sg储存人物
+
         //SG_UI::UI_ArticleBlood(&sf[ssum],X_,Y_,my.ReadSql(Name,"HP"));
         sf[ssum] = *ma->AddTextItem(m->ReadSql(Name,"HP")+"/"+m->ReadSql(Name,"HP"),"微软雅黑",15,225,225,225,X_,Y_);
         ma->SetItemLayer(&sg[ssum],3);                         //设置图片等级
@@ -322,14 +324,13 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
             fgg = ds;
             GG = 1;
         }
-    if(GG == 2){
+    /*if(GG == 2 && K == 3){
         for(int i = 0; i < 3; i++)
             for(int j = 0; j < 3; j++)
                 ma->RemoveItem(Wep[i][j]);
 
-        SG_UI::UI_FigureWeapons(ggs,1);
-    }
-
+        //SG_UI::UI_FigureWeapons(ggs,getY,1);
+    }*/
     if(G == 1)
     {
         float zo = 0.0;
@@ -355,22 +356,33 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
             /*由于元火缩放图元都是以左上角为标注 但敌方名片UI需要以右上角为基准缩放*/
                 if(name.StringVar[0] == "DS"){
                     ma->MoveItem(&fgg[j],757,name.intVar[2]);//所以当当前点击为敌方时 先左移出来一部分
-                    Yz = name.intVar[2];                     //设置被移动图元的Y
+                    Yz = name.intVar[2];//设置被移动图元的Y
+                    ParametersStru gety;
+                    gety.intVar<<  ma->GetItemY(&fgg[j]);
+                    Ty = ma->GetItemY(&fgg[j]);
+                    ggs.ItemVar[1] = &df[j];
                     if(K == 0)
-                        SG_UI::UI_FigureWeapons(ggs,GG);
+                        SG_UI::UI_FigureWeapons(ggs,gety,GG);
 
                     GG = 2;
                 }
                     ma->ScaleItem(&fgg[j],1.2);//放大
-                    if(name.StringVar[0] == "SG" && K == 1)
-                        SG_UI::UI_FigureWeapons(ggs,GG);
+                    if(name.StringVar[0] == "SG" && GG==2){
+                        for(int i = 0; i < 3; i++)
+                            for(int a = 0; a < 3; a++)
+                                ma->RemoveItem(Wep[i][a]);
+
+                        ParametersStru gety;
+                        gety.intVar<<  Ty;
+                        SG_UI::UI_FigureWeapons(ggs,gety,1);
+                    }
             }
         }
     }
     //return name;
 }
 
-void SG_UI::UI_FigureWeapons(ParametersStru &Name, int switchh)//寻找攻击者的武器类别 switchh是开关1开别的关
+void SG_UI::UI_FigureWeapons(ParametersStru &Name,ParametersStru _Name, int switchh)//寻找攻击者的武器类别 switchh是开关1开别的关
 {
     if(switchh == 1)
     {
@@ -387,7 +399,7 @@ void SG_UI::UI_FigureWeapons(ParametersStru &Name, int switchh)//寻找攻击者
                         ParametersStru weapon;
                         weapon.StringVar<<wa[i];
                         weapon.ItemVar<< Name.ItemVar[1];
-                        weapon.intVar <<Name.intVar[1]<<Name.intVar[2];
+                        weapon.intVar <<Name.intVar[1]<<_Name.intVar[0];
                         Wep[i][0] = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
                         Wep[i][1] = ma->AddPixmapItem(BT+"武器按钮_圈.png",k,Name.intVar[2]);
                         Wep[i][2] = ma->AddButtonItem(BT+pa[i],-k,Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
@@ -397,7 +409,7 @@ void SG_UI::UI_FigureWeapons(ParametersStru &Name, int switchh)//寻找攻击者
                         k = k+111;
                 }
             GG = 2; //之后把标记改成2
-            K = 1;
+            K = 0;
 
         }
         else if(read == "DD" || read == "CL")
@@ -411,21 +423,21 @@ void SG_UI::UI_FigureWeapons(ParametersStru &Name, int switchh)//寻找攻击者
 
                         ParametersStru weapon;
                         weapon.ItemVar<< Name.ItemVar[1];
-                        weapon.intVar <<Name.intVar[1]<<Name.intVar[2];
+                        weapon.intVar <<Name.intVar[1]<<_Name.intVar[0];
                         Wep[i][0] = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
                         Wep[i][1] = ma->AddPixmapItem(BT+"武器按钮_圈.png",k,Name.intVar[2]);
                         if(read == "DD")
                             weapon.StringVar<<ddd[i];
                         else
                             weapon.StringVar<<ccc[i];
-                        Wep[i][2] = ma->AddButtonItem(BT+pa[i],Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
+                        Wep[i][2] = ma->AddButtonItem(BT+pa[i],-k,Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
 
                         ma->AnimationMoveItem(Wep[i][2],k,Name.intVar[2],500);
                         for(int j =0,k = 9; j<3; j++,k++)
                             ma->SetItemLayer(Wep[i][j],k);
                         k = k+111;
                         GG = 2;
-                        K = 1;
+                        K = 0;
                     }
                 }
         else if(read == "CA")
@@ -439,21 +451,21 @@ void SG_UI::UI_FigureWeapons(ParametersStru &Name, int switchh)//寻找攻击者
                     {
                         ParametersStru weapon;
                         weapon.ItemVar<< Name.ItemVar[1];
-                        weapon.intVar <<Name.intVar[1]<<Name.intVar[2];
+                        weapon.intVar <<Name.intVar[1]<<_Name.intVar[0];
                         weapon.StringVar<<cac[i];
                         Wep[i][0] = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
                         Wep[i][1] = ma->AddPixmapItem(BT+"武器按钮_圈.png",k,Name.intVar[2]);
                         if(b.ReadSql(Name.StringVar[2],"TORPEDO") == 0)
-                            Wep[i][2] = ma->AddButtonItem(BT+paa[i],Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
+                            Wep[i][2] = ma->AddButtonItem(BT+paa[i],-k,Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
                         else
-                            Wep[i][2] = ma->AddButtonItem(BT+pa[i],Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
+                            Wep[i][2] = ma->AddButtonItem(BT+pa[i],-k,Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
 
                         ma->AnimationMoveItem(Wep[i][2],k,Name.intVar[2],500);
                         for(int j =0,k = 9; j<3; j++,k++)
                             ma->SetItemLayer(Wep[i][j],k);
                         k = k+111;
                         GG = 2;
-                        K = 1;
+                        K = 0;
                 }
         }
         else if(read == "BB" || read == "BC")
@@ -466,21 +478,21 @@ void SG_UI::UI_FigureWeapons(ParametersStru &Name, int switchh)//寻找攻击者
                     {
                         ParametersStru weapon;
                         weapon.ItemVar<<Name.ItemVar[1];
-                        weapon.intVar <<Name.intVar[1]<<Name.intVar[2];
+                        weapon.intVar <<Name.intVar[1]<<_Name.intVar[0];
                         Wep[i][0] = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
                         Wep[i][1] = ma->AddPixmapItem(BT+"武器按钮_圈.png",k,Name.intVar[2]);
                         if(read == "BB")
                             weapon.StringVar<<bbb[i];
                         else
                             weapon.StringVar<<bbc[i];
-                        Wep[i][2] = ma->AddButtonItem(BT+pa[i],Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
+                        Wep[i][2] = ma->AddButtonItem(BT+pa[i],-k,Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
 
                         ma->AnimationMoveItem(Wep[i][2],k,Name.intVar[2],500);
                         for(int j =0,k = 9; j<3; j++,k++)
                             ma->SetItemLayer(Wep[i][j],k);
                         k = k+111;
                         GG = 2;
-                        K = 1;
+                        K = 0;
                 }
         }
         else
@@ -492,17 +504,17 @@ void SG_UI::UI_FigureWeapons(ParametersStru &Name, int switchh)//寻找攻击者
                 {
                     ParametersStru weapon;
                     weapon.ItemVar<< Name.ItemVar[1];
-                    weapon.intVar <<Name.intVar[1]<<Name.intVar[2];
+                    weapon.intVar <<Name.intVar[1]<<_Name.intVar[0];
                     weapon.StringVar<<ss[i];
                     Wep[i][0] = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
                     Wep[i][1] = ma->AddPixmapItem(BT+"武器按钮_圈.png",k,Name.intVar[2]);
-                    Wep[i][2] = ma->AddButtonItem(BT+pa[i],Name.intVar[1],Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
+                    Wep[i][2] = ma->AddButtonItem(BT+pa[i],-k,Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
                     ma->AnimationMoveItem(Wep[i][2],k,Name.intVar[2],500);
                     for(int j =0,k = 9; j<3; j++,k++)
                         ma->SetItemLayer(Wep[i][j],k);
                     k = k+111;
                     GG = 2;
-                    K = 1;
+                    K = 0;
             }
         }
 

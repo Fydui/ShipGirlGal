@@ -69,6 +69,7 @@ void maincall::_Zoom(ParametersStru name)
 
 void maincall::_Att(ParametersStru WeaponType)
 {
+    RemoveItem(WeaponType.ItemVar[0]);
     fun->FightAtt(SName,DName,WeaponType);
 }
 void maincall::_ReturnUi(ParametersStru re)
