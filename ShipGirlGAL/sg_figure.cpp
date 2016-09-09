@@ -392,7 +392,7 @@ int Figure::FightAtt(QString SG_, QString DS_,ParametersStru WeaponType) //é»˜è®
     {return 8888;}
 
     SG_UI::UI_AnimationFigure(SG_,DS_,abs(shjs));
-    SG_UI::UI_ArticleBlood(WeaponType,WeaponType.intVar[0],WeaponType.intVar[1],B->HP-abs(shjs),B->HP);
+    SG_UI::UI_ArticleBlood(WeaponType.intVar[0],WeaponType.intVar[1],B->HP-abs(shjs),B->HP);
     return B->HP - abs(shjs);
 }
 

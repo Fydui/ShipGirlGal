@@ -15,6 +15,7 @@ Item* rh;              //右边黑幕
 Item* dc;              //下大文字框
 Item* fi;              //人物
 Item* re;
+Item* xt;
 
 int Yz = 0;            //敌方名片纵坐标(用于放大之后缩回)
 int Tbx = 752;         //TextUi界面的按钮横坐标
@@ -280,7 +281,6 @@ QString SG_UI::UI_FigureShow(QString Path, QString Name, QString Ta, int X, int 
         sgg.StringVar<<"SG"<<Ta<<Name;
         aaa++;
         sg[ssum] = *ma->AddButtonItem(Path,X,Y,"_Zoom","","",100,sgg);//Item*数组sg储存人物
-
         //SG_UI::UI_ArticleBlood(&sf[ssum],X_,Y_,my.ReadSql(Name,"HP"));
         sf[ssum] = *ma->AddTextItem(m->ReadSql(Name,"HP")+"/"+m->ReadSql(Name,"HP"),"微软雅黑",15,225,225,225,X_,Y_);
         ma->SetItemLayer(&sg[ssum],3);                         //设置图片等级
@@ -363,8 +363,6 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
                     ggs.ItemVar[1] = &df[j];
                     if(K == 0)
                         SG_UI::UI_FigureWeapons(ggs,gety,GG);
-
-                    GG = 2;
                 }
                     ma->ScaleItem(&fgg[j],1.2);//放大
                     if(name.StringVar[0] == "SG" && GG==2){
@@ -382,7 +380,7 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
     //return name;
 }
 
-void SG_UI::UI_FigureWeapons(ParametersStru &Name,ParametersStru _Name, int switchh)//寻找攻击者的武器类别 switchh是开关1开别的关
+void SG_UI::UI_FigureWeapons(ParametersStru Name,ParametersStru _Name, int switchh)//寻找攻击者的武器类别 switchh是开关1开别的关
 {
     if(switchh == 1)
     {
@@ -398,8 +396,9 @@ void SG_UI::UI_FigureWeapons(ParametersStru &Name,ParametersStru _Name, int swit
                     {
                         ParametersStru weapon;
                         weapon.StringVar<<wa[i];
-                        weapon.ItemVar<< Name.ItemVar[1];
+                        weapon.ItemVar << Name.ItemVar[1];
                         weapon.intVar <<Name.intVar[1]<<_Name.intVar[0];
+
                         Wep[i][0] = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
                         Wep[i][1] = ma->AddPixmapItem(BT+"武器按钮_圈.png",k,Name.intVar[2]);
                         Wep[i][2] = ma->AddButtonItem(BT+pa[i],-k,Name.intVar[2],macl,NULL_String,NULL_String,100,weapon);
@@ -576,8 +575,10 @@ void SG_UI::UI_AnimationFigure(QString SGname, QString DSname, int SH)
     ma->RemoveItem(pd);
 
     for(int i = 0; i < 3; i++)
-        for(int j = 0; j < 3; j++)
+        for(int j = 0; j < 3; j++){
             ma->MoveItem(Wep[i][j],-350,ma->GetItemY(Wep[i][j]));
+            GG = 1;
+        }
 
     for(int i = 0; i<ssum; i++)
         ma->ScaleItem(&sg[i],1.0);
@@ -623,12 +624,12 @@ void SG_UI::UI_UiReturn()//返回时的小特♂技
     ma->RemoveItem(bg);
     Yz =0;
 }
-void SG_UI::UI_ArticleBlood(ParametersStru &name,int X, int Y, int Ablood, int Bblood)
+void SG_UI::UI_ArticleBlood(int X, int Y, int Ablood, int Bblood)
 {
     QString ab = QString::number(Ablood);
     QString bb = QString::number(Bblood);
-    name.ItemVar[0] = ma->AddTextItem(ab+"/"+bb,"微软雅黑",15,178,255,0,X,Y);
-    ma->SetItemLayer(name.ItemVar[0],13);
+    xt = ma->AddTextItem(ab+"/"+bb,"微软雅黑",15,178,255,0,X,Y);
+    ma->SetItemLayer(xt,13);
     int b;
 }
 

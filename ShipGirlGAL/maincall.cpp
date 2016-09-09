@@ -3,7 +3,7 @@
 #include "maincall.h"
 #include <vector>
 
-
+int xxt = 0;
 QString SG_;
 QString DS_;
 QString SName;
@@ -13,6 +13,7 @@ maincall* ma;
 extern Item* fi;
 extern Item* re;
 extern Figure* sgfu;
+extern Item* xt;
 using namespace  std;
 using namespace SG_UI;
 using namespace SG_StartGame;
@@ -69,7 +70,13 @@ void maincall::_Zoom(ParametersStru name)
 
 void maincall::_Att(ParametersStru WeaponType)
 {
-    RemoveItem(WeaponType.ItemVar[0]);
+    if(xxt == 0){
+        RemoveItem(WeaponType.ItemVar[0]);
+        xxt=1;
+    }
+    else
+    RemoveItem(xt);
+
     fun->FightAtt(SName,DName,WeaponType);
 }
 void maincall::_ReturnUi(ParametersStru re)
