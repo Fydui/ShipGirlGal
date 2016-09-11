@@ -4,6 +4,7 @@
 #include <vector>
 
 int xxt = 0;
+extern int K;
 QString SG_;
 QString DS_;
 QString SName;
@@ -71,6 +72,7 @@ void maincall::_Zoom(ParametersStru name)
 void maincall::_Att(ParametersStru WeaponType)
 {
     fun->FightAtt(SName,DName,WeaponType);
+    //K = 1;
 }
 void maincall::_ReturnUi(ParametersStru re)
 {

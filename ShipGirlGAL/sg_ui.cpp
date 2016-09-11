@@ -363,12 +363,14 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
                     ggs.ItemVar[1] = df[j];
                     if(K == 0)
                         SG_UI::UI_FigureWeapons(ggs,gety,GG);
+
                 }
                     ma->ScaleItem(&fgg[j],1.2);//放大
-                    if(name.StringVar[0] == "SG" && GG==2){
+                    if(name.StringVar[0] == "SG" && K==1){
                         for(int i = 0; i < 3; i++)
                             for(int a = 0; a < 3; a++)
                                 ma->RemoveItem(Wep[i][a]);
+                        //K = 0;
 
                         ParametersStru gety;
                         gety.intVar<<  Ty;
@@ -406,9 +408,10 @@ void SG_UI::UI_FigureWeapons(ParametersStru Name,ParametersStru _Name, int switc
                         for(int j =0,k = 9; j<3; j++,k++)
                             ma->SetItemLayer(Wep[i][j],k);
                         k = k+111;
+                        GG = 2; //之后把标记改成2
+                        K = 1;
                 }
-            GG = 2; //之后把标记改成2
-            K = 0;
+
 
         }
         else if(read == "DD" || read == "CL")
@@ -436,7 +439,7 @@ void SG_UI::UI_FigureWeapons(ParametersStru Name,ParametersStru _Name, int switc
                             ma->SetItemLayer(Wep[i][j],k);
                         k = k+111;
                         GG = 2;
-                        K = 0;
+                        K = 1;
                     }
                 }
         else if(read == "CA")
@@ -464,7 +467,7 @@ void SG_UI::UI_FigureWeapons(ParametersStru Name,ParametersStru _Name, int switc
                             ma->SetItemLayer(Wep[i][j],k);
                         k = k+111;
                         GG = 2;
-                        K = 0;
+                        K = 1;
                 }
         }
         else if(read == "BB" || read == "BC")
@@ -491,7 +494,7 @@ void SG_UI::UI_FigureWeapons(ParametersStru Name,ParametersStru _Name, int switc
                             ma->SetItemLayer(Wep[i][j],k);
                         k = k+111;
                         GG = 2;
-                        K = 0;
+                        K = 1;
                 }
         }
         else
@@ -513,7 +516,7 @@ void SG_UI::UI_FigureWeapons(ParametersStru Name,ParametersStru _Name, int switc
                         ma->SetItemLayer(Wep[i][j],k);
                     k = k+111;
                     GG = 2;
-                    K = 0;
+                    K = 1;
             }
         }
 
