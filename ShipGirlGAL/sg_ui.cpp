@@ -16,6 +16,7 @@ Item* dc;              //下大文字框
 Item* fi;              //人物
 Item* re;
 Item* xt;
+Item* xa;
 
 int Yz = 0;            //敌方名片纵坐标(用于放大之后缩回)
 int Tbx = 752;         //TextUi界面的按钮横坐标
@@ -27,6 +28,7 @@ int dsum = 0;          //敌方
 int GG = 0;
 int K = 0;
 int Ty = 0;
+int gk = 0;
 ParametersStru ggs;
 
 using namespace SG_UI;
@@ -311,6 +313,7 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
     int fsum = 0;
     Item* fgg;                  //判断传进来的是属于SG表还是DS表
     if(name.StringVar[0] == "SG"){
+
             fsum = ssum;
             fgg = new Item[6];
             fgg = sg;
@@ -361,8 +364,10 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
                     gety.intVar<<  ma->GetItemY(&fgg[j]);
                     Ty = ma->GetItemY(&fgg[j]);
                     ggs.ItemVar[1] = df[j];
-                    if(K == 0)
+                    if(K == 0){
+                        ggs.ItemVar[1] = &fgg[j];
                         SG_UI::UI_FigureWeapons(ggs,gety,GG);
+                    }
 
                 }
                     ma->ScaleItem(&fgg[j],1.2);//放大
@@ -523,8 +528,9 @@ void SG_UI::UI_FigureWeapons(ParametersStru Name,ParametersStru _Name, int switc
     }
 }
 
-void SG_UI::UI_AnimationFigure(QString SGname, QString DSname, int SH)
+void SG_UI::UI_AnimationFigure(QString SGname, QString DSname, int SH, ParametersStru para = _NULLParametersStru)
 {
+    //ma->RemoveItem(para.ItemVar[0]);
     QString path = FO+SGname+".png";
     QString pathh =FO+DSname+".png";
     Item* s =  ma->AddPixmapItem(path,-1024,-40);
@@ -629,9 +635,23 @@ void SG_UI::UI_UiReturn()//返回时的小特♂技
 }
 void SG_UI::UI_ArticleBlood(Item* name,int X, int Y, int Ablood, int Bblood)
 {
+    int Yy;
+    //Item* xuetiao;
+    if(gk == 0)
+        {
+            Yy = ma->GetItemY(ggs.ItemVar[1]);
+            ma->RemoveItem(ggs.ItemVar[1]);
+            gk = 1;
+    }
+    else
+        {
+            Yy = ma->GetItemY(xa);
+            ma->RemoveItem(xa);
+    }
+
     QString ab = QString::number(Ablood);
     QString bb = QString::number(Bblood);
-    /*if(Ablood == 0){
+    if(Ablood == 0){
     Item* fo;
     SynchronousStart(vv)
             fo = ma->AddTextItem("MISS!!","微软雅黑",20,242,54,20,X-100,Y);
@@ -641,9 +661,16 @@ void SG_UI::UI_ArticleBlood(Item* name,int X, int Y, int Ablood, int Bblood)
     SynchronousFinish()
             ma->RemoveItem(fo);
 
-    }*/
-    name = ma->AddTextItem(ab+"/"+bb,"微软雅黑",15,178,255,0,X,Y);
-    ma->SetItemLayer(name,13);
+    }
+    xa = ma->AddTextItem(ab+"/"+bb,"微软雅黑",15,178,255,0,X,Yy);
+    ggs.ItemVar[1] = xa;
+    ma->SetItemLayer(xa,13);
+
+    if(Ablood < 0){
+            ma->AnimationSetOpacityItem(name,0,100);
+            if(gk == 1) ma->AnimationSetOpacityItem(ggs.ItemVar[1],0,100);
+            else ma->AnimationSetOpacityItem(xa,0,100);
+    }
 }
 
 void SG_UI::FU_Return(int ZSum, int SSum)

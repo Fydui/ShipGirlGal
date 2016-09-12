@@ -20,7 +20,7 @@ namespace SG_UI /*游戏的各种UI绘制都在此类((。﹏。*)整个一面�
     //显示人物名片并且返回人物所在表 通过FU_FigureShow自动调用(当然手动也可)
 
     void UI_FigureZoom(ParametersStru name);
-    void UI_AnimationFigure(QString SGname, QString DSname,int SH);
+    void UI_AnimationFigure(QString SGname, QString DSname, int SH, ParametersStru para);
     void FU_ClearTextui(Item *);                  //清除文字图层的实现(其实可以合并到返回)
     void FU_Return(int ZSum, int SSum);
 
