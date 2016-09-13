@@ -13,6 +13,7 @@ extern QSqlDatabase db;     //数据库连接变量
 Figure* sgfu;          //给别的类用的
 QString SG;
 QString DS;
+struct FHP;
 //extern QString* Table[12];  //
 QSqlQuery* query;           //数据库操作指针
 int SGxy = 0;               //我方人物名片的计数变量
@@ -21,6 +22,7 @@ int Sx = -277.0;          //我方人物名片的横 纵坐标
 int Sy = 0.0;
 int Dx = 1080.0;          //敌方人物名片的横 纵 坐标
 int Dy = 0.0;
+vector<QString,int> map;
 using namespace SG_UI;
 
 Figure::Figure(library* fu)
@@ -391,9 +393,10 @@ int Figure::FightAtt(QString SG_, QString DS_,ParametersStru WeaponType) //默�
     else
     {return 8888;}
     SG_UI::UI_AnimationFigure(SG_,DS_,abs(shjs),WeaponType);
-    SG_UI::UI_ArticleBlood(WeaponType.ItemVar[0],WeaponType.intVar[0],WeaponType.intVar[1],B->HP-abs(shjs),B->HP);
+    SG_UI::UI_ArticleBlood(WeaponType.intVar[0],WeaponType.intVar[1],B->HP-abs(shjs),B->HP);
     return B->HP - abs(shjs);
 }
+
 
 void Figure::PixToAscii(QString pach, QString Pixname, int Z)
 {

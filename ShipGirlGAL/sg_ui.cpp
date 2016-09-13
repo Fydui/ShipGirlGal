@@ -5,8 +5,8 @@ extern maincall* ma;
 
 Item* sg = new Item[6];//我方人物数组
 Item* ds = new Item[6];//敌方人物数组
-Item* sf[6];
-Item* df[6];
+Item* sf = new Item[6];
+Item* df = new Item[6];
 Item* font;
 Item* But[3];
 Item* Wep[3][3];
@@ -278,29 +278,29 @@ QString SG_UI::UI_FigureShow(QString Path, QString Name, QString Ta, int X, int 
     {
         ParametersStru sgg;
         Figure* m = new Figure;
-        sgg.ItemVar<< &sg[ssum]<<sf[ssum];
+        sgg.ItemVar<< &sg[ssum]<<&sf[ssum]<<NULL;
         sgg.intVar<< aaa<< 803 << Y_;
         sgg.StringVar<<"SG"<<Ta<<Name;
         aaa++;
         sg[ssum] = *ma->AddButtonItem(Path,X,Y,"_Zoom","","",100,sgg);//Item*数组sg储存人物
         //SG_UI::UI_ArticleBlood(&sf[ssum],X_,Y_,my.ReadSql(Name,"HP"));
-        sf[ssum] = ma->AddTextItem(m->ReadSql(Name,"HP")+"/"+m->ReadSql(Name,"HP"),"微软雅黑",15,225,225,225,X_,Y_);
+        sf[ssum] = *ma->AddTextItem(m->ReadSql(Name,"HP")+"/"+m->ReadSql(Name,"HP"),"微软雅黑",15,225,225,225,X_,Y_);
         ma->SetItemLayer(&sg[ssum],3);                         //设置图片等级
         ma->AnimationMoveItem(&sg[ssum],X_,Y_,20);
-        ma->SetItemLayer(sf[ssum],12);
+        ma->SetItemLayer(&sf[ssum],12);
         ssum++;
     }
     else
     {
         ParametersStru dss;
         Figure* m = new Figure;
-        dss.ItemVar<< &ds[dsum]<<df[dsum];
+        dss.ItemVar<< &ds[dsum]<<&df[dsum]<<NULL;
         dss.intVar<< bbb << 0 << Y_;
         dss.StringVar<< "DS"<<Ta<<Name;
         bbb++;
         ds[dsum] = *ma->AddButtonItem(Path,X,Y,"_Zoom","","",100,dss);          //Item*数组mp储存人物
-        df[dsum] = ma->AddTextItem(m->ReadSql(Name,"HP")+"/"+m->ReadSql(Name,"HP"),"微软雅黑",15,225,225,225,X_,Y_);
-        ma->SetItemLayer(df[dsum],12);
+        df[dsum] = *ma->AddTextItem(m->ReadSql(Name,"HP")+"/"+m->ReadSql(Name,"HP"),"微软雅黑",15,225,225,225,X_,Y_);
+        ma->SetItemLayer(&df[dsum],12);
         ma->SetItemLayer(&ds[dsum],3);                       //设置图片等级
         ma->AnimationMoveItem(&ds[dsum],X_,Y_,20);
         dsum++;
@@ -363,9 +363,9 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
                     ParametersStru gety;
                     gety.intVar<<  ma->GetItemY(&fgg[j]);
                     Ty = ma->GetItemY(&fgg[j]);
-                    ggs.ItemVar[1] = df[j];
+                    ggs.ItemVar[1] = &df[j];
                     if(K == 0){
-                        ggs.ItemVar[1] = &fgg[j];
+                        ggs.ItemVar[2] = &fgg[j];
                         SG_UI::UI_FigureWeapons(ggs,gety,GG);
                     }
 
@@ -403,7 +403,7 @@ void SG_UI::UI_FigureWeapons(ParametersStru Name,ParametersStru _Name, int switc
                     {
                         ParametersStru weapon;
                         weapon.StringVar<<wa[i];
-                        weapon.ItemVar << Name.ItemVar[1];
+                        weapon.ItemVar << Name.ItemVar[1] << Name.ItemVar[2];
                         weapon.intVar <<Name.intVar[1]<<_Name.intVar[0];
 
                         Wep[i][0] = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
@@ -429,7 +429,7 @@ void SG_UI::UI_FigureWeapons(ParametersStru Name,ParametersStru _Name, int switc
                     {
 
                         ParametersStru weapon;
-                        weapon.ItemVar<< Name.ItemVar[1];
+                        weapon.ItemVar<< Name.ItemVar[1] << Name.ItemVar[2];
                         weapon.intVar <<Name.intVar[1]<<_Name.intVar[0];
                         Wep[i][0] = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
                         Wep[i][1] = ma->AddPixmapItem(BT+"武器按钮_圈.png",k,Name.intVar[2]);
@@ -457,7 +457,7 @@ void SG_UI::UI_FigureWeapons(ParametersStru Name,ParametersStru _Name, int switc
                 for(int i = 0; i<3; i++)
                     {
                         ParametersStru weapon;
-                        weapon.ItemVar<< Name.ItemVar[1];
+                        weapon.ItemVar<< Name.ItemVar[1]<< Name.ItemVar[2];
                         weapon.intVar <<Name.intVar[1]<<_Name.intVar[0];
                         weapon.StringVar<<cac[i];
                         Wep[i][0] = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
@@ -484,7 +484,7 @@ void SG_UI::UI_FigureWeapons(ParametersStru Name,ParametersStru _Name, int switc
                 for(int i = 0; i<3; i++)
                     {
                         ParametersStru weapon;
-                        weapon.ItemVar<<Name.ItemVar[1];
+                        weapon.ItemVar<<Name.ItemVar[1]<< Name.ItemVar[2];
                         weapon.intVar <<Name.intVar[1]<<_Name.intVar[0];
                         Wep[i][0] = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
                         Wep[i][1] = ma->AddPixmapItem(BT+"武器按钮_圈.png",k,Name.intVar[2]);
@@ -510,7 +510,7 @@ void SG_UI::UI_FigureWeapons(ParametersStru Name,ParametersStru _Name, int switc
             for(int i = 0; i<3; i++)
                 {
                     ParametersStru weapon;
-                    weapon.ItemVar<< Name.ItemVar[1];
+                    weapon.ItemVar<< Name.ItemVar[1]<< Name.ItemVar[2];
                     weapon.intVar <<Name.intVar[1]<<_Name.intVar[0];
                     weapon.StringVar<<ss[i];
                     Wep[i][0] = ma->AddPixmapItem(BT+"武器按钮_背景.png",k,Name.intVar[2]);
@@ -633,7 +633,7 @@ void SG_UI::UI_UiReturn()//返回时的小特♂技
     ma->RemoveItem(bg);
     Yz =0;
 }
-void SG_UI::UI_ArticleBlood(Item* name,int X, int Y, int Ablood, int Bblood)
+void SG_UI::UI_ArticleBlood(int X, int Y, int Ablood, int Bblood)
 {
     int Yy;
     //Item* xuetiao;
@@ -651,6 +651,7 @@ void SG_UI::UI_ArticleBlood(Item* name,int X, int Y, int Ablood, int Bblood)
 
     QString ab = QString::number(Ablood);
     QString bb = QString::number(Bblood);
+
     if(Ablood == 0){
     Item* fo;
     SynchronousStart(vv)
@@ -663,16 +664,16 @@ void SG_UI::UI_ArticleBlood(Item* name,int X, int Y, int Ablood, int Bblood)
 
     }
     xa = ma->AddTextItem(ab+"/"+bb,"微软雅黑",15,178,255,0,X,Yy);
+    if(Ablood < 0)
+        {
+            ma->AnimationSetOpacityItem(ggs.ItemVar[2],0,100);
+            ma->AnimationSetOpacityItem(xa,0,100);
+    }
     ggs.ItemVar[1] = xa;
     ma->SetItemLayer(xa,13);
 
-    if(Ablood < 0){
-            ma->AnimationSetOpacityItem(name,0,100);
-            if(gk == 1) ma->AnimationSetOpacityItem(ggs.ItemVar[1],0,100);
-            else ma->AnimationSetOpacityItem(xa,0,100);
-    }
-}
 
+}
 void SG_UI::FU_Return(int ZSum, int SSum)
 {
     for(int i =SSum;ZSum > i; ZSum--)
