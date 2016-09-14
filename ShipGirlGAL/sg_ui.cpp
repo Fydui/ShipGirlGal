@@ -7,6 +7,7 @@ Item* sg = new Item[6];//我方人物数组
 Item* ds = new Item[6];//敌方人物数组
 Item* sf = new Item[6];
 Item* df = new Item[6];
+Item* zj[6];
 Item* font;
 Item* But[3];
 Item* Wep[3][3];
@@ -29,6 +30,7 @@ int GG = 0;
 int K = 0;
 int Ty = 0;
 int gk = 0;
+int by=0;
 ParametersStru ggs;
 
 using namespace SG_UI;
@@ -246,7 +248,7 @@ void SG_UI::UI_StartFight()//绘制战斗界面
     SynchronousFinish()
 
     Item* fig = ma->AddPixmapItem(BG+"开始战斗.png",280,200);
-    Item* re = ma->AddButtonItem(BT+"战斗返回_上.png",280,Y,"_Return",BT+"战斗返回_下.png","",100,ref);
+    Item* re = ma->AddButtonItem(BT+"战斗返回_上.png",280,Y,"",BT+"战斗返回_下.png","",100,ref);
     Item* go = ma->AddButtonItem(BT+"战斗攻击_上.png",440,Y,"",BT+"战斗攻击_下.png");
     Item* cx = ma->AddButtonItem(BT+"撤销_上.png",600,Y,"",BT+"撤销_下.png");
     Item* ad = ma->AddButtonItem(BT+"战斗托管_上.png",760,Y,"",BT+"战斗托管_下.png");
@@ -364,6 +366,8 @@ void SG_UI::UI_FigureZoom(ParametersStru name)//战斗人物显示的缩放
                     gety.intVar<<  ma->GetItemY(&fgg[j]);
                     Ty = ma->GetItemY(&fgg[j]);
                     ggs.ItemVar[1] = &df[j];
+                    ggs.ItemVar[2] = &fgg[j];
+
                     if(K == 0){
                         ggs.ItemVar[2] = &fgg[j];
                         SG_UI::UI_FigureWeapons(ggs,gety,GG);
@@ -637,15 +641,17 @@ void SG_UI::UI_ArticleBlood(int X, int Y, int Ablood, int Bblood)
 {
     int Yy;
     //Item* xuetiao;
-    if(gk == 0)
+    int toum = ma->GetItemOpacity(ggs.ItemVar[1]);
+    if(toum != 0)
         {
+            ma->SetOpacityItem(ggs.ItemVar[1],0);
             Yy = ma->GetItemY(ggs.ItemVar[1]);
-            ma->RemoveItem(ggs.ItemVar[1]);
-            gk = 1;
+
     }
+
     else
         {
-            Yy = ma->GetItemY(xa);
+            Yy = ma->GetItemY(ggs.ItemVar[1]);
             ma->RemoveItem(xa);
     }
 
@@ -668,12 +674,26 @@ void SG_UI::UI_ArticleBlood(int X, int Y, int Ablood, int Bblood)
         {
             ma->AnimationSetOpacityItem(ggs.ItemVar[2],0,100);
             ma->AnimationSetOpacityItem(xa,0,100);
+
     }
     ggs.ItemVar[1] = xa;
     ma->SetItemLayer(xa,13);
+    by++;
+    if(by == 3)
+    {
 
+                Item*pi = ma->AddPixmapItem(BG+"挖坑不填.png",0,0);
+                ma->SetOpacityItem(pi,0);
+                ma->AnimationSetOpacityItem(pi,1,100);
+                ma->SetItemLayer(pi,15);
+                Item*zhen = ma->AddButtonItem(BG+"按钮背景2上.png",800,600,"_OK",BG+"按钮背景2下.png");
+                Item*ok = ma->AddTextItem("朕知道了","微软雅黑",20,153,108,51,860,605);
+                ma->SetItemLayer(zhen,16);
+                ma->SetItemLayer(ok,16);
+    }
 
 }
+
 void SG_UI::FU_Return(int ZSum, int SSum)
 {
     for(int i =SSum;ZSum > i; ZSum--)
@@ -688,3 +708,4 @@ void SG_UI::FU_ClearTextui(Item* te)
 {
     ma->RemoveItem(te);
 }
+

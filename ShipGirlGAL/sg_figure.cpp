@@ -22,7 +22,8 @@ int Sx = -277.0;          //我方人物名片的横 纵坐标
 int Sy = 0.0;
 int Dx = 1080.0;          //敌方人物名片的横 纵 坐标
 int Dy = 0.0;
-vector<QString,int> map;
+map<QString,int> mysh;
+
 using namespace SG_UI;
 
 Figure::Figure(library* fu)
@@ -344,7 +345,7 @@ int Figure::FightAtt(QString SG_, QString DS_,ParametersStru WeaponType) //默�
         double bbsh;
         if(ak == "BBMG")
              bbsh = (A->ATK + A->LV* bb)* sh - (B->ARMOR* bb + B->LV* bb);
-        else bbsh = (A->ATK* bb)* sh - (B->ARMOR* bb + B->LV* bb);
+        else bbsh = A->ATK- B->ARMOR*bb;
         shjs = bbsh;
     }
     else if(A->CLASS == "BC"){
@@ -392,11 +393,28 @@ int Figure::FightAtt(QString SG_, QString DS_,ParametersStru WeaponType) //默�
     }
     else
     {return 8888;}
-    SG_UI::UI_AnimationFigure(SG_,DS_,abs(shjs),WeaponType);
-    SG_UI::UI_ArticleBlood(WeaponType.intVar[0],WeaponType.intVar[1],B->HP-abs(shjs),B->HP);
+    SG_UI::UI_AnimationFigure(SG_,DS_,abs(shjs)*3,WeaponType);
+    int endsh = SetSH(SG_,DS_,abs(shjs)*3,B->HP);
+    SG_UI::UI_ArticleBlood(WeaponType.intVar[0],WeaponType.intVar[1],endsh,B->HP);
     return B->HP - abs(shjs);
 }
 
+int Figure::SetSH(QString A, QString B, int SH,int BHP)
+{
+    QString fin = A+"-"+B;
+    map<QString,int>::iterator iter;
+    iter = mysh.find(fin);
+    if(iter != mysh.end()){
+        int _sh = iter->second -SH;
+        mysh[fin] = _sh;
+        return _sh;
+    }
+    else{
+        mysh[fin] = BHP-SH;
+        return BHP -SH;
+    }
+    return 8888;
+}
 
 void Figure::PixToAscii(QString pach, QString Pixname, int Z)
 {

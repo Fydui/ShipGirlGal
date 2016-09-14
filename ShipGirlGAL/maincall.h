@@ -33,6 +33,7 @@ public slots:
     void _Zoom(ParametersStru name);           //缩放人物名片
     void _Att(ParametersStru WeaponType);
     void test();
+    void _OK();
 
 
 };

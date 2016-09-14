@@ -38,7 +38,7 @@ public:
 
 
 private:
-    int SetSH(QString A, QString B,vector<QString,int> map ,int SH);
+    int SetSH(QString A, QString B, int SH, int BHP);
     library* fn;
     Figure* ui;
     QString* out;

@@ -14,9 +14,10 @@ namespace SG_UI /*游戏的各种UI绘制都在此类((。﹏。*)整个一面�
     void UI_UiReturn();                           //返回时通用动画
     void UI_OTextUi(QString Qoword);              //开始游戏之后输出文字的ui方法
     void UI_StartFight();                         //开始战斗的动画
-    void UI_ArticleBlood(int X, int Y, int Ablood, int Bblood);
+    void UI_ArticleBlood( int X, int Y, int Ablood, int Bblood);
     QString UI_FigureShow(QString Path, QString Name, QString Ta, int X, int Y, int X_, int Y_);
     void UI_FigureWeapons(ParametersStru Name, ParametersStru _Name, int switchh = 1);
+    void UI_Fanji();
     //显示人物名片并且返回人物所在表 通过FU_FigureShow自动调用(当然手动也可)
 
     void UI_FigureZoom(ParametersStru name);

@@ -92,3 +92,9 @@ void maincall::_Exit()
 {
     exit(0);
 }
+
+void maincall::_OK()
+{
+    ClearScene();
+    SG_UI::UI_MainUI();
+}

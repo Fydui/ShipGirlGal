@@ -95,5 +95,6 @@
         <file>SG/Button/战列炮_按钮.png</file>
         <file>SG/Button/重巡炮_按钮.png</file>
         <file>SG/Button/鱼雷机_按钮.png</file>
+        <file>SG/Background/挖坑不填.png</file>
     </qresource>
 </RCC>
