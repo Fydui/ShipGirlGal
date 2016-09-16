@@ -15,19 +15,14 @@ public:
 signals:
     //您可以在此添加异步变同步等功能需要用到的信号，只需声明，无需实现
     //例子：void FunctionFinish();
-    void ff();
-    void dd();
-    void cc();
-    void mm();
-    void vv();
-    void aa();
-    void bb();
-    void qq();
+    void yb1();
+    void yb2();
+    void yb3();
 
 };
 
 //-引擎自带的全局常量，可以在这里调节一些基础设定
-static const QString title="Life-Fire Engine";//窗口标题
+static const QString title="舰少GAL";//窗口标题
 static const int WindowsWidth=1080;//窗口宽
 static const int WindowsHeigh=720;//窗口高
 static const int MaximumWidth=10000;//舞台最大宽

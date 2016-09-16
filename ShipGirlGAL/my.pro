@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = my
 TEMPLATE = app
-QT += sql
+INCLUDEPATH += /usr/include
 
 SOURCES += main.cpp\
         widget.cpp \
@@ -24,9 +24,8 @@ SOURCES += main.cpp\
     animation.cpp \
     basics.cpp \
     reimplemen.cpp \
-    sg_figure.cpp \
-    sg_startgame.cpp \
-    sg_ui.cpp
+    sg_ui.cpp \
+    sg_startgame.cpp
 
 HEADERS  += widget.h \
     head.h \
@@ -41,20 +40,19 @@ HEADERS  += widget.h \
     globalVar.h \
     reimplemen.h \
     animation.h \
-    sg_figure.h \
-    sg_startgame.h \
-    sg_ui.cpp.oy4668 \
-    sg_ui.h
+    sg_ui.h \
+    sg_startgame.h
 
 FORMS    += widget.ui
 QT += core gui
 
 OTHER_FILES +=
-
 QT += multimedia multimediawidgets
 INSTALLS += target
 QT += script
 QMAKE_CXXFLAGS += -std=c++11
 
 RESOURCES += \
-    pix.qrc
+    res.qrc
+
+DISTFILES +=
