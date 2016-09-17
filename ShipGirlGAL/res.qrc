@@ -1,0 +1,28 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Data/Image/Background/M_BG.png</file>
+        <file>Data/Image/Background/M_Grid.png</file>
+        <file>Data/Image/Background/M_Informationbar.png</file>
+        <file>Data/Image/Button/M_About_D.png</file>
+        <file>Data/Image/Button/M_About_U.png</file>
+        <file>Data/Image/Button/M_CGame_D.png</file>
+        <file>Data/Image/Button/M_CGame_U.png</file>
+        <file>Data/Image/Button/M_Exit_D.png</file>
+        <file>Data/Image/Button/M_Exit_U.png</file>
+        <file>Data/Image/Button/M_NewGame_D.png</file>
+        <file>Data/Image/Button/M_NewGame_U.png</file>
+        <file>Data/Image/Button/M_Set_D.png</file>
+        <file>Data/Image/Button/M_Set_U.png</file>
+        <file>Data/Image/Loop/_1.png</file>
+        <file>Data/Image/Loop/_2.jpg</file>
+        <file>Data/Image/Loop/_3.png</file>
+        <file>Data/Image/Loop/_4.png</file>
+        <file>Data/Image/Loop/_5.jpg</file>
+        <file>Data/Image/Loop/1.png</file>
+        <file>Data/Image/Loop/2.png</file>
+        <file>Data/Image/Loop/3.png</file>
+        <file>Data/Image/Loop/4.png</file>
+        <file>Data/Image/Loop/5.png</file>
+        <file>Data/Music/port-day.mp3</file>
+    </qresource>
+</RCC>

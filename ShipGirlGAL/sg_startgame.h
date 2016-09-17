@@ -1,13 +1,11 @@
-﻿#ifndef SG_STARTGAME_H
+#ifndef SG_STARTGAME_H
 #define SG_STARTGAME_H
-#include "library.h"
-#include <fstream>
-#include <vector>
-#include <string>
-namespace SG_StartGame  /*对游戏的导演都在此类(一股面向过程味儿扑面而来)*/
+
+
+class sg_startgame
 {
-    void SG_StartText();
-    const QString SG =  ":/SG/Background/";
-}
+public:
+    sg_startgame();
+};
 
 #endif // SG_STARTGAME_H
