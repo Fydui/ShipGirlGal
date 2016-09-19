@@ -49,7 +49,7 @@ void UI::UI_Start()
         u->AnimationMoveItem(ab,45,361,250,"yb3");
         u->AnimationMoveItem(ex,45,448,300,"yb3");
     SynchronousFinish()
-    //u->AddMusic(":/Data/Music/port-day.mp3",100,1);
+    u->AddMusic(":/Data/Music/port-day.mp3",100,1);
 
     while(1){
         for(int i = 0;i<5;i++)
@@ -61,6 +61,7 @@ void UI::UI_Start()
             u->SetItemLayer(f1,3);
             u->SetOpacityItem(p1,0);
             u->SetOpacityItem(f1,0);
+            if(check == true)goto outwhile;
             u->AnimationSetOpacityItem(p1,1,500,"yb1");
             u->AnimationSetOpacityItem(f1,1,1000,"yb1");
             u->AnimationMoveItem(f1,200,-100,1000,"yb1");

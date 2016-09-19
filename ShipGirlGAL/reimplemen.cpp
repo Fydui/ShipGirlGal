@@ -1,4 +1,4 @@
-//-----本文件是对于NewType.h中定义的类的实现部分-----
+﻿//-----本文件是对于NewType.h中定义的类的实现部分-----
 #include "widget.h"
 
 QList<ExpansionSlot*> AllExpansionSlot;
@@ -137,6 +137,7 @@ VideoPlayer::~VideoPlayer()
 void MusicPlayer::singleplay(String name, int volume)
 {
     this->setMedia(QUrl::fromLocalFile(name));
+    //this->setMedia();
     this->setVolume(volume);
     this->play();
     QObject::connect(this,SIGNAL(stateChanged(QMediaPlayer::State)),this,SLOT(playFinished(QMediaPlayer::State)));
@@ -144,7 +145,8 @@ void MusicPlayer::singleplay(String name, int volume)
 
 void MusicPlayer::multipleplay(String name,int volume)
 {
-    QUrl backgroundMusicUrl = QUrl::fromLocalFile(name);
+    //QUrl backgroundMusicUrl = QUrl::fromLocalFile(name);
+    QUrl backgroundMusicUrl(name);
     if (QFile::exists(backgroundMusicUrl.toLocalFile()))
     {
        this->setVolume(volume);

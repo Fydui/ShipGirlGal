@@ -7,11 +7,13 @@ void maincall::StartGame()//入口函数
 {
     u = this;
     UI::UI_Start();
+
 }
 
 void maincall::_Exit()
 {
     exit(0);
+    //ClearScene();
 }
 
 
