@@ -6,8 +6,7 @@ void maincall::closeEvent(QCloseEvent *event){ exit(0);}
 void maincall::StartGame()//入口函数
 {
     u = this;
-    UI::UI_Start();
-
+    UI::UI_Main();
 }
 
 void maincall::_Exit()

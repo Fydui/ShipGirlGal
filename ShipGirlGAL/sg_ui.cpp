@@ -4,21 +4,14 @@
 using namespace UI;
 using namespace std;
 extern maincall* u;
-bool check = false;
+bool check = false; //循环背景跳出标记
+Item* bu[5];
 
-void UI::chick(){
-    check = true;
-    u->RemoveItem(u->AllItem[3]);
-    u->RemoveItem(u->AllItem[4]);
-    u->RemoveItem(u->AllItem[5]);
-    u->RemoveItem(u->AllItem[3]);
-    u->RemoveItem(u->AllItem[3]);
-}
-
-void UI::UI_Start()
+void UI::UI_Main()
 {
     const QString LO = ":/Data/Image/Loop/";
 
+    //背景图片
     QString p[5] = {"_1.png","_2.jpg","_3.png","_4.png","_5.jpg"};
     QString f[5] = {"1.png","2.png","3.png","4.png","5.png"};
     Item* bg = u->AddPixmapItem(BG+"M_BG.png",0,0);
@@ -31,27 +24,28 @@ void UI::UI_Start()
     u->SetItemLayer(bar,4);
     u->AnimationMoveItem(bar,0,0,200);
 
-    u->AddExpansionSlot("_CGame",chick);
-    Item* ng = u->AddButtonItem(BU+"M_NewGame_U.png",-380,100,"",BU+"M_NewGame_D.png");
-    Item* cg = u->AddButtonItem(BU+"M_CGame_U.png",-380,187,"_CGame",BU+"M_CGame_D.png");
-    Item* st = u->AddButtonItem(BU+"M_About_U.png",-380,274,"",BU+"M_About_D.png");
-    Item* ab = u->AddButtonItem(BU+"M_Set_U.png",-380,361,"",BU+"M_Set_D.png");
-    Item* ex = u->AddButtonItem(BU+"M_Exit_U.png",-380,448,"_Exit",BU+"M_Exit_D.png");
+    //按钮
+    u->AddExpansionSlot("UI_Start",UI_Start); //绑定非主三类函数
+    bu[0] = u->AddButtonItem(BU+"M_NewGame_U.png",-380,100,"UI_Start",BU+"M_NewGame_D.png");
+    bu[1] = u->AddButtonItem(BU+"M_CGame_U.png",-380,187,"",BU+"M_CGame_D.png");
+    bu[2] = u->AddButtonItem(BU+"M_About_U.png",-380,274,"",BU+"M_About_D.png");
+    bu[3] = u->AddButtonItem(BU+"M_Set_U.png",-380,361,"",BU+"M_Set_D.png");
+    bu[4] = u->AddButtonItem(BU+"M_Exit_U.png",-380,448,"_Exit",BU+"M_Exit_D.png");
+    //按钮的特效
     SynchronousStart(yb3)
-        u->SetItemLayer(ng,6);
-        u->SetItemLayer(cg,6);
-        u->SetItemLayer(st,6);
-        u->SetItemLayer(ab,6);
-        u->SetItemLayer(ex,6);
-        u->AnimationMoveItem(ng,45,100,100,"yb3");
-        u->AnimationMoveItem(cg,45,187,150,"yb3");
-        u->AnimationMoveItem(st,45,274,200,"yb3");
-        u->AnimationMoveItem(ab,45,361,250,"yb3");
-        u->AnimationMoveItem(ex,45,448,300,"yb3");
+        u->SetItemLayer(bu[0],6);
+        u->SetItemLayer(bu[1],6);
+        u->SetItemLayer(bu[2],6);
+        u->SetItemLayer(bu[3],6);
+        u->SetItemLayer(bu[4],6);
+        u->AnimationMoveItem(bu[0],45,100,100,"yb3");
+        u->AnimationMoveItem(bu[1],45,187,150,"yb3");
+        u->AnimationMoveItem(bu[2],45,274,200,"yb3");
+        u->AnimationMoveItem(bu[3],45,361,250,"yb3");
+        u->AnimationMoveItem(bu[4],45,448,300,"yb3");
     SynchronousFinish()
-    u->AddMusic(":/Data/Music/port-day.mp3",100,1);
-
     while(1){
+        //背景循环
         for(int i = 0;i<5;i++)
         {
             Item* p1 = u->AddPixmapItem(LO+p[i],0,0);
@@ -61,7 +55,7 @@ void UI::UI_Start()
             u->SetItemLayer(f1,3);
             u->SetOpacityItem(p1,0);
             u->SetOpacityItem(f1,0);
-            if(check == true)goto outwhile;
+            if(check == true)goto outwhile; //如果循环标记改变 跳出循环
             u->AnimationSetOpacityItem(p1,1,500,"yb1");
             u->AnimationSetOpacityItem(f1,1,1000,"yb1");
             u->AnimationMoveItem(f1,200,-100,1000,"yb1");
@@ -82,4 +76,89 @@ void UI::UI_Start()
     outwhile:;
 }
 
+void UI::UI_Start()
+{
+    SynchronousStart(yb3)
+        u->SetItemLayer(bu[0],6);
+        u->SetItemLayer(bu[1],6);
+        u->SetItemLayer(bu[2],6);
+        u->SetItemLayer(bu[3],6);
+        u->SetItemLayer(bu[4],6);
+        u->AnimationMoveItem(bu[4],-380,448,300,"yb3");
+        u->AnimationMoveItem(bu[3],-380,361,250,"yb3");
+        u->AnimationMoveItem(bu[2],-380,274,200,"yb3");
+        u->AnimationMoveItem(bu[1],-380,187,150,"yb3");
+        u->AnimationMoveItem(bu[0],-380,100,100,"yb3");
+    SynchronousFinish()
 
+        u->RemoveItem(bu[0]);
+        u->RemoveItem(bu[1]);
+        u->RemoveItem(bu[2]);
+        u->RemoveItem(bu[3]);
+        u->RemoveItem(bu[4]);
+    //绘制开始选择界面
+    u->AddExpansionSlot("UI_Return",UI_Return); //绑定非主三类函数
+    bu[0] = u->AddButtonItem(BU+"M_MainStory_U.png",-380,100,"",BU+"M_MainStory_D.png");
+    bu[1] = u->AddButtonItem(BU+"M_SecondStory_U.png",-380,187,"",BU+"SecondStory_D.png");
+    bu[2] = u->AddButtonItem(BU+"M_EditMode_U.png",-380,274,"",BU+"M_EditMode_D.png");
+    bu[3] = u->AddButtonItem(BU+"M_MyGirl_U.png",-380,361,"",BU+"M_MyGirl_D.png");
+    bu[4] = u->AddButtonItem(BU+"M_Return_U.png",-380,448,"UI_Return",BU+"M_Return_D.png");
+    //按钮的特效
+
+    SynchronousStart(yb3)
+        u->SetItemLayer(bu[0],6);
+        u->SetItemLayer(bu[1],6);
+        u->SetItemLayer(bu[2],6);
+        u->SetItemLayer(bu[3],6);
+        u->SetItemLayer(bu[4],6);
+        u->AnimationMoveItem(bu[0],45,100,100,"yb3");
+        u->AnimationMoveItem(bu[1],45,187,150,"yb3");
+        u->AnimationMoveItem(bu[2],45,274,200,"yb3");
+        u->AnimationMoveItem(bu[3],45,361,250,"yb3");
+        u->AnimationMoveItem(bu[4],45,448,300,"yb3");
+    SynchronousFinish()
+}
+
+void UI::UI_Return()
+{
+    SynchronousStart(yb3)
+        u->SetItemLayer(bu[0],6);
+        u->SetItemLayer(bu[1],6);
+        u->SetItemLayer(bu[2],6);
+        u->SetItemLayer(bu[3],6);
+        u->SetItemLayer(bu[4],6);
+        u->AnimationMoveItem(bu[0],-380,100,100,"yb3");
+        u->AnimationMoveItem(bu[1],-380,187,150,"yb3");
+        u->AnimationMoveItem(bu[2],-380,274,200,"yb3");
+        u->AnimationMoveItem(bu[3],-380,361,250,"yb3");
+        u->AnimationMoveItem(bu[4],-380,448,300,"yb3");
+
+    SynchronousFinish()
+
+    //删除开始选择界面按钮
+        u->RemoveItem(bu[0]);
+        u->RemoveItem(bu[1]);
+        u->RemoveItem(bu[2]);
+        u->RemoveItem(bu[3]);
+        u->RemoveItem(bu[4]);
+
+    u->AddExpansionSlot("UI_Start",UI_Start); //绑定非主三类函数
+    bu[0] = u->AddButtonItem(BU+"M_NewGame_U.png",-380,100,"UI_Start",BU+"M_NewGame_D.png");
+    bu[1] = u->AddButtonItem(BU+"M_CGame_U.png",-380,187,"",BU+"M_CGame_D.png");
+    bu[2] = u->AddButtonItem(BU+"M_About_U.png",-380,274,"",BU+"M_About_D.png");
+    bu[3] = u->AddButtonItem(BU+"M_Set_U.png",-380,361,"",BU+"M_Set_D.png");
+    bu[4] = u->AddButtonItem(BU+"M_Exit_U.png",-380,448,"_Exit",BU+"M_Exit_D.png");
+    //按钮的特效
+    SynchronousStart(yb3)
+        u->SetItemLayer(bu[0],6);
+        u->SetItemLayer(bu[1],6);
+        u->SetItemLayer(bu[2],6);
+        u->SetItemLayer(bu[3],6);
+        u->SetItemLayer(bu[4],6);
+        u->AnimationMoveItem(bu[0],45,100,100,"yb3");
+        u->AnimationMoveItem(bu[1],45,187,150,"yb3");
+        u->AnimationMoveItem(bu[2],45,274,200,"yb3");
+        u->AnimationMoveItem(bu[3],45,361,250,"yb3");
+        u->AnimationMoveItem(bu[4],45,448,300,"yb3");
+    SynchronousFinish()
+}

@@ -24,5 +24,17 @@
         <file>Data/Image/Loop/4.png</file>
         <file>Data/Image/Loop/5.png</file>
         <file>Data/Music/port-day.mp3</file>
+        <file>Data/Image/Button/M_EditMode_D.png</file>
+        <file>Data/Image/Button/M_EditMode_U.png</file>
+        <file>Data/Image/Button/M_MainStory_D.png</file>
+        <file>Data/Image/Button/M_MainStory_U.png</file>
+        <file>Data/Image/Button/M_MyGirl_D.png</file>
+        <file>Data/Image/Button/M_MyGirl_U.png</file>
+        <file>Data/Image/Button/M_Return_D.png</file>
+        <file>Data/Image/Button/M_Return_U.png</file>
+        <file>Data/Image/Button/M_SecondStory_D.png</file>
+        <file>Data/Image/Button/M_SecondStory_U.png</file>
+        <file>Data/Image/Button/M_Set_D.png</file>
+        <file>Data/Image/Button/M_Set_U.png</file>
     </qresource>
 </RCC>
