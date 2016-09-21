@@ -36,5 +36,6 @@
         <file>Data/Image/Button/M_SecondStory_U.png</file>
         <file>Data/Image/Button/M_Set_D.png</file>
         <file>Data/Image/Button/M_Set_U.png</file>
+        <file>Data/Image/Background/木头海岸.png</file>
     </qresource>
 </RCC>

@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     basics.cpp \
     reimplemen.cpp \
     sg_ui.cpp \
-    sg_startgame.cpp
+    sg_startgame.cpp \
+    ui_figure.cpp
 
 HEADERS  += widget.h \
     head.h \
@@ -41,7 +42,8 @@ HEADERS  += widget.h \
     reimplemen.h \
     animation.h \
     sg_ui.h \
-    sg_startgame.h
+    sg_startgame.h \
+    ui_figure.h
 
 FORMS    += widget.ui
 QT += core gui

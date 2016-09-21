@@ -98,7 +98,8 @@ void UI::UI_Start()
         u->RemoveItem(bu[4]);
     //绘制开始选择界面
     u->AddExpansionSlot("UI_Return",UI_Return); //绑定非主三类函数
-    bu[0] = u->AddButtonItem(BU+"M_MainStory_U.png",-380,100,"",BU+"M_MainStory_D.png");
+    u->AddExpansionSlot("UI_MainStory",UI_MainStory);
+    bu[0] = u->AddButtonItem(BU+"M_MainStory_U.png",-380,100,"UI_MainStory",BU+"M_MainStory_D.png");
     bu[1] = u->AddButtonItem(BU+"M_SecondStory_U.png",-380,187,"",BU+"SecondStory_D.png");
     bu[2] = u->AddButtonItem(BU+"M_EditMode_U.png",-380,274,"",BU+"M_EditMode_D.png");
     bu[3] = u->AddButtonItem(BU+"M_MyGirl_U.png",-380,361,"",BU+"M_MyGirl_D.png");
@@ -161,4 +162,18 @@ void UI::UI_Return()
         u->AnimationMoveItem(bu[3],45,361,250,"yb3");
         u->AnimationMoveItem(bu[4],45,448,300,"yb3");
     SynchronousFinish()
+}
+
+Item* UI::UI_MainFigure(Item* name, QString findname)
+{
+    u->RemoveItem(name);
+    Item* figu = u->AddPixmapItem(":/Data/Image/Figure/"+findname+".png",0,0);
+    u->SetOpacityItem(figu,0);
+    u->AnimationSetOpacityItem(figu,1,100);
+    return figu;
+}
+
+void UI::UI_MainStory()
+{
+    check = true;
 }

@@ -7,6 +7,8 @@ namespace UI {
     void UI_CGame();
     void UI_Start();
     void UI_Return();
+    void UI_MainStory();
+    Item *UI_MainFigure(Item* name, QString findname);
     const QString BG = ":/Data/Image/Background/";
     const QString BU = ":/Data/Image/Button/";
 }
