@@ -166,14 +166,61 @@ void UI::UI_Return()
 
 Item* UI::UI_MainFigure(Item* name, QString findname)
 {
-    u->RemoveItem(name);
-    Item* figu = u->AddPixmapItem(":/Data/Image/Figure/"+findname+".png",0,0);
-    u->SetOpacityItem(figu,0);
-    u->AnimationSetOpacityItem(figu,1,100);
-    return figu;
+    //u->RemoveItem(name);
+    name = u->AddPixmapItem(":/Data/Image/Figuer/"+findname+".png",0,-100);
+    u->SetOpacityItem(name,0);
+    u->AnimationSetOpacityItem(name,1,100);
+    return name;
+}
+
+Item* UI::UI_MainBackGround(Item* name, QString findname)
+{
+    name = u->AddPixmapItem(":/Data/Image/Background/"+findname+".png",0,0);
+    u->SetOpacityItem(name,0);
+    u->AnimationSetOpacityItem(name,1,50);
+    return name;
 }
 
 void UI::UI_MainStory()
 {
     check = true;
+    Item* textbar =  u->AddPixmapItem(BG+"文字框.png",0,500);
+    u->SetItemLayer(textbar,7);
+    u->SetOpacityItem(textbar,0);
+    u->AnimationSetOpacityItem(textbar,1,200);
+
+
+    QString Bup[6] = {"返回_上.png",//设置每个按钮图片
+                      "存档_上.png",
+                      "读档_上.png",
+                      "快进_上.png",
+                      "放大_上.png",
+                      "设置_上.png"};
+
+    QString MainFun[6] ={   "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            ""};
+
+    QString Bdo[6] ={
+            "返回_下.png",
+            "存档_下.png",
+            "读档_下.png",
+            "快进_下.png",
+            "放大_下.png",
+            "设置_下.png",
+    };
+
+    int Tbx = 752;
+    Item* But[6];
+    for(int i = 0; i < 6; i++)      //循环输出按钮
+    {
+        But[i] = u->AddButtonItem(BU+Bdo[i],Tbx,480,MainFun[i],BU+Bup[i],"",100);
+        u->SetOpacityItem(But[i],0.0);
+        u->AnimationSetOpacityItem(But[i],1,80);
+        u->SetItemLayer(But[i],8);
+        Tbx = Tbx+35;               //每次循环自动增加X坐标
+    }
 }

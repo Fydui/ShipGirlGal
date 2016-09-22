@@ -37,5 +37,29 @@
         <file>Data/Image/Button/M_Set_D.png</file>
         <file>Data/Image/Button/M_Set_U.png</file>
         <file>Data/Image/Background/木头海岸.png</file>
+        <file>Data/Image/Figuer/俾斯麦.png</file>
+        <file>Data/Image/Figuer/海伦娜.png</file>
+        <file>Data/Image/Figuer/航母O级.png</file>
+        <file>Data/Image/Figuer/胡德.png</file>
+        <file>Data/Image/Figuer/昆西.png</file>
+        <file>Data/Image/Figuer/列克星敦.png</file>
+        <file>Data/Image/Figuer/罗德尼.png</file>
+        <file>Data/Image/Figuer/欧根亲王.png</file>
+        <file>Data/Image/Figuer/轻巡E级.png</file>
+        <file>Data/Image/Figuer/萤火虫.png</file>
+        <file>Data/Image/Figuer/战列E级.png</file>
+        <file>Data/Image/Background/文字框.png</file>
+        <file>Data/Image/Button/存档_上.png</file>
+        <file>Data/Image/Button/存档_下.png</file>
+        <file>Data/Image/Button/读档_上.png</file>
+        <file>Data/Image/Button/读档_下.png</file>
+        <file>Data/Image/Button/返回_上.png</file>
+        <file>Data/Image/Button/返回_下.png</file>
+        <file>Data/Image/Button/放大_上.png</file>
+        <file>Data/Image/Button/放大_下.png</file>
+        <file>Data/Image/Button/快进_上.png</file>
+        <file>Data/Image/Button/快进_下.png</file>
+        <file>Data/Image/Button/设置_上.png</file>
+        <file>Data/Image/Button/设置_下.png</file>
     </qresource>
 </RCC>
