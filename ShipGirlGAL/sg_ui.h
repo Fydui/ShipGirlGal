@@ -7,6 +7,7 @@ namespace UI {
     void UI_CGame();
     void UI_Start();
     void UI_Return();
+    void UI_StoryReturn();
     Item* UI_MainBackGround(Item* name, QString findname);
     void UI_MainStory();
     Item *UI_MainFigure(Item* name, QString findname);

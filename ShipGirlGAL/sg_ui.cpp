@@ -78,24 +78,22 @@ void UI::UI_Main()
 
 void UI::UI_Start()
 {
-    SynchronousStart(yb3)
+    //SynchronousStart(yb3)
         u->SetItemLayer(bu[0],6);
         u->SetItemLayer(bu[1],6);
         u->SetItemLayer(bu[2],6);
         u->SetItemLayer(bu[3],6);
         u->SetItemLayer(bu[4],6);
-        u->AnimationMoveItem(bu[4],-380,448,300,"yb3");
-        u->AnimationMoveItem(bu[3],-380,361,250,"yb3");
-        u->AnimationMoveItem(bu[2],-380,274,200,"yb3");
-        u->AnimationMoveItem(bu[1],-380,187,150,"yb3");
-        u->AnimationMoveItem(bu[0],-380,100,100,"yb3");
-    SynchronousFinish()
+        u->AnimationMoveItem(bu[4],-380,448,300);
+        u->AnimationMoveItem(bu[3],-380,361,250);
+        u->AnimationMoveItem(bu[2],-380,274,200);
+        u->AnimationMoveItem(bu[1],-380,187,150);
+        u->AnimationMoveItem(bu[0],-380,100,100);
+    //SynchronousFinish()
 
-        u->RemoveItem(bu[0]);
-        u->RemoveItem(bu[1]);
-        u->RemoveItem(bu[2]);
-        u->RemoveItem(bu[3]);
-        u->RemoveItem(bu[4]);
+    for(int i = 0; i <5; i++)
+        u->RemoveItem(bu[i]);
+
     //绘制开始选择界面
     u->AddExpansionSlot("UI_Return",UI_Return); //绑定非主三类函数
     u->AddExpansionSlot("UI_MainStory",UI_MainStory);
@@ -106,35 +104,35 @@ void UI::UI_Start()
     bu[4] = u->AddButtonItem(BU+"M_Return_U.png",-380,448,"UI_Return",BU+"M_Return_D.png");
     //按钮的特效
 
-    SynchronousStart(yb3)
+    //SynchronousStart(yb3)
         u->SetItemLayer(bu[0],6);
         u->SetItemLayer(bu[1],6);
         u->SetItemLayer(bu[2],6);
         u->SetItemLayer(bu[3],6);
         u->SetItemLayer(bu[4],6);
-        u->AnimationMoveItem(bu[0],45,100,100,"yb3");
-        u->AnimationMoveItem(bu[1],45,187,150,"yb3");
-        u->AnimationMoveItem(bu[2],45,274,200,"yb3");
-        u->AnimationMoveItem(bu[3],45,361,250,"yb3");
-        u->AnimationMoveItem(bu[4],45,448,300,"yb3");
-    SynchronousFinish()
+        u->AnimationMoveItem(bu[0],45,100,100);
+        u->AnimationMoveItem(bu[1],45,187,150);
+        u->AnimationMoveItem(bu[2],45,274,200);
+        u->AnimationMoveItem(bu[3],45,361,250);
+        u->AnimationMoveItem(bu[4],45,448,300);
+    //SynchronousFinish()
 }
 
 void UI::UI_Return()
 {
-    SynchronousStart(yb3)
+    //SynchronousStart(yb3)
         u->SetItemLayer(bu[0],6);
         u->SetItemLayer(bu[1],6);
         u->SetItemLayer(bu[2],6);
         u->SetItemLayer(bu[3],6);
         u->SetItemLayer(bu[4],6);
-        u->AnimationMoveItem(bu[0],-380,100,100,"yb3");
-        u->AnimationMoveItem(bu[1],-380,187,150,"yb3");
-        u->AnimationMoveItem(bu[2],-380,274,200,"yb3");
-        u->AnimationMoveItem(bu[3],-380,361,250,"yb3");
-        u->AnimationMoveItem(bu[4],-380,448,300,"yb3");
+        u->AnimationMoveItem(bu[0],-380,100,100);
+        u->AnimationMoveItem(bu[1],-380,187,150);
+        u->AnimationMoveItem(bu[2],-380,274,200);
+        u->AnimationMoveItem(bu[3],-380,361,250);
+        u->AnimationMoveItem(bu[4],-380,448,300);
 
-    SynchronousFinish()
+    //SynchronousFinish()
 
     //删除开始选择界面按钮
         u->RemoveItem(bu[0]);
@@ -150,18 +148,18 @@ void UI::UI_Return()
     bu[3] = u->AddButtonItem(BU+"M_Set_U.png",-380,361,"",BU+"M_Set_D.png");
     bu[4] = u->AddButtonItem(BU+"M_Exit_U.png",-380,448,"_Exit",BU+"M_Exit_D.png");
     //按钮的特效
-    SynchronousStart(yb3)
+    //SynchronousStart(yb3)
         u->SetItemLayer(bu[0],6);
         u->SetItemLayer(bu[1],6);
         u->SetItemLayer(bu[2],6);
         u->SetItemLayer(bu[3],6);
         u->SetItemLayer(bu[4],6);
-        u->AnimationMoveItem(bu[0],45,100,100,"yb3");
-        u->AnimationMoveItem(bu[1],45,187,150,"yb3");
-        u->AnimationMoveItem(bu[2],45,274,200,"yb3");
-        u->AnimationMoveItem(bu[3],45,361,250,"yb3");
-        u->AnimationMoveItem(bu[4],45,448,300,"yb3");
-    SynchronousFinish()
+        u->AnimationMoveItem(bu[0],45,100,100);
+        u->AnimationMoveItem(bu[1],45,187,150);
+        u->AnimationMoveItem(bu[2],45,274,200);
+        u->AnimationMoveItem(bu[3],45,361,250);
+        u->AnimationMoveItem(bu[4],45,448,300);
+    //SynchronousFinish()
 }
 
 Item* UI::UI_MainFigure(Item* name, QString findname)
@@ -197,7 +195,7 @@ void UI::UI_MainStory()
                       "放大_上.png",
                       "设置_上.png"};
 
-    QString MainFun[6] ={   "",
+    QString MainFun[6] ={   "UI_StoryReturn",
                             "",
                             "",
                             "",
@@ -223,4 +221,11 @@ void UI::UI_MainStory()
         u->SetItemLayer(But[i],8);
         Tbx = Tbx+35;               //每次循环自动增加X坐标
     }
+    u->AddExpansionSlot("UI_StoryReturn",UI_StoryReturn);
+}
+
+void UI::UI_StoryReturn()
+{
+    u->ClearScene();
+    UI::UI_Main();
 }
