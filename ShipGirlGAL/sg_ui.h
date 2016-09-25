@@ -13,6 +13,7 @@ namespace UI {
     Item *UI_MainFigure(Item* name, QString findname);
     const QString BG = ":/Data/Image/Background/";
     const QString BU = ":/Data/Image/Button/";
+    const QString LO = ":/Data/Image/Loop/";
 }
 
 #endif // SG_UI_H
