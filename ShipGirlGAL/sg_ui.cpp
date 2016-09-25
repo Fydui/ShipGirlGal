@@ -122,11 +122,8 @@ void UI::UI_Return()
         u->AnimationMoveItem(Mainbutton[4],-380,448,300);
 
     //删除开始选择界面按钮
-        u->RemoveItem(Mainbutton[0]);
-        u->RemoveItem(Mainbutton[1]);
-        u->RemoveItem(Mainbutton[2]);
-        u->RemoveItem(Mainbutton[3]);
-        u->RemoveItem(Mainbutton[4]);
+        for(int i = 0; i <=4; i++)
+            u->RemoveItem(Mainbutton[i]);
 
     u->AddExpansionSlot("UI_Start",UI_Start); //绑定非主三类函数
     Mainbutton[0] = u->AddButtonItem(BU+"M_NewGame_U.png",-380,100,"UI_Start",BU+"M_NewGame_D.png");
@@ -213,67 +210,5 @@ void UI::UI_StoryReturn()
 {
     u->ClearScene();
     check = false;
-    //UI_Start();
-
-    //背景图片
-    QString p[5] = {"_1.png","_2.jpg","_3.png","_4.png","_5.jpg"};
-    QString f[5] = {"1.png","2.png","3.png","4.png","5.png"};
-    Item* bg = u->AddPixmapItem(BG+"M_BG.png",0,0);
-    u->SetItemLayer(bg,2);
-    Item* grid = u->AddPixmapItem(BG+"M_Grid.png",0,0);
-    u->SetItemLayer(grid,5);
-    u->SetOpacityItem(grid,0);
-    u->AnimationSetOpacityItem(grid,1,300);
-    Item* bar = u->AddPixmapItem(BG+"M_Informationbar.png",1570,0);
-    u->SetItemLayer(bar,4);
-    u->AnimationMoveItem(bar,0,0,200);
-
-    //按钮
-    u->AddExpansionSlot("UI_Start",UI_Start); //绑定非主三类函数
-    Mainbutton[0] = u->AddButtonItem(BU+"M_NewGame_U.png",-380,100,"UI_Start",BU+"M_NewGame_D.png");
-    Mainbutton[1] = u->AddButtonItem(BU+"M_CGame_U.png",-380,187,"",BU+"M_CGame_D.png");
-    Mainbutton[2] = u->AddButtonItem(BU+"M_About_U.png",-380,274,"",BU+"M_About_D.png");
-    Mainbutton[3] = u->AddButtonItem(BU+"M_Set_U.png",-380,361,"",BU+"M_Set_D.png");
-    Mainbutton[4] = u->AddButtonItem(BU+"M_Exit_U.png",-380,448,"_Exit",BU+"M_Exit_D.png");
-    //按钮的特效
-        u->SetItemLayer(Mainbutton[0],6);
-        u->SetItemLayer(Mainbutton[1],6);
-        u->SetItemLayer(Mainbutton[2],6);
-        u->SetItemLayer(Mainbutton[3],6);
-        u->SetItemLayer(Mainbutton[4],6);
-        u->AnimationMoveItem(Mainbutton[0],45,100,100);
-        u->AnimationMoveItem(Mainbutton[1],45,187,150);
-        u->AnimationMoveItem(Mainbutton[2],45,274,200);
-        u->AnimationMoveItem(Mainbutton[3],45,361,250);
-        u->AnimationMoveItem(Mainbutton[4],45,448,300);
-        while(1){
-            //背景循环
-            for(int i = 0;i<5;i++)
-            {
-                Item* p1 = u->AddPixmapItem(LO+p[i],0,0);
-                Item* f1 = u->AddPixmapItem(LO+f[i],400,-100);
-                SynchronousStart(yb1)
-                u->SetItemLayer(p1,1);
-                u->SetItemLayer(f1,3);
-                u->SetOpacityItem(p1,0);
-                u->SetOpacityItem(f1,0);
-                if(check == true)goto outwhile; //如果循环标记改变 跳出循环
-                u->AnimationSetOpacityItem(p1,1,500,"yb1");
-                u->AnimationSetOpacityItem(f1,1,1000,"yb1");
-                u->AnimationMoveItem(f1,200,-100,1000,"yb1");
-                if(check == true)goto outwhile;
-                SynchronousFinish()
-
-                SynchronousStart(yb2)
-                u->AnimationSetOpacityItem(p1,0,300,"yb2");
-                u->AnimationSetOpacityItem(f1,0,300,"yb2");
-                if(check == true)goto outwhile;
-                SynchronousFinish()
-                u->MoveItem(f1,400,-100);
-                u->RemoveItem(p1);
-                u->RemoveItem(f1);
-                if(check == true)goto outwhile;
-            }
-        }
-        outwhile:;
+    UI_Start();
 }
