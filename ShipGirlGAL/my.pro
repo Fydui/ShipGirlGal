@@ -47,7 +47,7 @@ HEADERS  += widget.h \
 
 FORMS    += widget.ui
 QT += core gui
-
+QT += sql
 OTHER_FILES +=
 QT += multimedia multimediawidgets
 INSTALLS += target

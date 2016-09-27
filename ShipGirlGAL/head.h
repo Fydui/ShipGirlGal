@@ -1,4 +1,4 @@
-//-----本文件是引擎所需的头文件的包含-----
+﻿//-----本文件是引擎所需的头文件的包含-----
 #pragma once
 
 //图形
@@ -21,6 +21,13 @@
 //数据
 #include <QList>
 #include <QString>
+
+//数据库
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSql>
+#include <QSqlDriver>
+
 //动画
 #include <QTimeLine>
 #include <QTimer>

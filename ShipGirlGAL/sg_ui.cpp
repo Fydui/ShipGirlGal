@@ -23,7 +23,7 @@ void UI::UI_Main()
     u->AnimationMoveItem(bar,0,0,200);
 
     //按钮
-    u->AddExpansionSlot("UI_Start",UI_Start); //绑定非主三类函数
+    //u->AddExpansionSlot("UI_Start",UI_Start,); //绑定非主三类函数
     Mainbutton[0] = u->AddButtonItem(BU+"M_NewGame_U.png",-380,100,"UI_Start",BU+"M_NewGame_D.png");
     Mainbutton[1] = u->AddButtonItem(BU+"M_CGame_U.png",-380,187,"",BU+"M_CGame_D.png");
     Mainbutton[2] = u->AddButtonItem(BU+"M_About_U.png",-380,274,"",BU+"M_About_D.png");
@@ -71,7 +71,7 @@ void UI::UI_Main()
     outwhile:;
 }
 
-void UI::UI_Start()
+void UI::UI_Start(QString slotname, VoidSlot slot)
 {
         u->SetItemLayer(Mainbutton[0],6);
         u->SetItemLayer(Mainbutton[1],6);
@@ -84,12 +84,12 @@ void UI::UI_Start()
         u->AnimationMoveItem(Mainbutton[1],-380,187,150);
         u->AnimationMoveItem(Mainbutton[0],-380,100,100);
 
-    for(int i = 0; i <=4; i++)
+    for(int i = 0; i <=3; i++)
         u->RemoveItem(Mainbutton[i]);
 
     //绘制开始选择界面
     u->AddExpansionSlot("UI_Return",UI_Return); //绑定非主三类函数
-    u->AddExpansionSlot("UI_MainStory",UI_MainStory);
+    u->AddExpansionSlot(slotname,slot);
     Mainbutton[0] = u->AddButtonItem(BU+"M_MainStory_U.png",-380,100,"UI_MainStory",BU+"M_MainStory_D.png");
     Mainbutton[1] = u->AddButtonItem(BU+"M_SecondStory_U.png",-380,187,"",BU+"SecondStory_D.png");
     Mainbutton[2] = u->AddButtonItem(BU+"M_EditMode_U.png",-380,274,"",BU+"M_EditMode_D.png");
@@ -125,8 +125,8 @@ void UI::UI_Return()
         for(int i = 0; i <=4; i++)
             u->RemoveItem(Mainbutton[i]);
 
-    u->AddExpansionSlot("UI_Start",UI_Start); //绑定非主三类函数
-    Mainbutton[0] = u->AddButtonItem(BU+"M_NewGame_U.png",-380,100,"UI_Start",BU+"M_NewGame_D.png");
+
+    Mainbutton[0] = u->AddButtonItem(BU+"M_NewGame_U.png",-380,100,"",BU+"M_NewGame_D.png");
     Mainbutton[1] = u->AddButtonItem(BU+"M_CGame_U.png",-380,187,"",BU+"M_CGame_D.png");
     Mainbutton[2] = u->AddButtonItem(BU+"M_About_U.png",-380,274,"",BU+"M_About_D.png");
     Mainbutton[3] = u->AddButtonItem(BU+"M_Set_U.png",-380,361,"",BU+"M_Set_D.png");
@@ -142,6 +142,7 @@ void UI::UI_Return()
         u->AnimationMoveItem(Mainbutton[2],45,274,200);
         u->AnimationMoveItem(Mainbutton[3],45,361,250);
         u->AnimationMoveItem(Mainbutton[4],45,448,300);
+        //u->AddMusic();
 }
 
 Item* UI::UI_MainFigure(Item* name, QString findname)
@@ -210,5 +211,15 @@ void UI::UI_StoryReturn()
 {
     u->ClearScene();
     check = false;
-    UI_Start();
+    //UI_Start();
+}
+
+void UI::UI_FightFigure(QString *SGnames[], QString *DSnames[])
+{
+    //
+}
+
+void UI::UI_FightFigure(QString figurename)
+{
+    //
 }

@@ -1,9 +1,8 @@
-//-----本文件无需修改-----
+﻿//-----本文件无需修改-----
 #include "maincall.h"
 #include <QApplication>
 
 QObject *thob;
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
