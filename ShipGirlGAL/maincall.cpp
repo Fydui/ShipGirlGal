@@ -6,8 +6,8 @@ void maincall::closeEvent(QCloseEvent *event){ exit(0);}
 void maincall::StartGame()//入口函数
 {
     u = this;
-    AddMusic(":/Data/Music/port-day.mp3",100);
-    //UI::UI_Main();
+    //AddMusic(":/Data/Music/port-day.mp3",100);
+    UI::UI_Main();
 }
 
 void maincall::_Exit()

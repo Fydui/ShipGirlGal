@@ -23,7 +23,7 @@ void UI::UI_Main()
     u->AnimationMoveItem(bar,0,0,200);
 
     //按钮
-    //u->AddExpansionSlot("UI_Start",UI_Start,); //绑定非主三类函数
+    u->AddExpansionSlot("UI_Start",UI_Start); //绑定非主三类函数
     Mainbutton[0] = u->AddButtonItem(BU+"M_NewGame_U.png",-380,100,"UI_Start",BU+"M_NewGame_D.png");
     Mainbutton[1] = u->AddButtonItem(BU+"M_CGame_U.png",-380,187,"",BU+"M_CGame_D.png");
     Mainbutton[2] = u->AddButtonItem(BU+"M_About_U.png",-380,274,"",BU+"M_About_D.png");
@@ -71,7 +71,7 @@ void UI::UI_Main()
     outwhile:;
 }
 
-void UI::UI_Start(QString slotname, VoidSlot slot)
+void UI::UI_Start()
 {
         u->SetItemLayer(Mainbutton[0],6);
         u->SetItemLayer(Mainbutton[1],6);
@@ -89,8 +89,8 @@ void UI::UI_Start(QString slotname, VoidSlot slot)
 
     //绘制开始选择界面
     u->AddExpansionSlot("UI_Return",UI_Return); //绑定非主三类函数
-    u->AddExpansionSlot(slotname,slot);
-    Mainbutton[0] = u->AddButtonItem(BU+"M_MainStory_U.png",-380,100,"UI_MainStory",BU+"M_MainStory_D.png");
+    u->AddExpansionSlot("UI_MainStory",UI_MainStory);
+    Mainbutton[0] = u->AddButtonItem(BU+"M_MainStory_U.png",-380,100,slotname,BU+"M_MainStory_D.png");
     Mainbutton[1] = u->AddButtonItem(BU+"M_SecondStory_U.png",-380,187,"",BU+"SecondStory_D.png");
     Mainbutton[2] = u->AddButtonItem(BU+"M_EditMode_U.png",-380,274,"",BU+"M_EditMode_D.png");
     Mainbutton[3] = u->AddButtonItem(BU+"M_MyGirl_U.png",-380,361,"",BU+"M_MyGirl_D.png");
@@ -145,7 +145,7 @@ void UI::UI_Return()
         //u->AddMusic();
 }
 
-Item* UI::UI_MainFigure(Item* name, QString findname)
+Item* UI::UI_AddFigure(Item* name, QString findname)
 {
     //u->RemoveItem(name);
     name = u->AddPixmapItem(":/Data/Image/Figuer/"+findname+".png",0,-100);
@@ -154,12 +154,24 @@ Item* UI::UI_MainFigure(Item* name, QString findname)
     return name;
 }
 
-Item* UI::UI_MainBackGround(Item* name, QString findname)
+Item* UI::UI_SetGameBackGround(Item* name, QString findname)
 {
     name = u->AddPixmapItem(":/Data/Image/Background/"+findname+".png",0,0);
     u->SetOpacityItem(name,0);
     u->AnimationSetOpacityItem(name,1,50);
     return name;
+}
+
+Item* UI::UI_SetGameText(QString name, int wordsize, int R, int B, int G)
+{
+    ifstream text(name);
+    string word;
+    string w;
+    while(getline(text,w))
+        word += w + "\n";   //添加换行符
+
+    QString _word; = QString::fromStdString(word);
+    QString jiequ;= _word.section(fenge,Tsum,Tsum);
 }
 
 void UI::UI_MainStory()
@@ -214,12 +226,12 @@ void UI::UI_StoryReturn()
     //UI_Start();
 }
 
-void UI::UI_FightFigure(QString *SGnames[], QString *DSnames[])
+void UI::UI_FightFigure(QString *SGnames, QString *DSnames)
 {
     //
 }
 
-void UI::UI_FightFigure(QString figurename)
+void UI::UI_FightFigure(QString *SGname, QString *DSname)
 {
     //
 }

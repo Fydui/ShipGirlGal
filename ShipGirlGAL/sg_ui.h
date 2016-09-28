@@ -10,9 +10,13 @@ namespace UI {
     void UI_StoryReturn();
     void UI_MainStory();
     void UI_FightFigure(QString figurename);
-    void UI_FightFigure(QString* SGnames[], QString* DSnames[]);
-    Item* UI_MainBackGround(Item* name, QString findname);
-    Item* UI_MainFigure(Item* name, QString findname);
+    void UI_FightFigure(QString SGname[], QString DSname[]);
+    Item* UI_SetBackGround(Item* name, QString findname);
+    Item* UI_SetText(Item* name, QString findname);
+    Item* UI_SetFigure(Item* name, QString findname);
+    void UI_SetFigureTalk(QString ConfigFileName);
+    void UI_SetFigureTalk(QString figurename, QString Talk);
+    void UI_ParsingConfig(QString ConfigFileName);
     const QString BG = ":/Data/Image/Background/";
     const QString BU = ":/Data/Image/Button/";
     const QString LO = ":/Data/Image/Loop/";
