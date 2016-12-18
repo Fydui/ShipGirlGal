@@ -6,6 +6,7 @@ namespace UI {
     void UI_Main();
     void UI_CGame();
     void UI_Start(QString slotname, VoidSlot slot);
+    void UI_Start();
     void UI_Return();
     void UI_StoryReturn();
     void UI_MainStory();
